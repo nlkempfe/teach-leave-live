@@ -21,7 +21,9 @@ Then, you can clone the repo as normal, e.g. 'git clone git@gitlab.com:nlkempfe/
 
 ## Teach Leave Live
 [Instagram](https://www.instagram.com/p/B8I9rZAh5tm/)
+
 [Color Palette #1](https://coolors.co/export/pdf/01ffff-ffffff-000000-474350-f8fff4)
+
 [Color Palette #2](https://coolors.co/export/pdf/000808-00b5b5-a6a6a6-009696-007777)
 
 ## Resources
