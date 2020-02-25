@@ -1,7 +1,7 @@
 # CEN3031 DevOps Team: Teach Leave Live
 
 ## Instructions
-### To clone this repo, follow these steps:
+To clone this repo, follow these steps:
 
     Go to "Git Bash" just like cmd. Right click and "Run as Administrator".
     Type ssh-keygen
@@ -17,13 +17,12 @@
     Then click "Add key".
 
 Then, you can clone the repo as normal, e.g. 'git clone git@gitlab.com:nlkempfe/teach-leave-live.git'
-
 [Source](https://stackoverflow.com/questions/40427498/getting-permission-denied-public-key-on-gitlab)
 
 ## Teach Leave Live
 [Instagram](https://www.instagram.com/p/B8I9rZAh5tm/)
-(https://coolors.co/export/pdf/01ffff-ffffff-000000-474350-f8fff4)
-(https://coolors.co/export/pdf/000808-00b5b5-a6a6a6-009696-007777)
+[Color Palette #1](https://coolors.co/export/pdf/01ffff-ffffff-000000-474350-f8fff4)
+[Color Palette #2](https://coolors.co/export/pdf/000808-00b5b5-a6a6a6-009696-007777)
 
 ## Resources
 ### Blogging APIs
