@@ -27,6 +27,10 @@ Then, you can clone the repo as normal, e.g. 'git clone git@gitlab.com:nlkempfe/
 [Color Palette #2](https://coolors.co/export/pdf/000808-00b5b5-a6a6a6-009696-007777)
 
 ## Resources
+### Agile Development
+- [How to use GitLab for Agile software development](https://about.gitlab.com/blog/2018/03/05/gitlab-for-agile-software-development/)
+- [Agile Delivery](https://about.gitlab.com/solutions/agile-delivery/)
+
 ### Blogging APIs
 Ideas
 - [Top Blogging APIs](https://rapidapi.com/blog/top-blogging-apis/)
