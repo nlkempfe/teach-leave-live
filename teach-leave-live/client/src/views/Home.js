@@ -2,37 +2,22 @@ import React, { useState } from 'react';
 
 /* Import assets */
 import logo from '../assets/logo.png'
-import PersonFillIcon from '../assets/icons/person-fill.svg';
 import ImageIcon from '../assets/icons/image.svg';
 
 /* Import bootstrap components */
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
+
+/* Import custom components */
+import NavigationBar from '../components/NavigationBar.js';
 
 function Home() {
   return (
     <div>
-      <Navbar fixed = "top" variant = "dark">
-        <Navbar.Brand>
-          Teach Leave Live
-        </Navbar.Brand>
-        <Navbar.Toggle/>
-        <Navbar.Collapse className = "justify-content-end" variant = "dark">
-            <Nav.Link>Home</Nav.Link>
-            <Nav.Link>Blog</Nav.Link>
-            <Nav.Link>Courses</Nav.Link>
-            <Nav.Link>
-              <Image src = {PersonFillIcon}/>
-              {' Account'}
-            </Nav.Link>
-        </Navbar.Collapse>
-      </Navbar>
+      <NavigationBar/>
       <Jumbotron fluid variant = "dark">
         <Container fluid style = {{padding: "50px"}} variant = "dark">
           <Row>
@@ -50,7 +35,6 @@ function Home() {
       </Jumbotron>
     </div>
   );
-
 }
 
 export default Home;
