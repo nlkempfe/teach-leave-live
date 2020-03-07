@@ -37,6 +37,7 @@ Ideas
 
 ### Bootstrap
 Documentation and Tutorials
+- [Bootstrap Icons](https://icons.getbootstrap.com)
 - [React Bootstrap](https://react-bootstrap.github.io)
 - [React Bootstrap Examples](https://react.rocks/tag/Bootstrap)
 
