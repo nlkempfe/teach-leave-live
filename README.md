@@ -19,6 +19,14 @@ To clone this repo, follow these steps:
 Then, you can clone the repo as normal, e.g. 'git clone git@gitlab.com:nlkempfe/teach-leave-live.git'
 [Source](https://stackoverflow.com/questions/40427498/getting-permission-denied-public-key-on-gitlab)
 
+To create a branch relating to an issue, follow these steps:
+
+  1. Click on the issue in GitLab
+  2. Click "Create branch" or click the arrow next to "Create merge request" to access the "Create branch" option
+  3. Do not change the description or tags when creating your branch
+
+When you submit your merge request, it will automatically be linked to the related issue.
+
 ## Teach Leave Live
 [Instagram](https://www.instagram.com/p/B8I9rZAh5tm/)
 
