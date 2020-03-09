@@ -1,0 +1,40 @@
+{
+  "name": "teach-leave-live",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0-alpha2",
+    "firebase": "^7.10.0",
+    "react": "^16.12.0",
+    "react-admin": "^3.2.4",
+    "react-bootstrap": "^1.0.0-beta.17",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.4.0",
+    "stripe": "^8.28.1"
+  },
+  "scripts": {
+    "start": "cd client && npm start",
+    "build": "cd client && npm build",
+    "test": "cd client && npm test",
+    "eject": "cd client && npm eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
