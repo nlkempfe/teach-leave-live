@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Home from './views/Home.js';
-import {auth} from "./firebase";
+import {auth} from "./firebase/firebase";
 
 function App() {
 

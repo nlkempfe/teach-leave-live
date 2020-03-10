@@ -6,7 +6,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 
 /* Import firebase app and products */
-import {auth, provider, db} from "../firebase";
+import {auth, provider, db} from "../firebase/firebase";
 
 
 const AuthButton = (props) => {
@@ -17,7 +17,7 @@ const AuthButton = (props) => {
         auth().signInWithPopup(provider).then((retUser) => {
 
             // console.log(retUser.additionalUserInfo.profile.name);
-            console.log(retUser.user.uid);
+            // console.log(retUser.user.uid);
             console.log(retUser);
             props.updateUser(retUser);
 
@@ -47,6 +47,7 @@ const AuthButton = (props) => {
         return(
             <div>
                 <DropdownButton title={props.user.displayName}>
+                    <Dropdown.Item>Profile</Dropdown.Item>
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                 </DropdownButton>
             </div>
@@ -56,7 +57,7 @@ const AuthButton = (props) => {
         //User is not logged in
         return (
             <div>
-                <Button variant="primary" onClick={handleLogin}>Log in</Button>
+                <Button variant="primary" onClick={handleLogin}>Facebook Sign-In</Button>
             </div>
         )
     }
