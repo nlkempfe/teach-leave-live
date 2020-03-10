@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Home from './views/Home.js';
+import Admin from './views/Admin.js';
+import Blog from './views/Blog.js';
 
 function App() {
   return (
-    <div>
-      <Home/>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/admin" component={Admin} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 
