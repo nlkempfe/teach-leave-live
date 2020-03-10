@@ -6,18 +6,30 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 
 /* Import firebase app and products */
-import {auth, provider} from "../firebase";
+import {auth, provider, db} from "../firebase";
 
 
 const AuthButton = (props) => {
 
     //Event handler to log the user in with Firebase auth()
     const handleLogin = () => {
+        //Sign into Firestore with the facebook auth provider
         auth().signInWithPopup(provider).then((retUser) => {
-            console.log(retUser.additionalUserInfo.profile.name);
+
+            // console.log(retUser.additionalUserInfo.profile.name);
+            console.log(retUser.user.uid);
             console.log(retUser);
             props.updateUser(retUser);
-        })
+
+            //Update the user document with the most recent sign-in information (info from fb)
+            let userDoc = db.collection('users').doc(retUser.user.uid);
+            let setUserDoc = userDoc.set({
+                firstName : retUser.additionalUserInfo.profile.first_name,
+                lastName : retUser.additionalUserInfo.profile.last_name,
+                email : retUser.additionalUserInfo.profile.email,
+                picURL : retUser.additionalUserInfo.profile.picture.data.url
+            });
+        });
     };
 
     //Event handler to sign the user out with Firebase auth()
@@ -30,6 +42,7 @@ const AuthButton = (props) => {
 
     //Conditional return statements based on whether user is signed in
     if(props.user != null){
+
         //User is Logged in
         return(
             <div>
