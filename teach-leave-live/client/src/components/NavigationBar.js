@@ -8,7 +8,10 @@ import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function NavigationBar () {
+/* Import custom components */
+import AuthButton from "./AuthButton";
+
+function NavigationBar (props) {
   return (
     <div>
       <Navbar bg = "dark" fixed = "top" variant = "dark">
@@ -21,8 +24,7 @@ function NavigationBar () {
             <Nav.Link>Blog</Nav.Link>
             <Nav.Link>Courses</Nav.Link>
             <Nav.Link>
-              <Image src = {PersonFillIcon}/>
-              {' Account'}
+                <AuthButton updateUser={props.updateUser} user={props.user}/>
             </Nav.Link>
         </Navbar.Collapse>
       </Navbar>

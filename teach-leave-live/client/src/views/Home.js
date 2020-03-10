@@ -14,10 +14,10 @@ import Row from 'react-bootstrap/Row';
 /* Import custom components */
 import NavigationBar from '../components/NavigationBar.js';
 
-function Home() {
+function Home(props) {
   return (
     <div>
-      <NavigationBar/>
+      <NavigationBar updateUser={props.updateUser} user={props.user}/>
       <Jumbotron fluid variant = "dark">
         <Container fluid style = {{padding: "50px"}} variant = "dark">
           <Row>
