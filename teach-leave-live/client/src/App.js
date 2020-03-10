@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import Home from './views/Home.js';
 import {auth} from "./firebase/firebase";
 
+/* Import custom components */
+import Admin from './views/Admin.js';
+import Blog from './views/Blog.js';
+
 function App() {
 
     //Setting state vars
@@ -16,7 +20,15 @@ function App() {
 
   return (
     <div>
-      <Home updateUser={setUser} user={user}/>
+      <Router>
+      <Switch>
+        <Route exact path="/" component={() => <Home updateUser={setUser} user={user}/>} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </Router>
+
     </div>
   );
 }
