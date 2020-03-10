@@ -17,7 +17,7 @@ function NavigationBar () {
         </Navbar.Brand>
         <Navbar.Toggle/>
         <Navbar.Collapse className = "justify-content-end" variant = "dark">
-            <Nav.Link>Home</Nav.Link>
+            <Nav.Link href = "/home">Home</Nav.Link>
             <Nav.Link>Blog</Nav.Link>
             <Nav.Link>Courses</Nav.Link>
             <Nav.Link>
