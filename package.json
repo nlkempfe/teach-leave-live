@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "heroku-postbuild": "cd client && npm install && npm run build",
+    "postinstall": "cd client && npm install && cd ..",
     "start": "cd client && npm run build && cd .. && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

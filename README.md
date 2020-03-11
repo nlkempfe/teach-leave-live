@@ -25,6 +25,12 @@ To create a branch relating to an issue, follow these steps:
   2. Click "Create branch" or click the arrow next to "Create merge request" to access the "Create branch" option
   3. Do not change the description or tags when creating your branch
 
+To test your code, follow these steps:
+
+    npm install
+    npm start
+    Go to http://localhost:5000
+
 When you submit your merge request, it will automatically be linked to the related issue.
 
 ## Teach Leave Live
