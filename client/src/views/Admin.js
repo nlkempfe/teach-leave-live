@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+/* Import custom components */
+import NavigationBar from '../components/NavigationBar.js';
 
 function Admin() {
   return (
