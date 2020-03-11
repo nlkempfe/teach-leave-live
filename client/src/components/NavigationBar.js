@@ -20,7 +20,7 @@ function NavigationBar () {
             <Nav.Link href = "/home">Home</Nav.Link>
             <Nav.Link href = "/blog">Blog</Nav.Link>
             <Nav.Link>Courses</Nav.Link>
-            <Nav.Link>
+            <Nav.Link href = "/admin">
               <Image src = {PersonFillIcon}/>
               {' Account'}
             </Nav.Link>

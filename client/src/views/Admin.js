@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 function Admin() {
   return (
     <div>
+      <NavigationBar/>
       <p>
       This is the admin page.
       </p>
