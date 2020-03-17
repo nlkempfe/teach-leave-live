@@ -26,7 +26,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SchoolIcon from '@material-ui/icons/School';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import Home from "../views/Home";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -50,7 +49,7 @@ function NavigationBar (props) {
           <Button href = "/home">Home</Button>
           <Button href = "/blog">Blog</Button>
           <Button href = "/admin/dashboard">Admin</Button>
-            <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
+          <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
       <Drawer anchor = 'left' variant = 'persistent' open={location.split('/')[1] == 'admin' ? true : false}>
