@@ -9,7 +9,7 @@ import NavigationBar from '../components/NavigationBar.js';
 function Home(props) {
   return (
     <div>
-      <NavigationBar/>
+      <NavigationBar currUser={props.currUser} updateUser={props.updateUser}/>
     </div>
   );
 }
