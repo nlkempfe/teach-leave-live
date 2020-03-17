@@ -11,7 +11,7 @@ function App() {
 
   const [currUser, setCurrUser] = useState(null);
 
-  //Add listener on authentication state changes, set user appropriately
+  /* Add listener on authentication state changes, set user appropriately */
   auth().onAuthStateChanged(function (user) {
       if(user){
         setCurrUser(user);
@@ -21,14 +21,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path = '/' render ={(props) => <Home {...props} currUser={currUser} updateUser={setCurrUser} />} />
+        <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/users' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard/>} />
-        <Route path = '/blog' render ={(props) => <Blog {...props} currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/user' render ={(props) => <Home {...props} currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/' render ={(props) => <Home {...props} currUser={currUser} updateUser={setCurrUser} />} />
+        <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
+        <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
+        <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
       </Switch>
     </Router>
   );
