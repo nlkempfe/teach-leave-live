@@ -38,17 +38,25 @@ function NavigationBar (props) {
   return (
     <div style = {{display: 'flex'}}>
       <CssBaseline/>
-      <AppBar position = 'static' className = {classes.appBar}>
-        <Toolbar>
-          <Typography variant = 'h6' style = {{flexGrow: 1}}>
-            Teach. Leave. Live.
-          </Typography>
-          <Button href = "/home">Home</Button>
-          <Button href = "/blog">Blog</Button>
-          <Button href = "/admin/dashboard">Admin</Button>
-          <Button href = "/user/">Account</Button>
-        </Toolbar>
-      </AppBar>
+      <Drawer anchor = 'left' variant = 'persistent' open={true}>
+        <div className={classes.toolbar} />
+        <ListItem button selected = {location == '/admin/dashboard' ? true : false} component = {RouterLink} to = '/admin/dashboard'>
+          <ListItemIcon><TrendingUpIcon/></ListItemIcon>
+          <ListItemText>Dashboard</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/users' ? true : false} component = {RouterLink} to = '/admin/users'>
+          <ListItemIcon><SupervisorAccountIcon/></ListItemIcon>
+          <ListItemText>Manage Users</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/blog' ? true : false} component = {RouterLink} to = '/admin/blog'>
+          <ListItemIcon><ForumIcon/></ListItemIcon>
+          <ListItemText>Manage Blog</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/courses' ? true : false} component = {RouterLink} to = '/admin/courses'>
+          <ListItemIcon><SchoolIcon/></ListItemIcon>
+          <ListItemText>Manage Courses</ListItemText>
+        </ListItem>
+      </Drawer>
     </div>
   );
 }
