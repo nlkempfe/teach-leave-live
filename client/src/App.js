@@ -16,6 +16,7 @@ function App() {
         <Route path = '/admin/users' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard/>} />
+        <Route path = '/admin/event' render ={(props) => <AdminEvent/>} />
         <Route path = '/blog' render ={(props) => <Blog/>} />
         <Route path = '/user' render ={(props) => <Home/>} />
         <Route path = '/' render ={(props) => <Home/>} />
