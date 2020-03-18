@@ -8,7 +8,6 @@ import logo from '../assets/logo.png'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -20,6 +19,9 @@ import {
 /* Import custom components */
 import NavigationBar from '../components/NavigationBar.js';
 
+/* Import firebase products */
+import {db} from "../firebase/firebaseInit";
+
 const useStyles = makeStyles(theme => ({
     root: {
       '& > *': {
@@ -30,7 +32,9 @@ const useStyles = makeStyles(theme => ({
 
 function AdminEvent() {
     const classes = useStyles();
-    const [selectedDate, setSelectedDate] = React.useState(new Date(Date.now()));
+    let currentDate = Date.now().toString();
+    /* Hook for the value of each form */
+    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedName, setSelectedName] = useState("");
     const [selectedDescription, setSelectedDescription] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -38,8 +42,22 @@ function AdminEvent() {
     const [selectedState, setSelectedState] = useState("");
     const [selectedZip, setSelectedZip] = useState(""); 
 
+    //Splits description into an array of strings since firebase only allows strings of 99 characters or less
+    function makeDescriptionArray(eventDescription) {
+        let count = 0;
+        let i = 0;
+        for(i; i < Math.ceil(selectedDescription.length/99) - 1; i++)
+        {
+            eventDescription[i] = selectedDescription.substring(count, count + 98);
+            count += 99;
+        }
+        console.log(i);
+        eventDescription[i] = selectedDescription.substring(count);
+    }
+
+    /* Handle changes of the value of each form using debounce to improve performance*/
     const handleDateChange = date => {
-      setSelectedDate(date.target);
+      setSelectedDate(date);
     };
     const handleNameChange = debounce ((name) => {
       setSelectedName(name);
@@ -60,8 +78,21 @@ function AdminEvent() {
       setSelectedZip(zip);
     }, 500);
 
+    //Adds event to database after submission of form
     const handleSubmit = event => {
-      event.preventDefault();
+      currentDate = selectedDate;
+      let eventDescription = new Array(Math.ceil(selectedDescription.length/99))
+      makeDescriptionArray(eventDescription)
+      let userDoc = db.collection("events").doc(selectedName);
+      let setUserDoc = userDoc.set({
+          name : selectedName,
+          description : eventDescription,
+          address : selectedAddress,
+          city : selectedCity,
+          state : selectedState,
+          zip : selectedZip,
+          dateAndTime : currentDate
+      });
     };
 
   return (
@@ -70,14 +101,24 @@ function AdminEvent() {
           <NavigationBar/>
         </div>
         <div>
-          <Container maxWidth="md">
+          <Grid container direction="column" justify="center" alignItems="center">
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
               <Grid container direction="row" justify="center" alignItems="flex-start">
                 <h2>Create an Event</h2>
               </Grid>
                 <form className={classes.root} onSubmit={handleSubmit}>                      
                   <Grid container direction="row" justify="center" alignItems="flex-start" spacing={2}>
                     <Grid item xs={12}>
-                     <TextField id="outlined-full-width" label="Event Name" fullWidth variant="outlined" required onChange={e => handleNameChange(e.target.value)}/>
+                     <TextField id="outlined-full-width"
+                                label="Event Name" 
+                                fullWidth 
+                                variant="outlined" 
+                                required
+                                inputProps={{
+                                  maxLength: 99
+                                }}
+                                onChange={e => handleNameChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField id="outlined-multiline-static"
@@ -90,16 +131,45 @@ function AdminEvent() {
                                  onChange={e => handleDescriptionChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="outlined-basic" label="Address" fullWidth variant="outlined" required onChange={e => handleAddressChange(e.target.value)}/>
+                      <TextField id="outlined-basic"
+                                 label="Address" 
+                                 fullWidth variant="outlined" 
+                                 required
+                                 inputProps={{
+                                  maxLength: 99
+                                 }} 
+                                 onChange={e => handleAddressChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic" label="City" fullWidth variant="outlined" required onChange={e => handleCityChange(e.target.value)}/>
+                      <TextField id="outlined-basic"
+                                 label="City" 
+                                 fullWidth variant="outlined" 
+                                 required
+                                 inputProps={{
+                                  maxLength: 99
+                                 }} 
+                                 onChange={e => handleCityChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic" label="State" fullWidth variant="outlined" required onChange={e => handleStateChange(e.target.value)}/>
+                      <TextField id="outlined-basic"
+                                 label="State"
+                                 fullWidth
+                                 variant="outlined"
+                                 required
+                                 inputProps={{
+                                  maxLength: 99
+                                 }}
+                                 onChange={e => handleStateChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic" label="Zip" fullWidth variant="outlined" required onChange={e => handleZipChange(e.target.value)}/>
+                      <TextField id="outlined-basic"
+                                 label="Zip"
+                                 fullWidth variant="outlined"
+                                 required
+                                 inputProps={{
+                                  maxLength: 99
+                                 }} 
+                                 onChange={e => handleZipChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -143,10 +213,12 @@ function AdminEvent() {
                         </Button>
                       </Grid>
                   </Grid>
-              </Grid>
-            </form>
-          </Container>
-        </div>
+                </Grid>
+              </form>
+            </Grid>
+          <Grid item xs={4}></Grid>
+        </Grid>
+      </div>
     </div>
   );
 }
