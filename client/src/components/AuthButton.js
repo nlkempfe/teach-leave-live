@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 
 /* Import material-ui components */
-import {makeStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,16 +11,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 /* Import firebase products */
 import {auth, provider, db} from "../firebase/firebaseInit";
 
-
-const useStyles = makeStyles(theme => ({
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
-    toolbar: theme.mixins.toolbar,
-}));
-
 const AuthButton = (props) => {
-    const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
     //Event handler to log the user in with Firebase auth()
@@ -41,20 +31,15 @@ const AuthButton = (props) => {
                 picURL : retUser.additionalUserInfo.profile.picture.data.url,
                 role: "user"
             });
-
         });
-
-
     };
 
     //Event handler to log the user out with Firebase auth()
     const handleLogout = () => {
-
         auth().signOut().then(() => {
             props.updateUser(null);
         });
         handleClose();
-
     };
 
     //Event handlers for the menu that is displayed when user is logged in
@@ -71,16 +56,10 @@ const AuthButton = (props) => {
         //User is logged in -> Display button to allow logout
         return (
             <div>
-                <Button className={classes.button} variant="contained" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                     {props.currUser.displayName}
                 </Button>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
+                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem onClick={handleClose}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
@@ -91,12 +70,7 @@ const AuthButton = (props) => {
         //User is not logged in -> Display button to allow login
         return (
             <div>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={<FacebookIcon />}
-                    onClick={handleLogin}
-                >
+                <Button startIcon={<FacebookIcon />} onClick={handleLogin}>
                     Login
                 </Button>
             </div>

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {debounce} from 'lodash';
 
-/* Import assets */
-import logo from '../assets/logo.png'
-
 /* Import material-UI components */
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -40,7 +37,7 @@ function AdminEvent() {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedState, setSelectedState] = useState("");
-    const [selectedZip, setSelectedZip] = useState(""); 
+    const [selectedZip, setSelectedZip] = useState("");
 
     //Splits description into an array of strings since firebase only allows strings of 99 characters or less
     function makeDescriptionArray(eventDescription) {
@@ -107,13 +104,13 @@ function AdminEvent() {
               <Grid container direction="row" justify="center" alignItems="flex-start">
                 <h2>Create an Event</h2>
               </Grid>
-                <form className={classes.root} onSubmit={handleSubmit}>                      
+                <form className={classes.root} onSubmit={handleSubmit}>
                   <Grid container direction="row" justify="center" alignItems="flex-start" spacing={2}>
                     <Grid item xs={12}>
                      <TextField id="outlined-full-width"
-                                label="Event Name" 
-                                fullWidth 
-                                variant="outlined" 
+                                label="Event Name"
+                                fullWidth
+                                variant="outlined"
                                 required
                                 inputProps={{
                                   maxLength: 99
@@ -132,22 +129,22 @@ function AdminEvent() {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField id="outlined-basic"
-                                 label="Address" 
-                                 fullWidth variant="outlined" 
+                                 label="Address"
+                                 fullWidth variant="outlined"
                                  required
                                  inputProps={{
                                   maxLength: 99
-                                 }} 
+                                 }}
                                  onChange={e => handleAddressChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
                       <TextField id="outlined-basic"
-                                 label="City" 
-                                 fullWidth variant="outlined" 
+                                 label="City"
+                                 fullWidth variant="outlined"
                                  required
                                  inputProps={{
                                   maxLength: 99
-                                 }} 
+                                 }}
                                  onChange={e => handleCityChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
@@ -168,7 +165,7 @@ function AdminEvent() {
                                  required
                                  inputProps={{
                                   maxLength: 99
-                                 }} 
+                                 }}
                                  onChange={e => handleZipChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>

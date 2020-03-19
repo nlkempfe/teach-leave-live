@@ -19,15 +19,11 @@ import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
 import ForumIcon from '@material-ui/icons/Forum';
-import MenuIcon from '@material-ui/icons/Menu';
 import SchoolIcon from '@material-ui/icons/School';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
   toolbar: theme.mixins.toolbar,
 }));
 
