@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
-/* Import custom components */
-import AuthButton from "./AuthButton";
-
 /* Import material-ui components */
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
@@ -41,17 +38,25 @@ function NavigationBar (props) {
   return (
     <div style = {{display: 'flex'}}>
       <CssBaseline/>
-      <AppBar position = 'static' className = {classes.appBar}>
-        <Toolbar>
-          <Typography variant = 'h6' style = {{flexGrow: 1}}>
-            Teach. Leave. Live.
-          </Typography>
-          <Button href = "/home">Home</Button>
-          <Button href = "/blog">Blog</Button>
-          <Button href = "/admin/dashboard">Admin</Button>
-          <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
-        </Toolbar>
-      </AppBar>
+      <Drawer anchor = 'left' variant = 'persistent' open={true}>
+        <div className={classes.toolbar} />
+        <ListItem button selected = {location == '/admin/dashboard' ? true : false} component = {RouterLink} to = '/admin/dashboard'>
+          <ListItemIcon><TrendingUpIcon/></ListItemIcon>
+          <ListItemText>Dashboard</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/users' ? true : false} component = {RouterLink} to = '/admin/users'>
+          <ListItemIcon><SupervisorAccountIcon/></ListItemIcon>
+          <ListItemText>Manage Users</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/blog' ? true : false} component = {RouterLink} to = '/admin/blog'>
+          <ListItemIcon><ForumIcon/></ListItemIcon>
+          <ListItemText>Manage Blog</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/courses' ? true : false} component = {RouterLink} to = '/admin/courses'>
+          <ListItemIcon><SchoolIcon/></ListItemIcon>
+          <ListItemText>Manage Courses</ListItemText>
+        </ListItem>
+      </Drawer>
     </div>
   );
 }

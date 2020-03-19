@@ -7,6 +7,8 @@ import Home from './views/Home.js';
 import AdminDashboard from './views/AdminDashboard.js';
 import Blog from './views/Blog.js';
 import AdminEvent from './views/AdminEvent.js';
+import NavigationBar from './components/NavigationBar.js'
+import AdminBar from './components/AdminBar.js'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
 
   return (
     <Router>
+      <Route path = '/' render = {(props) => <NavigationBar/>} />
+      <Route path = '/admin' render = {(props) => <AdminBar/>} />
       <Switch>
         <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard/>} />
