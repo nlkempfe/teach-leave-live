@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
+/* Import custom components */
+import AuthButton from "./AuthButton";
+
 /* Import material-ui components */
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
@@ -46,7 +49,7 @@ function NavigationBar (props) {
           <Button href = "/home">Home</Button>
           <Button href = "/blog">Blog</Button>
           <Button href = "/admin/dashboard">Admin</Button>
-          <Button href = "/user/">Account</Button>
+          <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
     </div>
