@@ -6,6 +6,7 @@ import {auth} from "./firebase/firebaseInit";
 import Home from './views/Home.js';
 import AdminDashboard from './views/AdminDashboard.js';
 import Blog from './views/Blog.js';
+import AdminEvent from './views/AdminEvent.js';
 import NavigationBar from './components/NavigationBar.js'
 import AdminBar from './components/AdminBar.js'
 
@@ -30,6 +31,7 @@ function App() {
         <Route path = '/admin/users' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard/>} />
+        <Route path = '/admin/event' render ={(props) => <AdminEvent/>} />
         <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
