@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 function NavigationBar (props) {
   const classes = useStyles();
-  const location = useLocation().pathname;
+  const location = '/' + useLocation().pathname.split('/')[1];
 
   return (
     <div style = {{display: 'flex'}}>
@@ -31,10 +31,10 @@ function NavigationBar (props) {
           <Typography variant = 'h6' style = {{flexGrow: 1}}>
             Teach. Leave. Live.
           </Typography>
-          <Button href = "/home">Home</Button>
-          <Button href = "/blog">Blog</Button>
-          <Button href = "/courses">Courses</Button>
-          <Button href = "/admin/dashboard">Admin</Button>
+          <Button href = '/home' variant = {location == '/home' ? 'outlined' : 'default'}>Home</Button>
+          <Button href = '/blog' variant = {location == '/blog' ? 'outlined' : 'default'}>Blog</Button>
+          <Button href = '/courses' variant = {location == '/courses' ? 'outlined' : 'default'}>Courses</Button>
+          <Button href = '/admin/dashboard' variant = {location == '/admin' ? 'outlined' : 'default'}>Admin</Button>
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
