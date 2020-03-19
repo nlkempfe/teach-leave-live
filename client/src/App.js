@@ -6,6 +6,9 @@ import Home from './views/Home.js';
 import Admin from './views/Admin.js';
 import Blog from './views/Blog.js';
 
+/* Test Components */
+import Checkout from './views/Checkout.js';
+
 function App() {
   return (
     <Router>
@@ -13,6 +16,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/admin" component={Admin} />
         <Route path="/blog" component={Blog} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>
