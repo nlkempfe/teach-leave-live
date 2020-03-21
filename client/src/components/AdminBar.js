@@ -34,7 +34,7 @@ function NavigationBar (props) {
   return (
     <div style = {{display: 'flex'}}>
       <CssBaseline/>
-      <Drawer anchor = 'left' variant = 'persistent' open={true}>
+      <Drawer anchor = 'left' variant = 'persistent' open={true} style = {{maxWidth: props.drawerWidth}}>
         <div className={classes.toolbar} />
         <ListItem button selected = {location == '/admin/dashboard' ? true : false} component = {RouterLink} to = '/admin/dashboard'>
           <ListItemIcon><TrendingUpIcon/></ListItemIcon>

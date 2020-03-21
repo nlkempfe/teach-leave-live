@@ -34,6 +34,7 @@ function NavigationBar (props) {
           <Button href = "/home">Home</Button>
           <Button href = "/blog">Blog</Button>
           <Button href = "/courses">Courses</Button>
+          <Button href = "/socials">Socials</Button>
           <Button href = "/admin/dashboard">Admin</Button>
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>

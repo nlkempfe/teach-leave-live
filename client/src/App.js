@@ -13,6 +13,7 @@ import AdminBar from './components/AdminBar.js'
 function App() {
 
   const [currUser, setCurrUser] = useState(null);
+  const [drawerWidth, setDrawerWidth] = useState(200);
 
   /* Add listener on authentication state changes, set user appropriately */
   auth().onAuthStateChanged(function (user) {
@@ -24,10 +25,10 @@ function App() {
   return (
     <Router>
       <Route path = '/' render = {(props) => <NavigationBar currUser={currUser} updateUser={setCurrUser}/>} />
-      <Route path = '/admin' render = {(props) => <AdminBar currUser={currUser} updateUser={setCurrUser}/>} />
+      <Route path = '/admin' render = {(props) => <AdminBar currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
       <Switch>
         <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
         <Route path = '/admin/users' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
