@@ -4,7 +4,7 @@ import firebase from "firebase";
 /* Import environment variables for initialization */
 import config from '../firebaseConfig.js';
 
-const credentials = {
+const prodConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY || config.apiKey,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || config.authDomain,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL || config.databaseURL,
@@ -14,6 +14,20 @@ const credentials = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID || config.appId,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || config.measurementId
 };
+
+const devConfig = {
+  apiKey: config.apiKey,
+  authDomain: config.authDomain,
+  databaseURL: config.databaseURL,
+  projectId: config.projectId,
+  storageBucket: config.storageBucket,
+  messagingSenderId: config.messagingSenderId,
+  appId: config.appId,
+  measurementId: config.measurementId
+}
+
+const credentials =
+  process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 
 firebase.initializeApp(credentials);
 
