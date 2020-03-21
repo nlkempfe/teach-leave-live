@@ -15,8 +15,8 @@ function Admin(props) {
   console.log(props.drawerWidth);
   return (
     <div>
-      <Container style = {{marginLeft: props.drawerWidth + 50, marginRight: 50}}>
-        <Card style = {{marginTop: 20}}>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50}}>
+        <Card fluid style = {{marginTop: 20}}>
           <CardContent>
             <Typography variant = 'h6'>User Activity</Typography>
             <DashboardChart/>

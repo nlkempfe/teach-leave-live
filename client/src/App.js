@@ -32,7 +32,7 @@ function App() {
         <Route path = '/admin/users' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
-        <Route path = '/admin/event' render ={(props) => <AdminEvent currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/admin/events' render ={(props) => <AdminEvent currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
