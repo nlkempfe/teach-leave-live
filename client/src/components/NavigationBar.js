@@ -31,10 +31,11 @@ function NavigationBar (props) {
           <Typography variant = 'h6' style = {{flexGrow: 1}}>
             Teach. Leave. Live.
           </Typography>
-          <Button href = "/home">Home</Button>
-          <Button href = "/blog">Blog</Button>
-          <Button href = "/courses">Courses</Button>
-          <Button href = "/admin/dashboard">Admin</Button>
+          <Button href = "/home" disabled = {location == '/home' ? true : false}>Home</Button>
+          <Button href = "/blog" disabled = {location == '/blog' ? true : false}>Blog</Button>
+          <Button href = "/courses" disabled = {location == '/courses' ? true : false}>Courses</Button>
+          <Button href = "/socials" disabled = {location == '/socials' ? true : false}>Socials</Button>
+          <Button href = "/admin/dashboard" disabled = {location.includes('/admin/') ? true : false}>Admin</Button>
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
