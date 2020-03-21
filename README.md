@@ -25,15 +25,13 @@ To create a branch relating to an issue, follow these steps:
   2. Click "Create branch" or click the arrow next to "Create merge request" to access the "Create branch" option
   3. Do not change the description or tags when creating your branch
 
-When you submit your merge request, it will automatically be linked to the related issue.
-
 To test your code, follow these steps:
 
     npm install
     npm start
     Go to http://localhost:5000
 
-[Deployment](https://devops-teach-leave-live.herokuapp.com)
+When you submit your merge request, it will automatically be linked to the related issue.
 
 ## Teach Leave Live
 [Instagram](https://www.instagram.com/p/B8I9rZAh5tm/)
@@ -51,26 +49,32 @@ To test your code, follow these steps:
 Ideas
 - [Top Blogging APIs](https://rapidapi.com/blog/top-blogging-apis/)
 
-### Bootstrap
-Documentation and Tutorials
-- [Bootstrap Icons](https://icons.getbootstrap.com)
-- [React Bootstrap](https://react-bootstrap.github.io)
-- [React Bootstrap Examples](https://react.rocks/tag/Bootstrap)
-
 ### FireBase
 Documentation and Tutorials
 - [A Firebase in React Tutorial for Beginners](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial)
 - [Build a Serverless full stack app using firebase cloud functions.](https://blog.usejournal.com/build-a-serverless-full-stack-app-using-firebase-cloud-functions-81afe34a64fc)
 - [How to setup Firebase Authentication with React in 5 minutes (maybe 10)](https://medium.com/firebase-developers/how-to-setup-firebase-authentication-with-react-in-5-minutes-maybe-10-bb8bb53e8834)
 
-### ReactAdmin
+### Material UI
 Documentation and Tutorials
-- [ReactAdmin](https://marmelab.com/react-admin/)
-- [How to build an admin panel with React](https://blog.logrocket.com/admin-panel-with-react/)
-- [Creating Admin Interfaces in React with react-admin](https://alligator.io/react/react-admin-interface/)
+- [Material UI Icons](https://material-ui.com/components/material-icons/)
+- [Material UI](https://material-ui.com)
+- [Material UI Examples](https://material-ui.com/getting-started/example-projects/)
+
+### Recharts
+Documentation and Tutorials
+- [Recharts](http://recharts.org/en-US/)
+- [A Practical Guide to Hacking the Recharts Library](https://www.olioapps.com/blog/graph-hacking/)
 
 ### Stripe
 Documentation and Tutorials
 - [Stripe API Documentation](https://stripe.com/docs/api?lang=node)
 - [Stripe API, ReactJS, Express Tutorial](https://hackernoon.com/stripe-api-reactjs-and-express-bc446bf08301)
 - [Stripe React Elements](https://stripe.dev/react-stripe-elements/#card)
+- [Stripe for ReactJS](https://stripe.com/docs/stripe-js/react)
+
+### Wireframes + Mockups
+- [Balsamiq](https://balsamiq.com)
+- [Figma](https://www.figma.com)
+- [Figma Examples](https://www.figmaresources.com)
+- [Figma Freebies](https://www.figmafreebies.com)
