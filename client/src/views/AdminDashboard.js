@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 function Admin(props) {
-  console.log(props.drawerWidth);
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50}}>

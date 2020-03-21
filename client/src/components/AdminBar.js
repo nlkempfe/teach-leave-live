@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 /* Import material-ui components */
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
+import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
