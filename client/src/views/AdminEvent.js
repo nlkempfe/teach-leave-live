@@ -95,9 +95,6 @@ function AdminEvent() {
   return (
     <div>
         <div>
-          <NavigationBar/>
-        </div>
-        <div>
           <Grid container direction="column" justify="center" alignItems="center">
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>
