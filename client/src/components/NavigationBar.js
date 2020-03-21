@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 function NavigationBar (props) {
   const classes = useStyles();
-  const location = '/' + useLocation().pathname.split('/')[1];
+  const location = useLocation().pathname;
 
   return (
     <div style = {{display: 'flex'}}>
