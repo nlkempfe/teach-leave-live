@@ -76,18 +76,18 @@ function AdminEvent() {
     }, 500);
 
     //Adds event to database after submission of form
-    const handleSubmit = event => {
+    const handleSubmit = async (event) => {
       currentDate = selectedDate;
       let eventDescription = new Array(Math.ceil(selectedDescription.length/99))
       makeDescriptionArray(eventDescription)
       let userDoc = db.collection('events').doc(selectedName);
-      let setUserDoc = userDoc.set({
+      let setUserDoc = await userDoc.set({
           name : selectedName,
-          description : eventDescription,
           address : selectedAddress,
           city : selectedCity,
           state : selectedState,
           zip : selectedZip,
+          description : eventDescription,
           dateAndTime : currentDate
       });
     };
