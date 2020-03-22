@@ -17,13 +17,13 @@ function DashboardChart(props) {
   return (
     <ResponsiveContainer width='100%' aspect={2.0/1.0}>
       <LineChart data={data} width = {1000} height = {500}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <CartesianGrid strokeDasharray='3 3' />
+        <XAxis dataKey='name' />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="subscribers" stroke="#8884d8"/>
-        <Line type="monotone" dataKey="users" stroke="#82ca9d"/>
+        <Line type='monotone' dataKey='subscribers' stroke='#8884d8'/>
+        <Line type='monotone' dataKey='users' stroke='#82ca9d'/>
       </LineChart>
     </ResponsiveContainer>
   );

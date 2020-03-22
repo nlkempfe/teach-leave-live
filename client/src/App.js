@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import {auth} from "./firebase/firebaseInit";
+import {auth} from './firebase/firebaseInit';
 
 /* Import custom components */
 import NavigationBar from './components/NavigationBar.js'
@@ -9,9 +9,10 @@ import AdminBar from './components/AdminBar.js'
 /* Import views */
 import Home from './views/Home.js';
 import AdminDashboard from './views/AdminDashboard.js';
+import AdminEvent from './views/AdminEvent.js';
+import AdminUsers from './views/AdminUsers.js';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
-import AdminEvent from './views/AdminEvent.js';
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
       <Switch>
         <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
-        <Route path = '/admin/users' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/admin/users' render ={(props) => <AdminUsers/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/events' render ={(props) => <AdminEvent currUser={currUser} updateUser={setCurrUser}/>} />
