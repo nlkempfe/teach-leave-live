@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 /* Import material-ui icons */
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 /* Import firebase products */
-import {auth, provider, db} from "../firebase/firebaseInit";
+import {auth, provider, db} from '../firebase/firebaseInit';
 
 const AuthButton = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -29,7 +29,7 @@ const AuthButton = (props) => {
                 lastName : retUser.additionalUserInfo.profile.last_name,
                 email : retUser.additionalUserInfo.profile.email,
                 picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                role: "user"
+                role: 'user'
             });
         });
     };
@@ -56,10 +56,10 @@ const AuthButton = (props) => {
         //User is logged in -> Display button to allow logout
         return (
             <div>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
                     {props.currUser.displayName}
                 </Button>
-                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem onClick={handleClose}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>

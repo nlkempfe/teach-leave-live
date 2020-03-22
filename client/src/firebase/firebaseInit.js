@@ -1,5 +1,5 @@
 /* Import Firebase app */
-import firebase from "firebase";
+import firebase from 'firebase';
 
 /* Import environment variables for initialization */
 const config = {
