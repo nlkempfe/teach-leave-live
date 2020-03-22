@@ -17,7 +17,7 @@ import {
 import NavigationBar from '../components/NavigationBar.js';
 
 /* Import firebase products */
-import {db} from "../firebase/firebaseInit";
+import {db} from '../firebase/firebaseInit';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,12 +32,12 @@ function AdminEvent() {
     let currentDate = Date.now().toString();
     /* Hook for the value of each form */
     const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedName, setSelectedName] = useState("");
-    const [selectedDescription, setSelectedDescription] = useState("");
-    const [selectedAddress, setSelectedAddress] = useState("");
-    const [selectedCity, setSelectedCity] = useState("");
-    const [selectedState, setSelectedState] = useState("");
-    const [selectedZip, setSelectedZip] = useState("");
+    const [selectedName, setSelectedName] = useState('');
+    const [selectedDescription, setSelectedDescription] = useState('');
+    const [selectedAddress, setSelectedAddress] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedZip, setSelectedZip] = useState('');
 
     //Splits description into an array of strings since firebase only allows strings of 99 characters or less
     function makeDescriptionArray(eventDescription) {
@@ -80,7 +80,7 @@ function AdminEvent() {
       currentDate = selectedDate;
       let eventDescription = new Array(Math.ceil(selectedDescription.length/99))
       makeDescriptionArray(eventDescription)
-      let userDoc = db.collection("events").doc(selectedName);
+      let userDoc = db.collection('events').doc(selectedName);
       let setUserDoc = userDoc.set({
           name : selectedName,
           description : eventDescription,
@@ -95,22 +95,19 @@ function AdminEvent() {
   return (
     <div>
         <div>
-          <NavigationBar/>
-        </div>
-        <div>
-          <Grid container direction="column" justify="center" alignItems="center">
+          <Grid container direction='column' justify='center' alignItems='center'>
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>
-              <Grid container direction="row" justify="center" alignItems="flex-start">
+              <Grid container direction='row' justify='center' alignItems='flex-start'>
                 <h2>Create an Event</h2>
               </Grid>
                 <form className={classes.root} onSubmit={handleSubmit}>
-                  <Grid container direction="row" justify="center" alignItems="flex-start" spacing={2}>
+                  <Grid container direction='row' justify='center' alignItems='flex-start' spacing={2}>
                     <Grid item xs={12}>
-                     <TextField id="outlined-full-width"
-                                label="Event Name"
+                     <TextField id='outlined-full-width'
+                                label='Event Name'
                                 fullWidth
-                                variant="outlined"
+                                variant='outlined'
                                 required
                                 inputProps={{
                                   maxLength: 99
@@ -118,19 +115,19 @@ function AdminEvent() {
                                 onChange={e => handleNameChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="outlined-multiline-static"
-                                 label="Event Description"
+                      <TextField id='outlined-multiline-static'
+                                 label='Event Description'
                                  multiline
                                  required
                                  fullWidth
-                                 rows="4"
-                                 variant="outlined"
+                                 rows='4'
+                                 variant='outlined'
                                  onChange={e => handleDescriptionChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="outlined-basic"
-                                 label="Address"
-                                 fullWidth variant="outlined"
+                      <TextField id='outlined-basic'
+                                 label='Address'
+                                 fullWidth variant='outlined'
                                  required
                                  inputProps={{
                                   maxLength: 99
@@ -138,9 +135,9 @@ function AdminEvent() {
                                  onChange={e => handleAddressChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic"
-                                 label="City"
-                                 fullWidth variant="outlined"
+                      <TextField id='outlined-basic'
+                                 label='City'
+                                 fullWidth variant='outlined'
                                  required
                                  inputProps={{
                                   maxLength: 99
@@ -148,10 +145,10 @@ function AdminEvent() {
                                  onChange={e => handleCityChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic"
-                                 label="State"
+                      <TextField id='outlined-basic'
+                                 label='State'
                                  fullWidth
-                                 variant="outlined"
+                                 variant='outlined'
                                  required
                                  inputProps={{
                                   maxLength: 99
@@ -159,9 +156,9 @@ function AdminEvent() {
                                  onChange={e => handleStateChange(e.target.value)}/>
                     </Grid>
                     <Grid item xs={4}>
-                      <TextField id="outlined-basic"
-                                 label="Zip"
-                                 fullWidth variant="outlined"
+                      <TextField id='outlined-basic'
+                                 label='Zip'
+                                 fullWidth variant='outlined'
                                  required
                                  inputProps={{
                                   maxLength: 99
@@ -170,17 +167,17 @@ function AdminEvent() {
                     </Grid>
                     <Grid item xs={12}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="center" spacing={2}>
+                        <Grid container justify='center' spacing={2}>
                           <Grid item xs={6}>
                             <KeyboardDatePicker
                               disableToolbar
                               fullWidth
                               required
-                              variant="inline"
-                              format="MM/dd/yyyy"
-                              margin="normal"
-                              id="date-picker-inline"
-                              label="Event Date"
+                              variant='inline'
+                              format='MM/dd/yyyy'
+                              margin='normal'
+                              id='date-picker-inline'
+                              label='Event Date'
                               value={selectedDate}
                               onChange={handleDateChange}
                               KeyboardButtonProps={{
@@ -192,9 +189,9 @@ function AdminEvent() {
                             <KeyboardTimePicker
                               fullWidth
                               required
-                              margin="normal"
-                              id="time-picker"
-                              label="Event Time"
+                              margin='normal'
+                              id='time-picker'
+                              label='Event Time'
                               value={selectedDate}
                               onChange={handleDateChange}
                               KeyboardButtonProps={{
@@ -205,7 +202,7 @@ function AdminEvent() {
                         </Grid>
                       </MuiPickersUtilsProvider>
                       <Grid item>
-                        <Button variant="contained" color="primary" type="submit">
+                        <Button variant='contained' color='primary' type='submit'>
                           Submit
                         </Button>
                       </Grid>

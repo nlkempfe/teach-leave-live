@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useLocation } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 /* Import custom components */
-import AuthButton from "./AuthButton";
+import AuthButton from './AuthButton';
 
 /* Import material-ui components */
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
+import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -31,10 +31,11 @@ function NavigationBar (props) {
           <Typography variant = 'h6' style = {{flexGrow: 1}}>
             Teach. Leave. Live.
           </Typography>
-          <Button href = "/home">Home</Button>
-          <Button href = "/blog">Blog</Button>
-          <Button href = "/courses">Courses</Button>
-          <Button href = "/admin/dashboard">Admin</Button>
+          <Button href = '/home' disabled = {location == '/home' ? true : false}>Home</Button>
+          <Button href = '/blog' disabled = {location == '/blog' ? true : false}>Blog</Button>
+          <Button href = '/courses' disabled = {location == '/courses' ? true : false}>Courses</Button>
+          <Button href = '/socials' disabled = {location == '/socials' ? true : false}>Socials</Button>
+          <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button>
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
