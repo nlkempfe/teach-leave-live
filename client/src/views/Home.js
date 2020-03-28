@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/Row';
 
 /* Import custom components */
 import NavigationBar from '../components/NavigationBar.js';
+//
 
 function Home() {
   return (
