@@ -21,17 +21,15 @@ export const getUsers = () => {
   let users = [];
   db.collection('users').get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
-      console.log(doc.id, " => ", doc.data());
-        users.push({
-          firstName: doc.data().firstName,
-          lastName: doc.data().lastName,
-          premium: doc.data().premium,
-          role: doc.data().role,
-        });
+      users.push({
+        firstName: doc.data().firstName,
+        lastName: doc.data().lastName,
+        premium: doc.data().premium,
+        role: doc.data().role,
+      });
     });
-    console.log(users);
   });
-  return null;
+  return users;
 }
 
 
