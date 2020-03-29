@@ -27,14 +27,10 @@ function App() {
           //User just signed in -> store user in browser storage to avoid flicker
           let userDocReference = db.collection('users').doc(user.uid);
           let getUserDoc = userDocReference.get().then(snapshot => {
-             if(!snapshot.exists){
-                 console.log("Error, user document not found");
-             }
-             else{
+             if(snapshot.exists){
                  //User document found
                  localStorage.setItem('currentUser', JSON.stringify(snapshot.data()));
                  setCurrUser(JSON.stringify(snapshot.data()));
-                 console.log(snapshot.data());
              }
           });
       }
