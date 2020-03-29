@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import {auth} from './firebase/firebaseInit';
+import {auth, db} from './firebase/firebaseInit';
 
 /* Import custom components */
 import NavigationBar from './components/NavigationBar.js'
@@ -24,9 +24,15 @@ function App() {
   /* Add listener on authentication state changes, set user appropriately */
   auth().onAuthStateChanged(user => {
       if(user){
-          //User just signed in -> store msg in browser storage to avoid flicker
-          localStorage.setItem("userSignedIn", user.displayName);
-          setCurrUser(user);
+          //User just signed in -> store user in browser storage to avoid flicker
+          let userDocReference = db.collection('users').doc(user.uid);
+          let getUserDoc = userDocReference.get().then(snapshot => {
+             if(snapshot.exists){
+                 //User document found
+                 localStorage.setItem('currentUser', JSON.stringify(snapshot.data()));
+                 setCurrUser(JSON.stringify(snapshot.data()));
+             }
+          });
       }
   });
 
