@@ -22,9 +22,11 @@ function App() {
   const [drawerWidth, setDrawerWidth] = useState(200);
 
   /* Add listener on authentication state changes, set user appropriately */
-  auth().onAuthStateChanged(function (user) {
+  auth().onAuthStateChanged(user => {
       if(user){
-        setCurrUser(user);
+          //User just signed in -> store msg in browser storage to avoid flicker
+          localStorage.setItem("userSignedIn", user.displayName);
+          setCurrUser(user);
       }
   });
 
