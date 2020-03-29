@@ -20,7 +20,7 @@ function createData(name, calories, fat) {
 
 function AdminUsers(props) {
   const users = getUsers();
-  console.log('users', users);
+  console.log('user function called', users);
 
   const rows = [
   createData('Cupcake', 305, 3.7),

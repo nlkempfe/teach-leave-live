@@ -28,6 +28,7 @@ export const getUsers = () => {
         role: doc.data().role,
       });
     });
+    console.log('querying users', users);
   });
   return users;
 }
