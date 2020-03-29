@@ -8,13 +8,31 @@ export const readUser = () => {
 
     let userString = localStorage.getItem("currentUser");
     if(userString){
-        //A user object is signed in and returned
+        /* A user object is signed in and returned */
         return JSON.parse(userString);
     }
     else
-        //User is not signed in
+        /* User is not signed in */
         return null;
 };
+
+/* Return array of all users */
+export const getUsers = () => {
+  let users = [];
+  db.collection('users').get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      console.log(doc.id, " => ", doc.data());
+        users.push({
+          firstName: doc.data().firstName,
+          lastName: doc.data().lastName,
+          premium: doc.data().premium,
+          role: doc.data().role,
+        });
+    });
+    console.log(users);
+  });
+  return null;
+}
 
 
 /* COURSES */
@@ -97,4 +115,3 @@ export const deleteEvent = (name) => {
     let deleteEvent = db.collection('events').doc(name).delete();
 
 };
-

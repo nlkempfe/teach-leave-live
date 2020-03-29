@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {auth, db} from './firebase/firebaseInit';
 
+/* Import controllers */
+import {readUser} from './firebase/controllers.js';
+
 /* Import custom components */
 import NavigationBar from './components/NavigationBar.js'
 import AdminBar from './components/AdminBar.js'

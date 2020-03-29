@@ -3,9 +3,6 @@ import React, { useState } from 'react';
 /* Import custom components */
 import TablePaginationActions from './TablePaginationActions.js';
 
-/* Import firebase products */
-import {db} from '../firebase/firebaseInit';
-
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
@@ -37,9 +34,9 @@ function PagedTable(props) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Subscription Plan</TableCell>
+            <TableCell align="right">Role</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

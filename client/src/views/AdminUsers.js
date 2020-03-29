@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+/* Import controllers */
+import {getUsers} from "../firebase/controllers";
+
 /* Import custom components */
 import PagedTable from '../components/PagedTable.js';
 
@@ -16,6 +19,8 @@ function createData(name, calories, fat) {
 }
 
 function AdminUsers(props) {
+  const users = getUsers();
+
   const rows = [
   createData('Cupcake', 305, 3.7),
   createData('Donut', 452, 25.0),
