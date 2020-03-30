@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 
-/* Import controllers */
-import {getUsers} from "../firebase/controllers";
-
-/* Import custom components */
-import PagedTable from '../components/PagedTable.js';
+/* Import firebase products */
+import {db} from '../firebase/firebaseInit';
 
 /* Import material-ui components */
 import Card from '@material-ui/core/Card';
@@ -14,25 +11,87 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
+/* Import material-ui icons */
+import EditIcon from '@material-ui/icons/Edit';
+
+/* Import mui-datatables */
+import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
-  console.log('user function called');
+  const columns = [
+    {name: '',
+      options: {
+        empty: true,
+        filter: false,
+        sort: false,
+        viewColumns: false
+      }
+    },
+    {
+      name: 'First Name',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'Last Name',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'Subscription Plan',
+      options: {
+        filter: true,
+        sort: true
+      }
+    },
+    {
+      name: 'Role',
+      options: {
+        filter: true,
+        sort: true
+      }
+    },
+    {
+        name: '',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <EditIcon/>
+            );
+          },
+          filter: false,
+          sort: false,
+          viewColumns: false
+        }
+      }
+  ];
 
-  const rows = [{name: 'test', premium: true, role: 'user'}];
+  const data = [
+   ['Natascha', 'Kempfe', 'Premium', 'admin'],
+  ];
+
+  const options = {
+    disableToolbarSelect: true,
+    download: false,
+    filterType: 'checkbox',
+    print: false,
+    selectableRows: 'none',
+    selectableRowsHeader: false,
+  };
 
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50}}>
-        <Card fluid style = {{marginTop: 20}}>
-          <CardContent>
-            <Typography variant = 'h6'>Manage Users</Typography>
-            <PagedTable data = {rows} />
-          </CardContent>
-          <CardActions></CardActions>
-        </Card>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
+        <MUIDataTable
+          title={'Manage Users'}
+          data={data}
+          columns={columns}
+          options={options}
+        />
       </Container>
     </div>
   );

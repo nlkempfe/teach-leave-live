@@ -16,24 +16,6 @@ export const readUser = () => {
         return null;
 };
 
-/* Return array of all users */
-export const getUsers = () => {
-  let users = [];
-  db.collection('users').get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-      users.push({
-        firstName: doc.data().firstName,
-        lastName: doc.data().lastName,
-        premium: doc.data().premium,
-        role: doc.data().role,
-      });
-    });
-    console.log('querying users', users);
-  });
-  return users;
-}
-
-
 /* COURSES */
 
 /* Create course document in database */
