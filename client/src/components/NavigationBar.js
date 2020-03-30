@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 function NavigationBar (props) {
   const classes = useStyles();
   const location = useLocation().pathname;
-  console.log('currentUser', props.currUser);
+  let user = readUser();
 
   return (
     <div style = {{display: 'flex'}}>
@@ -39,7 +39,7 @@ function NavigationBar (props) {
           <Button href = '/blog' disabled = {location == '/blog' ? true : false}>Blog</Button>
           <Button href = '/courses' disabled = {location == '/courses' ? true : false}>Courses</Button>
           <Button href = '/socials' disabled = {location == '/socials' ? true : false}>Socials</Button>
-          {(props.currUser !== null && props.currUser.role === 'admin') ? <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button> : null }
+          {(user !== null && user.role === 'admin') ? <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button> : null }
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
