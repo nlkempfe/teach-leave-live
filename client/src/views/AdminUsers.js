@@ -21,7 +21,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
-  const [isEditing, setIsEditing] = useState(false);
+
+  const handleDelete = (tableMeta) => {
+    /* TODO */
+  }
+
+  const handleEdit = (tableMeta) => {
+    /* TODO */
+  }
+
   const columns = [
     {name: '',
       options: {
@@ -68,7 +76,7 @@ function AdminUsers(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {() => setIsEditing(true)}>
+              <IconButton onClick = {event => handleEdit(tableMeta)}>
                 <EditIcon/>
               </IconButton>
             );
@@ -83,7 +91,7 @@ function AdminUsers(props) {
           options: {
             customBodyRender: (value, tableMeta, updateValue) => {
               return (
-                <IconButton onClick = {() => setIsEditing(true)}>
+                <IconButton onClick = {event => handleDelete(tableMeta)}>
                   <DeleteIcon/>
                 </IconButton>
               );
@@ -97,6 +105,7 @@ function AdminUsers(props) {
 
   const data = [
    ['Natascha', 'Kempfe', true, 'admin'],
+   ['test', 'test', true, 'admin'],
   ];
 
   const options = {
