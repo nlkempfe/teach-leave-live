@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Fragment } from 'react'
-import Parser from 'html-react-parser';
 
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
