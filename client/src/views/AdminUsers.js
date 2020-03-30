@@ -8,16 +8,22 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 /* Import mui-datatables */
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
+  const [isEditing, setIsEditing] = useState(false);
   const columns = [
     {name: '',
       options: {
@@ -44,6 +50,19 @@ function AdminUsers(props) {
     {
       name: 'Subscription Plan',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if (isEditing)
+            return (
+              <Select autoWidth = {true} value={value} variant = 'outlined'>
+                <MenuItem value={true}>Premium</MenuItem>
+                <MenuItem value={false}>Free</MenuItem>
+              </Select>
+            );
+          else {
+            if(value) return 'Premium';
+            else return 'Free';
+          }
+        },
         filter: true,
         sort: true
       }
@@ -59,19 +78,50 @@ function AdminUsers(props) {
         name: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <EditIcon/>
-            );
+            if (isEditing)
+              return (
+                <IconButton onClick = {() => setIsEditing(false)}>
+                  <ClearIcon/>
+                </IconButton>
+              );
+            else
+              return (
+                <IconButton onClick = {() => setIsEditing(true)}>
+                  <EditIcon/>
+                </IconButton>
+              );
           },
           filter: false,
           sort: false,
           viewColumns: false
         }
-      }
+      },
+      {
+          name: '',
+          options: {
+            customBodyRender: (value, tableMeta, updateValue) => {
+              if (isEditing)
+                return (
+                  <IconButton onClick = {() => setIsEditing(false)}>
+                    <CheckIcon/>
+                  </IconButton>
+                );
+              else
+                return (
+                  <IconButton onClick = {() => setIsEditing(true)}>
+                    <DeleteIcon/>
+                  </IconButton>
+                );
+            },
+            filter: false,
+            sort: false,
+            viewColumns: false
+          }
+        }
   ];
 
   const data = [
-   ['Natascha', 'Kempfe', 'Premium', 'admin'],
+   ['Natascha', 'Kempfe', true, 'admin'],
   ];
 
   const options = {
