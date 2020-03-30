@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import {auth} from './firebase/firebaseInit';
+import {auth, db} from './firebase/firebaseInit';
 
 /* Import custom components */
 import NavigationBar from './components/NavigationBar.js'
@@ -13,6 +13,8 @@ import AdminEvent from './views/AdminEvent.js';
 import AdminUsers from './views/AdminUsers.js';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
+import Account from './views/Account.js';
+
 
 function App() {
 
@@ -20,9 +22,17 @@ function App() {
   const [drawerWidth, setDrawerWidth] = useState(200);
 
   /* Add listener on authentication state changes, set user appropriately */
-  auth().onAuthStateChanged(function (user) {
+  auth().onAuthStateChanged(user => {
       if(user){
-        setCurrUser(user);
+          //User just signed in -> store user in browser storage to avoid flicker
+          let userDocReference = db.collection('users').doc(user.uid);
+          let getUserDoc = userDocReference.get().then(snapshot => {
+             if(snapshot.exists){
+                 //User document found
+                 localStorage.setItem('currentUser', JSON.stringify(snapshot.data()));
+                 setCurrUser(JSON.stringify(snapshot.data()));
+             }
+          });
       }
   });
 
@@ -40,6 +50,7 @@ function App() {
         <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
       </Switch>
     </Router>
