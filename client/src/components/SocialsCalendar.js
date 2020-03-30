@@ -63,21 +63,13 @@ function getEventsOnDay(events, date){
 }
 
 function SocialsCalendar(props){
-  const [clickedDay, setClickedDay] = useState(null);
+  const [clickedDay, setClickedDay] = useState(new Date());
   const onClickDay = (value, event) => setClickedDay(value);
 
   const [events, setEvents] = useState([]);
   if(events.length === 0){
     getAllEvents((docs) => setEvents(docs));
   }
-
-  const card = clickedDay == null ? null : (
-    <Card>
-      <CardContent>
-        {getEventsOnDay(events, clickedDay)}
-      </CardContent>
-    </Card>
-  )
 
   return (
     <Container>
@@ -86,7 +78,11 @@ function SocialsCalendar(props){
           <Calendar tileContent = {getTileContent(events)} onClickDay = {onClickDay}/>
         </Grid>
         <Grid item xs = {6}>
-          {card}
+          <Card>
+            <CardContent>
+              {getEventsOnDay(events, clickedDay)}
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Container>
