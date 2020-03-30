@@ -26,7 +26,7 @@ function getTileContent(tiles){
 
 const dateToString = (date) => date.getFullYear() + date.getMonth() + date.getDate();
 
-const dateTimeFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+const dateTimeFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'})
 
 
 function SocialsCalendar(props){
@@ -37,6 +37,12 @@ function SocialsCalendar(props){
       <CardContent>
         <Typography color="textSecondary">
           {dateTimeFormat.format(clickedDay)}
+        </Typography>
+        <Typography>
+          Events:
+        </Typography>
+        <Typography>
+          Sample event
         </Typography>
       </CardContent>
     </Card>
