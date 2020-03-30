@@ -9,41 +9,72 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
+import {getAllEvents} from '../firebase/controllers.js'
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
-const dateEquals = (date1, date2) => date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
+const dayEquals = (date1, date2) => date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
 
-function getTileContent(tiles){
+const dateTimeFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'})
+
+function getTileContent(events){
   return ({activeStartDate, date, view}) => {
-    for(var i = 0; i < tiles.length; i++){
-      if(dateEquals(tiles[i][0], date)){
-        return <p>{tiles[i][1]}</p>;
+    for(var i = 0; i < events.length; i++){
+      if(dayEquals(events[i].get('dateAndTime').toDate(), date)){
+        return <div>*</div>;  //todo put something more meaningful here
       }
     }
     return null;
   }
 }
 
-const dateToString = (date) => date.getFullYear() + date.getMonth() + date.getDate();
+function getEventsOnDay(events, date){
+  let results = [];
+  for(var i = 0; i < events.length; i++){
+    if(dayEquals(events[i].get('dateAndTime').toDate(), date)){
+      results.push(
+        <div>
+          <Typography variant="h5">
+            {events[i].get('name')}
+          </Typography>
+          <Typography>
+            {events[i].get('dateAndTime').toDate().toString()}
+          </Typography>
+          <Typography>
+            {events[i].get('address')} {events[i].get('city')}, {events[i].get('state')} {events[i].get('zip')}
+          </Typography>
+          <Typography paragraph>
+            {events[i].get('description')}
+          </Typography>
+        </div>
+      );
+    }
+  }
 
-const dateTimeFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'})
-
+  if(results.length === 0){
+    results.push(
+      <div>
+        <Typography>
+          There are no events on {dateTimeFormat.format(date)}.
+        </Typography>
+      </div>
+    )
+  }
+  return results;
+}
 
 function SocialsCalendar(props){
   const [clickedDay, setClickedDay] = useState(null);
   const onClickDay = (value, event) => setClickedDay(value);
+
+  const [events, setEvents] = useState([]);
+  if(events.length === 0){
+    getAllEvents((docs) => setEvents(docs));
+  }
+
   const card = clickedDay == null ? null : (
     <Card>
       <CardContent>
-        <Typography color="textSecondary">
-          {dateTimeFormat.format(clickedDay)}
-        </Typography>
-        <Typography>
-          Events:
-        </Typography>
-        <Typography>
-          Sample event
-        </Typography>
+        {getEventsOnDay(events, clickedDay)}
       </CardContent>
     </Card>
   )
@@ -52,9 +83,9 @@ function SocialsCalendar(props){
     <Container>
       <Grid container spacing = {5}>
         <Grid item>
-          <Calendar tileContent = {props.tiles ? getTileContent(props.tiles) : null} onClickDay = {onClickDay}/>
+          <Calendar tileContent = {props.tiles ? getTileContent(events) : null} onClickDay = {onClickDay}/>
         </Grid>
-        <Grid item>
+        <Grid item xs = {6}>
           {card}
         </Grid>
       </Grid>

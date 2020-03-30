@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SocialsCalendar from '../components/SocialsCalendar.js'
 
-
 function Socials(props) {
   return (
     <div>
