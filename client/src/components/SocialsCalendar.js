@@ -13,8 +13,8 @@ import {getAllEvents} from '../firebase/controllers.js'
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 const dayEquals = (date1, date2) => date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
-
-const dateTimeFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'})
+const dayFormat = new Intl.DateTimeFormat('default', { year: 'numeric', month: 'short', day: '2-digit'})
+const timeFormat = new Intl.DateTimeFormat('default', {hour: 'numeric', minute: 'numeric', timeZoneName: 'long'})
 
 function getTileContent(events){
   return ({activeStartDate, date, view}) => {
@@ -37,7 +37,7 @@ function getEventsOnDay(events, date){
             {events[i].get('name')}
           </Typography>
           <Typography>
-            {events[i].get('dateAndTime').toDate().toString()}
+            {timeFormat.format(events[i].get('dateAndTime').toDate())}
           </Typography>
           <Typography>
             {events[i].get('address')} {events[i].get('city')}, {events[i].get('state')} {events[i].get('zip')}
@@ -54,7 +54,7 @@ function getEventsOnDay(events, date){
     results.push(
       <div>
         <Typography>
-          There are no events on {dateTimeFormat.format(date)}.
+          There are no events on {dayFormat.format(date)}.
         </Typography>
       </div>
     )
@@ -83,7 +83,7 @@ function SocialsCalendar(props){
     <Container>
       <Grid container spacing = {5}>
         <Grid item>
-          <Calendar tileContent = {props.tiles ? getTileContent(events) : null} onClickDay = {onClickDay}/>
+          <Calendar tileContent = {getTileContent(events)} onClickDay = {onClickDay}/>
         </Grid>
         <Grid item xs = {6}>
           {card}
