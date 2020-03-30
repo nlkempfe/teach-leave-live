@@ -4,14 +4,8 @@ import React, { useState } from 'react';
 import {db} from '../firebase/firebaseInit';
 
 /* Import material-ui components */
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
 import DeleteIcon from '@material-ui/icons/Delete';
