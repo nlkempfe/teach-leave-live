@@ -11,6 +11,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 
 /* Import firebase products */
 import {auth, provider, db} from '../firebase/firebaseInit';
+import {readUser} from "../firebase/controllers";
 
 const AuthButton = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -25,18 +26,34 @@ const AuthButton = (props) => {
 
             //Update (or add) user document with most recent sign-in information (from fb)
             let userDoc = db.collection('users').doc(retUser.user.uid);
-            let setUserDoc = userDoc.set({
-                firstName : retUser.additionalUserInfo.profile.first_name,
-                lastName : retUser.additionalUserInfo.profile.last_name,
-                email : retUser.additionalUserInfo.profile.email,
-                picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                role: 'user'
-            });
+
+            //Email might not be shared, set user doc accordingly.
+            if(retUser.additionalUserInfo.profile.email){
+                userDoc.set({
+                    uid : retUser.user.uid,
+                    email : retUser.additionalUserInfo.profile.email,
+                    firstName : retUser.additionalUserInfo.profile.first_name,
+                    lastName : retUser.additionalUserInfo.profile.last_name,
+                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
+                    role: 'user'
+                });
+            }
+            else{
+                userDoc.set({
+                    uid : retUser.user.uid,
+                    email: "N/A",
+                    firstName : retUser.additionalUserInfo.profile.first_name,
+                    lastName : retUser.additionalUserInfo.profile.last_name,
+                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
+                    role: 'user'
+                });
+            }
         });
     };
 
     //Event handler to log the user out with Firebase auth()
     const handleLogout = () => {
+        localStorage.removeItem("currentUser");
         auth().signOut().then(() => {
             props.updateUser(null);
         });
@@ -51,14 +68,16 @@ const AuthButton = (props) => {
         setAnchorEl(null);
     };
 
+    let user = readUser();
 
     //Conditional return buttons based on whether a user is logged in
-    if(props.currUser != null){
+    if(user != null){
         //User is logged in -> Display button to allow logout
+
         return (
             <div>
                 <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
-                    {props.currUser.displayName}
+                    {user.firstName}
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
