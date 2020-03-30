@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
@@ -98,7 +99,7 @@ const AuthButton = (props) => {
                     {user.firstName}
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <MenuItem onClick={handleClose}>Account</MenuItem>
+                    <MenuItem component = {RouterLink} to = '/account'>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             </div>

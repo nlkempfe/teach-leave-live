@@ -127,6 +127,7 @@ function AdminUsers(props) {
   const options = {
     disableToolbarSelect: true,
     download: false,
+    elevation: 1,
     filterType: 'checkbox',
     print: false,
     selectableRows: 'none',
