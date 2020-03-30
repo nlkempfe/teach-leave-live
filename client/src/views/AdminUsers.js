@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
 import EditUserDialog from '../components/EditUserDialog.js';
@@ -7,6 +7,8 @@ import EditUserDialog from '../components/EditUserDialog.js';
 import {db} from '../firebase/firebaseInit';
 
 /* Import material-ui components */
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -19,17 +21,36 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
   const [isEditing, setIsEditing] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    db.collection('users').get().then(querySnapshot => {
+      let tempUsers = [];
+      querySnapshot.forEach(doc => {
+        let user = {
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            premium: doc.data().premium,
+            role: doc.data().role
+        }
+        tempUsers.push(user);
+        console.log(user);
+      });
+      setUsers(tempUsers);
+    });
+  }, []);
+
   const handleDelete = (tableMeta) => {
     /* TODO */
   }
-
   const handleEdit = (tableMeta) => {
     /* TODO */
     setIsEditing(true);
   }
-
   const columns = [
-    {name: '',
+    {
+      name: '',
+      label: '',
       options: {
         empty: true,
         filter: false,
@@ -38,21 +59,24 @@ function AdminUsers(props) {
       }
     },
     {
-      name: 'First Name',
+      name: 'firstName',
+      label: 'First Name',
       options: {
         filter: false,
         sort: true
       }
     },
     {
-      name: 'Last Name',
+      name: 'lastName',
+      label: 'Last Name',
       options: {
         filter: false,
         sort: true
       }
     },
     {
-      name: 'Subscription Plan',
+      name: 'premium',
+      label: 'Subscription Plan',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           if(value) return 'Premium';
@@ -63,7 +87,8 @@ function AdminUsers(props) {
       }
     },
     {
-      name: 'Role',
+      name: 'role',
+      label: 'Role',
       options: {
         filter: true,
         sort: true
@@ -100,12 +125,6 @@ function AdminUsers(props) {
           }
         }
   ];
-
-  const data = [
-   ['Natascha', 'Kempfe', true, 'admin'],
-   ['test', 'test', true, 'admin'],
-  ];
-
   const options = {
     disableToolbarSelect: true,
     download: false,
@@ -119,12 +138,7 @@ function AdminUsers(props) {
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
-        <MUIDataTable
-          title={'Manage Users'}
-          data={data}
-          columns={columns}
-          options={options}
-        />
+        <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
         <EditUserDialog open = {isEditing}/>
       </Container>
     </div>
