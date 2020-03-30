@@ -99,7 +99,7 @@ const AuthButton = (props) => {
                     {user.firstName}
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <MenuItem component = {RouterLink} to = '/account'>Account</MenuItem>
+                    <MenuItem component = {RouterLink} to = '/account' onClick = {handleClose}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             </div>

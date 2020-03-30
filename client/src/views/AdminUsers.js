@@ -14,8 +14,6 @@ import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -51,17 +49,8 @@ function AdminUsers(props) {
       name: 'Subscription Plan',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          if (isEditing)
-            return (
-              <Select autoWidth = {true} value={value} variant = 'outlined'>
-                <MenuItem value={true}>Premium</MenuItem>
-                <MenuItem value={false}>Free</MenuItem>
-              </Select>
-            );
-          else {
-            if(value) return 'Premium';
-            else return 'Free';
-          }
+          if(value) return 'Premium';
+          else return 'Free';
         },
         filter: true,
         sort: true
@@ -78,18 +67,11 @@ function AdminUsers(props) {
         name: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (isEditing)
-              return (
-                <IconButton onClick = {() => setIsEditing(false)}>
-                  <ClearIcon/>
-                </IconButton>
-              );
-            else
-              return (
-                <IconButton onClick = {() => setIsEditing(true)}>
-                  <EditIcon/>
-                </IconButton>
-              );
+            return (
+              <IconButton onClick = {() => setIsEditing(true)}>
+                <EditIcon/>
+              </IconButton>
+            );
           },
           filter: false,
           sort: false,
@@ -100,18 +82,11 @@ function AdminUsers(props) {
           name: '',
           options: {
             customBodyRender: (value, tableMeta, updateValue) => {
-              if (isEditing)
-                return (
-                  <IconButton onClick = {() => setIsEditing(false)}>
-                    <CheckIcon/>
-                  </IconButton>
-                );
-              else
-                return (
-                  <IconButton onClick = {() => setIsEditing(true)}>
-                    <DeleteIcon/>
-                  </IconButton>
-                );
+              return (
+                <IconButton onClick = {() => setIsEditing(true)}>
+                  <DeleteIcon/>
+                </IconButton>
+              );
             },
             filter: false,
             sort: false,
