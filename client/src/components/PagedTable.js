@@ -46,8 +46,8 @@ function PagedTable(props) {
           ).map(row => (
             <TableRow key={row.name}>
               <TableCell component='th' scope='row'>{row.name}</TableCell>
-              <TableCell align='right'>{row.calories}</TableCell>
-              <TableCell align='right'>{row.fat}</TableCell>
+              <TableCell align='right'>{row.premium}</TableCell>
+              <TableCell align='right'>{row.role}</TableCell>
             </TableRow>
           ))}
 
