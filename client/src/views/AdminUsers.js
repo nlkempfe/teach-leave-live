@@ -28,6 +28,7 @@ function AdminUsers(props) {
       let tempUsers = [];
       querySnapshot.forEach(doc => {
         let user = {
+            uid: doc.data().uid,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
             premium: doc.data().premium,
@@ -41,11 +42,14 @@ function AdminUsers(props) {
   }, []);
 
   const handleDelete = (tableMeta) => {
-    /* TODO */
+    /* TODO: ask client about the ability to delete users */
   }
+
   const handleEdit = (tableMeta) => {
-    /* TODO */
     setIsEditing(true);
+  }
+  const handleSubmit = (tableMeta) => {
+    /* TODO */
   }
   const columns = [
     {
@@ -98,11 +102,19 @@ function AdminUsers(props) {
         name: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <IconButton onClick = {event => handleEdit(tableMeta)}>
-                <EditIcon/>
-              </IconButton>
-            );
+            if(isEditing) {
+              return (
+                <IconButton onClick = {event => handleEdit(tableMeta)}>
+                  <EditIcon/>
+                </IconButton>
+              );
+            } else {
+              return (
+                <IconButton onClick = {event => handleEdit(tableMeta)}>
+                  <EditIcon/>
+                </IconButton>
+              );
+            }
           },
           filter: false,
           sort: false,
@@ -139,7 +151,6 @@ function AdminUsers(props) {
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
         <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
-        <EditUserDialog open = {isEditing}/>
       </Container>
     </div>
   );
