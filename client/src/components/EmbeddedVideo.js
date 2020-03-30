@@ -27,8 +27,10 @@ function EmbeddedVideo (props) {
   };
 
   return (
-    <div style = {container_style}>
-      <iframe style = {iframe_style} src={'https://www.youtube.com/embed/' + props.youtubeId} frameborder='0' allowfullscreen />
+    <div style = {props.style}>
+      <div style = {container_style}>
+        <iframe style = {iframe_style} src={'https://www.youtube.com/embed/' + props.youtubeId} frameborder='0' allowfullscreen />
+      </div>
     </div>
   );
 }
