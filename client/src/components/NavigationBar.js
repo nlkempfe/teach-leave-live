@@ -31,12 +31,12 @@ function NavigationBar (props) {
           <Typography variant = 'h6' style = {{flexGrow: 1}}>
             Teach. Leave. Live.
           </Typography>
-          <Button href = '/home' disabled = {location == '/home' ? true : false}>Home</Button>
-          <Button href = '/blog' disabled = {location == '/blog' ? true : false}>Blog</Button>
-          <Button href = '/courses' disabled = {location == '/courses' ? true : false}>Courses</Button>
-          <Button href = '/socials' disabled = {location == '/socials' ? true : false}>Socials</Button>
-          <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button>
-          <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
+          <Button href = '/home' disabled = {location.startsWith('/home')}>Home</Button>
+          <Button href = '/blog' disabled = {location.startsWith('/blog')}>Blog</Button>
+          <Button href = '/courses' disabled = {location.startsWith('/courses')}>Courses</Button>
+          <Button href = '/socials' disabled = {location.startsWith('/socials')}>Socials</Button>
+          <Button href = '/admin/dashboard' disabled = {location.startsWith('/admin')}>Admin</Button>
+          <AuthButton currUser={props.currUser} disableAccount = {location.startsWith('/account')} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
     </div>

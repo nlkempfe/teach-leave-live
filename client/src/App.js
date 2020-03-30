@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import {auth} from './firebase/firebaseInit';
 
 /* Import custom components */
@@ -43,7 +43,7 @@ function App() {
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
-        <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
+        <Route path = '/' render ={(props) => <Redirect to="/home" />} />
       </Switch>
     </Router>
   );
