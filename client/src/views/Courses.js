@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
+/* Import custom components */
 import EmbededVideo from '../components/EmbededVideo.js'
-
 
 function Courses(props) {
   return (

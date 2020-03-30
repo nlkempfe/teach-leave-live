@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+/* Import custom components */
+import EditUserDialog from '../components/EditUserDialog.js';
+
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
 
@@ -15,13 +18,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
-
+  const [isEditing, setIsEditing] = useState(false);
   const handleDelete = (tableMeta) => {
     /* TODO */
   }
 
   const handleEdit = (tableMeta) => {
     /* TODO */
+    setIsEditing(true);
   }
 
   const columns = [
@@ -121,6 +125,7 @@ function AdminUsers(props) {
           columns={columns}
           options={options}
         />
+        <EditUserDialog open = {isEditing}/>
       </Container>
     </div>
   );
