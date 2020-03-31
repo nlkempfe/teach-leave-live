@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import {db} from '../firebase/firebaseInit';
 
 /* Import material-ui components */
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,7 +21,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
-  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [rowIndex, setRowIndex] = useState(null);
