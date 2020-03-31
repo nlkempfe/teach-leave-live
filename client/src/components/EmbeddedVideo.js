@@ -36,6 +36,7 @@ const useStyles = makeStyles({
 });
 
 function EmbeddedVideo (props) {
+  //stores information about user and video
   const [link, setLink] = useState('')
   const [premium, setPremium] = useState(false)
   const [userPremium, setUserPremium] = useState(false)
@@ -49,18 +50,21 @@ function EmbeddedVideo (props) {
   /*Calculate inverse of aspect ratio and convert into a percentage*/
   const inverseAspectRatio = ((props.aspectRatio ? 1.0/props.aspectRatio : 9.0/16.0) * 100) + '%'
 
+  //styles the container of the button/video
   const container_style = {
     position: 'relative',
     overflow: 'hidden',
     paddingTop: 20
   };
 
+  //styles the Iframe containing the youtube video
   const iframe_style = {
     width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto'
   };
 
+  //Gets course information from database and current user information
   let userRef = db.collection('courses').doc(props.courseName);
   let getDoc = userRef.get()
   .then(doc => {
@@ -84,6 +88,7 @@ function EmbeddedVideo (props) {
     }
   })
 
+  //handles opening of popup
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -92,12 +97,15 @@ function EmbeddedVideo (props) {
     setOpen(false);
   };
 
+  //displays the video when needed
   const changeDisplay = () => {
     setDisplayVideo(true);
   }
 
-  //<iframe style={iframe_style} src={'https://www.youtube.com/embed/' + link + '/0.jpg'} frameborder='0' allowfullscreen />
-
+  /*Chooses what to return based off the status of user and the video. The component will always start with an
+    image of the youtube video and a button that creates a popup. If the video is a standard video or if a premium user
+    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the 
+    popup will direct the user to pay for a premium membership*/
   const checkUser = () => {
     //console.log(!(premium))
     if ((userPremium || !(premium)) && !(displayVideo))
@@ -108,22 +116,22 @@ function EmbeddedVideo (props) {
                     <Dialog
                       open={open}
                       onClose={handleClose}
-                      aria-labelledby="alert-dialog-slide-title"
-                      aria-describedby="alert-dialog-slide-description"
+                      aria-labelledby='alert-dialog-slide-title'
+                      aria-describedby='alert-dialog-slide-description'
                     >
-                      <DialogTitle id="alert-dialog-slide-title">
+                      <DialogTitle id='alert-dialog-slide-title'>
                         {name}
                       </DialogTitle>
                       <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
+                        <DialogContentText id='alert-dialog-slide-description'>
                           {description}
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button onClick={changeDisplay} color="primary">
+                        <Button onClick={changeDisplay} color='primary'>
                           Watch Video
                         </Button>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={handleClose} color='primary'>
                           Exit
                         </Button>
                       </DialogActions>
@@ -157,10 +165,10 @@ function EmbeddedVideo (props) {
             <Dialog
               open={open}
               onClose={handleClose}
-              aria-labelledby="alert-dialog-slide-title"
-              aria-describedby="alert-dialog-slide-description"
+              aria-labelledby='alert-dialog-slide-title'
+              aria-describedby='alert-dialog-slide-description'
             >
-              <DialogTitle id="alert-dialog-slide-title">
+              <DialogTitle id='alert-dialog-slide-title'>
                 {name}
               </DialogTitle>
               <DialogContent>
@@ -172,10 +180,10 @@ function EmbeddedVideo (props) {
                 </DialogContentText>
               </DialogContent>
                 <DialogActions>
-                  <Button href = '/account' color="primary">
+                  <Button href = '/account' color='primary'>
                     Buy Premium
                  </Button>
-                 <Button onClick={handleClose} color="primary">
+                 <Button onClick={handleClose} color='primary'>
                    Exit
                  </Button>
               </DialogActions>
