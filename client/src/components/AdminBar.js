@@ -18,6 +18,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
+import EventIcon from '@material-ui/icons/Event';
 import ForumIcon from '@material-ui/icons/Forum';
 import SchoolIcon from '@material-ui/icons/School';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -47,6 +48,10 @@ function NavigationBar (props) {
         <ListItem button selected = {location == '/admin/blog' ? true : false} component = {RouterLink} to = '/admin/blog'>
           <ListItemIcon><ForumIcon/></ListItemIcon>
           <ListItemText>Manage Blog</ListItemText>
+        </ListItem>
+        <ListItem button selected = {location == '/admin/events' ? true : false} component = {RouterLink} to = '/admin/events'>
+          <ListItemIcon><EventIcon/></ListItemIcon>
+          <ListItemText>Manage Events</ListItemText>
         </ListItem>
         <ListItem button selected = {location == '/admin/courses' ? true : false} component = {RouterLink} to = '/admin/courses'>
           <ListItemIcon><SchoolIcon/></ListItemIcon>
