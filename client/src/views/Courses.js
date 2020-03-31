@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import EmbeddedVideo from '../components/EmbeddedVideo.js'
 
-
 function Courses(props) {
 
 
