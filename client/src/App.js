@@ -14,6 +14,7 @@ import AdminUsers from './views/AdminUsers.js';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
 import Account from './views/Account.js';
+import Socials from './views/Socials.js'
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
         <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
       </Switch>
