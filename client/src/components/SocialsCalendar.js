@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 
-import Card from '@material-ui/core/card'
+import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
