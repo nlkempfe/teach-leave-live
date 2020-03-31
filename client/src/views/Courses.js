@@ -6,7 +6,7 @@ function Courses(props) {
 
 
   const simple_video_style = {
-    width: '50%',
+    width: '20%',
     marginLeft: 'auto',
     marginRight: 'auto'
   }
