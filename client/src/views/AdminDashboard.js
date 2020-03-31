@@ -14,8 +14,8 @@ import Typography from '@material-ui/core/Typography';
 function Admin(props) {
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50}}>
-        <Card fluid style = {{marginTop: 20}}>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
+        <Card fluid>
           <CardContent>
             <Typography variant = 'h6'>User Activity</Typography>
             <DashboardChart/>

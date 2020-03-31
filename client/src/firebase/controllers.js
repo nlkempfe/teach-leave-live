@@ -8,14 +8,13 @@ export const readUser = () => {
 
     let userString = localStorage.getItem("currentUser");
     if(userString){
-        //A user object is signed in and returned
+        /* A user object is signed in and returned */
         return JSON.parse(userString);
     }
     else
-        //User is not signed in
+        /* User is not signed in */
         return null;
 };
-
 
 /* COURSES */
 
