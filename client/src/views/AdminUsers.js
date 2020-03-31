@@ -23,13 +23,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [rowIndex, setRowIndex] = useState(null);
   const [role, setRole] = useState('user');
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+  const handleUpdate = () => {
     db.collection('users').get().then(querySnapshot => {
       let tempUsers = [];
       querySnapshot.forEach(doc => {
@@ -42,10 +43,13 @@ function AdminUsers(props) {
             role: doc.data().role
         }
         tempUsers.push(user);
-        console.log(user);
       });
       setUsers(tempUsers);
     });
+  }
+
+  useEffect(() => {
+    handleUpdate();
   }, []);
 
   const handleDelete = (tableMeta) => {
@@ -60,9 +64,10 @@ function AdminUsers(props) {
   const handleRoleChange = (role) => {
     setRole(role);
   }
+
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
-    /* TODO */
+    db.collection('users').doc(users[tableMeta.rowIndex].uid).update({premium: isPremium, role: role}).then(handleUpdate());
   }
   const handleSubscriptionPlanChange = (isPremium) => {
     setIsPremium(isPremium);
