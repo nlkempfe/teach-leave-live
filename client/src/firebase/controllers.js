@@ -89,10 +89,10 @@ export const updateEvent = (name, updatedValues) => {
 
 };
 
-/* Delete event document from database */
-export const deleteEvent = (name) => {
-    /* Takes in the name of the event to be deleted */
-
-    let deleteEvent = db.collection('events').doc(name).delete();
-
+/* Get all events*/
+/* TODO should probably search by date instead but I cannot figure out how */
+export const getAllEvents = (callback) => {
+  db.collection("events").get().then(function(snap) {
+    callback(snap.docs)
+  })
 };
