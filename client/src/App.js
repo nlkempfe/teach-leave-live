@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {auth, db} from './firebase/firebaseInit';
 
+/* Import controllers */
+import {readUser} from './firebase/controllers.js';
+
 /* Import custom components */
 import NavigationBar from './components/NavigationBar.js'
 import AdminBar from './components/AdminBar.js'
@@ -14,6 +17,7 @@ import AdminUsers from './views/AdminUsers.js';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
 import Account from './views/Account.js';
+import Socials from './views/Socials.js'
 
 
 function App() {
@@ -42,7 +46,7 @@ function App() {
       <Route path = '/admin' render = {(props) => <AdminBar currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
       <Switch>
         <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
+        <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/users' render ={(props) => <AdminUsers/>} />
         <Route path = '/admin/blog' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />
@@ -50,6 +54,7 @@ function App() {
         <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
+        <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
         <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
       </Switch>

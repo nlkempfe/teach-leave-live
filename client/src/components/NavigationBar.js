@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+
+/* Import controllers */
+import {readUser} from "../firebase/controllers";
 
 /* Import custom components */
 import AuthButton from './AuthButton';
@@ -22,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 function NavigationBar (props) {
   const classes = useStyles();
   const location = useLocation().pathname;
+  let user = readUser();
 
   return (
     <div style = {{display: 'flex'}}>
@@ -32,12 +36,10 @@ function NavigationBar (props) {
             Teach. Leave. Live.
           </Typography>
           <Button href = '/home' disabled = {location == '/home' ? true : false}>Home</Button>
-          <Link to="/blog">
-          <Button disabled = {location == '/blog' ? true : false}>Blog</Button>
-          </Link>
+          <Button href = '/blog' disabled = {location == '/blog' ? true : false}>Blog</Button>
           <Button href = '/courses' disabled = {location == '/courses' ? true : false}>Courses</Button>
           <Button href = '/socials' disabled = {location == '/socials' ? true : false}>Socials</Button>
-          <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button>
+          {(user !== null && user.role === 'admin') ? <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button> : null }
           <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
         </Toolbar>
       </AppBar>
