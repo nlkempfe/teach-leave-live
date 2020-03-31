@@ -7,10 +7,16 @@ import {db} from '../firebase/firebaseInit';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 
 /* Import material-ui icons */
+import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 
 /* Import mui-datatables */
@@ -18,6 +24,9 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+  const [rowIndex, setRowIndex] = useState(null);
+  const [role, setRole] = useState('user');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -28,6 +37,7 @@ function AdminUsers(props) {
             uid: doc.data().uid,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
+            email: doc.data().email,
             premium: doc.data().premium,
             role: doc.data().role
         }
@@ -39,15 +49,25 @@ function AdminUsers(props) {
   }, []);
 
   const handleDelete = (tableMeta) => {
-    /* TODO: ask client about the ability to delete users */
-  }
-
-  const handleEdit = (tableMeta) => {
-    setIsEditing(true);
-  }
-  const handleSubmit = (tableMeta) => {
     /* TODO */
   }
+  const handleEdit = (tableMeta) => {
+    setIsEditing(true);
+    setRowIndex(tableMeta.rowIndex);
+    setIsPremium(tableMeta.rowData[4]);
+    setRole(tableMeta.rowData[5]);
+  }
+  const handleRoleChange = (role) => {
+    setRole(role);
+  }
+  const handleSubmit = (tableMeta) => {
+    setIsEditing(false);
+    /* TODO */
+  }
+  const handleSubscriptionPlanChange = (isPremium) => {
+    setIsPremium(isPremium);
+  }
+
   const columns = [
     {
       name: '',
@@ -63,6 +83,9 @@ function AdminUsers(props) {
       name: 'firstName',
       label: 'First Name',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return value;
+        },
         filter: false,
         sort: true
       }
@@ -71,6 +94,20 @@ function AdminUsers(props) {
       name: 'lastName',
       label: 'Last Name',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return value;
+        },
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'email',
+      label: 'E-Mail Address',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return value;
+        },
         filter: false,
         sort: true
       }
@@ -80,8 +117,17 @@ function AdminUsers(props) {
       label: 'Subscription Plan',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          if(value) return 'Premium';
-          else return 'Free';
+          if(isEditing && tableMeta.rowIndex === rowIndex ) {
+            return (
+              <Select variant = 'outlined' value = {isPremium} onChange = {event => handleSubscriptionPlanChange(event.target.value)}>
+                <MenuItem value = {true}>Premium</MenuItem>
+                <MenuItem value = {false}>Free</MenuItem>
+              </Select>
+            );
+          } else {
+            if(value) return 'Premium';
+            else return 'Free';
+          }
         },
         filter: true,
         sort: true
@@ -91,6 +137,22 @@ function AdminUsers(props) {
       name: 'role',
       label: 'Role',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(isEditing && tableMeta.rowIndex === rowIndex ) {
+            return (
+              <Select variant = 'outlined' value = {role} onChange = {event => handleRoleChange(event.target.value)}>
+                <MenuItem value = {'admin'}>Admin</MenuItem>
+                <MenuItem value = {'user'}>User</MenuItem>
+              </Select>
+            );
+          } else {
+            if(value === 'admin') {
+              return 'Admin';
+            } else {
+              return 'User';
+            }
+          }
+        },
         filter: true,
         sort: true
       }
@@ -101,8 +163,8 @@ function AdminUsers(props) {
           customBodyRender: (value, tableMeta, updateValue) => {
             if(isEditing) {
               return (
-                <IconButton onClick = {event => handleEdit(tableMeta)}>
-                  <EditIcon/>
+                <IconButton onClick = {event => handleSubmit(tableMeta)}>
+                  <DoneIcon/>
                 </IconButton>
               );
             } else {
@@ -119,20 +181,29 @@ function AdminUsers(props) {
         }
       },
       {
-          name: '',
-          options: {
-            customBodyRender: (value, tableMeta, updateValue) => {
+        name: '',
+        label: '',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if(isEditing) {
+              return (
+                <IconButton onClick = {event => setIsEditing(false)}>
+                  <CloseIcon/>
+                </IconButton>
+              );
+            } else {
               return (
                 <IconButton onClick = {event => handleDelete(tableMeta)}>
                   <DeleteIcon/>
                 </IconButton>
               );
-            },
-            filter: false,
-            sort: false,
-            viewColumns: false
-          }
+            }
+          },
+          filter: false,
+          sort: false,
+          viewColumns: false
         }
+      },
   ];
   const options = {
     disableToolbarSelect: true,
