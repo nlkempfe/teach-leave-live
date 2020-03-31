@@ -1,32 +1,46 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-/* Import assets */
-import PersonFillIcon from '../assets/icons/person-fill.svg';
+/* Import custom components */
+import AuthButton from './AuthButton';
 
-/* Import bootstrap components */
-import Image from 'react-bootstrap/Image';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';import StripeCheckout from '../components/StripeCheckout'
+/* Import material-ui components */
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
-function NavigationBar () {
+const useStyles = makeStyles(theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+}));
+
+function NavigationBar (props) {
+  const classes = useStyles();
+  const location = useLocation().pathname;
+
   return (
-    <div>
-      <Navbar bg = "dark" fixed = "top" variant = "dark">
-        <Navbar.Brand>
-          Teach Leave Live
-        </Navbar.Brand>
-        <Navbar.Toggle/>
-        <Navbar.Collapse className = "justify-content-end" variant = "dark">
-            <Nav.Link href = "/home">Home</Nav.Link>
-            <Nav.Link href = "/blog">Blog</Nav.Link>
-            <Nav.Link href = "/checkout">Checkout</Nav.Link>
-            <Nav.Link>Courses</Nav.Link>
-            <Nav.Link>
-              <Image src = {PersonFillIcon}/>
-              {' Account'}
-            </Nav.Link>
-        </Navbar.Collapse>
-      </Navbar>
+    <div style = {{display: 'flex'}}>
+      <CssBaseline/>
+      <AppBar position = 'static' className = {classes.appBar}>
+        <Toolbar>
+          <Typography variant = 'h6' style = {{flexGrow: 1}}>
+            Teach. Leave. Live.
+          </Typography>
+          <Button href = '/home' disabled = {location == '/home' ? true : false}>Home</Button>
+          <Link to="/blog">
+          <Button disabled = {location == '/blog' ? true : false}>Blog</Button>
+          </Link>
+          <Button href = '/courses' disabled = {location == '/courses' ? true : false}>Courses</Button>
+          <Button href = '/socials' disabled = {location == '/socials' ? true : false}>Socials</Button>
+          <Button href = '/admin/dashboard' disabled = {location.includes('/admin/') ? true : false}>Admin</Button>
+          <AuthButton currUser={props.currUser} updateUser={props.updateUser}/>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
