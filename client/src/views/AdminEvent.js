@@ -148,6 +148,7 @@ function AdminEvent(props) {
     elevation: 1,
     filterType: 'checkbox',
     print: false,
+    responsive: 'scrollMaxHeight',
     selectableRows: 'none',
     selectableRowsHeader: false,
   };
