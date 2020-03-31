@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 /* Import material-ui components */
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -18,7 +18,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 /* Import material-ui icons */
-import EventIcon from '@material-ui/icons/Event';
 import ForumIcon from '@material-ui/icons/Forum';
 import SchoolIcon from '@material-ui/icons/School';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -35,7 +34,7 @@ function NavigationBar (props) {
   return (
     <div style = {{display: 'flex'}}>
       <CssBaseline/>
-      <Drawer anchor = 'left' variant = 'persistent' open={true} style = {{maxWidth: props.drawerWidth}}>
+      <Drawer anchor = 'left' variant = 'persistent' open={true}>
         <div className={classes.toolbar} />
         <ListItem button selected = {location == '/admin/dashboard' ? true : false} component = {RouterLink} to = '/admin/dashboard'>
           <ListItemIcon><TrendingUpIcon/></ListItemIcon>
@@ -48,10 +47,6 @@ function NavigationBar (props) {
         <ListItem button selected = {location == '/admin/blog' ? true : false} component = {RouterLink} to = '/admin/blog'>
           <ListItemIcon><ForumIcon/></ListItemIcon>
           <ListItemText>Manage Blog</ListItemText>
-        </ListItem>
-        <ListItem button selected = {location == '/admin/events' ? true : false} component = {RouterLink} to = '/admin/events'>
-          <ListItemIcon><EventIcon/></ListItemIcon>
-          <ListItemText>Manage Events</ListItemText>
         </ListItem>
         <ListItem button selected = {location == '/admin/courses' ? true : false} component = {RouterLink} to = '/admin/courses'>
           <ListItemIcon><SchoolIcon/></ListItemIcon>

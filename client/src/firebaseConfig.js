@@ -1,3 +1,4 @@
+
 //Set up config object specific to out firestore app.
 const config = {
     apiKey: "AIzaSyDWipDGZ1j4xN632UILLy4QTD_SLDzSx7g",
