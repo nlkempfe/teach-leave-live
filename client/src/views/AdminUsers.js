@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-/* Import custom components */
-import EditUserDialog from '../components/EditUserDialog.js';
-
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
 
