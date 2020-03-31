@@ -17,6 +17,7 @@
     "@material-ui/pickers": "^3.2.10",
     "date-fns": "^2.11.0",
     "express": "^4.17.1",
-    "firebase": "^7.11.0"
+    "firebase": "^7.11.0",
+    "react-youtube": "^7.9.0"
   }
 }
