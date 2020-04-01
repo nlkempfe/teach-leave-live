@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+/* Import custom components */
+import NavigationBar from '../components/NavigationBar.js';
 
 function Blog(props) {
   return (
     <div>
+      <NavigationBar/>
       <p>
       This is the blog page.
       </p>

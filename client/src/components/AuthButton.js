@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Link from '@material-ui/core/Link'
 
 /* Import material-ui icons */
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -12,6 +13,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 /* Import firebase products */
 import {auth, provider, db} from '../firebase/firebaseInit';
 import {readUser} from "../firebase/controllers";
+
+var stripe = window.Stripe('pk_test_EAXk2U8zR7fVlKNW9sUoACCl006fPFA1kk');
 
 const AuthButton = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -99,8 +102,19 @@ const AuthButton = (props) => {
                     {user.firstName}
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <MenuItem component = {RouterLink} to = '/account' onClick = {handleClose}>Account</MenuItem>
+                    <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <MenuItem onClick={() =>{
+                        fetch('/stripe')
+                            .then(r => r.json())
+                            .then(d => {
+                                stripe.redirectToCheckout({
+                                    sessionId: d.id,
+                                }).then(function (result) {
+                                    console.log(result);
+                                })
+                            })                      
+                    }}>Checkout</MenuItem>
                 </Menu>
             </div>
         );

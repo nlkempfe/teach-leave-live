@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import {db} from '../firebase/firebaseInit';
 
 /* Import material-ui components */
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,12 +21,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
-  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
   const [isPremium, setIsPremium] = useState(false);
   const [rowIndex, setRowIndex] = useState(null);
   const [role, setRole] = useState('user');
   const [users, setUsers] = useState([]);
+  const [width, setWidth] = useState({width: window.innerWidth});
+
+  useEffect(() => {
+    window.addEventListener('resize', setWidth(window.innerWidth));
+  });
 
   const handleUpdate = () => {
     db.collection('users').get().then(querySnapshot => {
@@ -51,6 +54,7 @@ function AdminUsers(props) {
   useEffect(() => {
     handleUpdate();
   }, []);
+
 
   const handleDelete = (tableMeta) => {
     /* TODO */
@@ -216,14 +220,15 @@ function AdminUsers(props) {
     elevation: 1,
     filterType: 'checkbox',
     print: false,
+    responsive: 'scrollMaxHeight',
     selectableRows: 'none',
     selectableRowsHeader: false,
   };
 
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
-        <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
+          <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
       </Container>
     </div>
   );

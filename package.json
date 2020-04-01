@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "firebase": "^7.11.0",
     "react-youtube": "^7.9.0",
+    "stripe": "^8.38.0",
     "html-react-parser": "^0.10.2",
     "react-html-parser": "^2.0.2",
     "react-calendar": "^3.0.0"
