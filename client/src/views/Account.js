@@ -26,7 +26,7 @@ function Account(props) {
         <Grid item xs={10}>
           <CardContent>
             {user.premium ? (
-              <Typography paragraph>Congradulations! You are a premium user.</Typography>
+              <Typography paragraph>Congratulations! You are a premium user.</Typography>
             ) : (
               <Container>
                 <Typography paragraph>You are not a premium user.</Typography>
