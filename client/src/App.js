@@ -59,7 +59,6 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
-          <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         </Switch>
       </Router>
     );
@@ -74,33 +73,10 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
-          <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
         </Switch>
       </Router>
     );
   }
-
-
-  return(
-    <Router>
-      <Route path = '/' render = {(props) => <NavigationBar currUser={currUser} updateUser={setCurrUser}/>} />
-      {isAdmin && <Route path = '/admin' render = {(props) => <AdminBar currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />}
-      <Switch>
-        <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
-        {isAdmin && <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />}
-        {isAdmin && <Route path = '/admin/users' render ={(props) => <AdminUsers/>} />}
-        {isAdmin && <Route path = '/admin/blog' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />}
-        {isAdmin && <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser}/>} />}
-        {isAdmin && <Route path = '/admin/events' render ={(props) => <AdminEvent currUser={currUser} updateUser={setCurrUser}/>} />}
-        <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
-        <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
-        <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
-        <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
-        <Route path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
-      </Switch>
-    </Router>
-  )
 }
 
 export default App;
