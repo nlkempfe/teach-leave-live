@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
 import CreateEventDialog from '../components/CreateEventDialog.js';
+import UpdateEventDialog from '../components/UpdateEventDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -27,7 +28,6 @@ function AdminEvent(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [events, setEvents] = useState([]);
   const [open, setOpen] = useState(false);
-  const [rowIndex, setRowIndex] = useState(null);
   const [width, setWidth] = useState({width: window.innerWidth});
 
   useEffect(() => {
@@ -69,6 +69,7 @@ function AdminEvent(props) {
   }
   const handleEdit = (tableMeta) => {
     setIsEditing(true);
+    setIsOpen(true);
     setRowIndex(tableMeta.rowIndex);
   }
   const handleSubmit = (tableMeta) => {
@@ -201,6 +202,7 @@ function AdminEvent(props) {
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
         <CreateEventDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
+        <UpdateEventDialog open = {open && isEditing} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
