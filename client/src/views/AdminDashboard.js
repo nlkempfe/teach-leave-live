@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
 import DashboardChart from '../components/DashboardChart.js';
@@ -12,9 +12,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 function Admin(props) {
+  const [width, setWidth] = useState({width: window.innerWidth});
+
+  useEffect(() => {
+    window.addEventListener('resize', setWidth(window.innerWidth));
+  });
+
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <Card fluid>
           <CardContent>
             <Typography variant = 'h6'>User Activity</Typography>
