@@ -6,7 +6,6 @@ function Blog() {
   let userID = 'a2c60dovnNajfSG91rnB4UXmBlf2'
   return (
     <div>
-      <NavigationBar/>
       <p>
       This is the blog page.
       </p>
