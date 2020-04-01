@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
-import CreateEventDialog from './CreateEventDialog.js';
+import CreateEventDialog from '../components/CreateEventDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -39,7 +39,7 @@ function AdminEvent(props) {
       let tempEvents = [];
       querySnapshot.forEach(doc => {
         let event = {
-            id: doc.data().id,
+            id: doc.id,
             name: doc.data().name,
             dateAndTime: doc.data().dateAndTime,
             description: doc.data().description,
@@ -60,11 +60,12 @@ function AdminEvent(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setIsEditing(false);
     handleUpdate();
   }
 
   const handleDelete = (tableMeta) => {
-    /* TODO */
+    db.collection('events').doc(events[tableMeta.rowIndex].id).delete().then(handleUpdate());
   }
   const handleEdit = (tableMeta) => {
     setIsEditing(true);
@@ -90,9 +91,57 @@ function AdminEvent(props) {
       name: 'name',
       label: 'Event Name',
       options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'dateAndTime',
+      label: 'Date & Time',
+      options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          return value;
+          return ('' + value.toDate());
         },
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'description',
+      label: 'Description',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'address',
+      label: 'Address',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'city',
+      label: 'City',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'state',
+      label: 'State',
+      options: {
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'zip',
+      label: 'Zipcode',
+      options: {
         filter: false,
         sort: true
       }
@@ -101,19 +150,11 @@ function AdminEvent(props) {
         name: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
-            if(isEditing) {
-              return (
-                <IconButton onClick = {event => handleSubmit(tableMeta)}>
-                  <DoneIcon/>
-                </IconButton>
-              );
-            } else {
-              return (
-                <IconButton onClick = {event => handleEdit(tableMeta)}>
-                  <EditIcon/>
-                </IconButton>
-              );
-            }
+            return (
+              <IconButton onClick = {event => handleEdit(tableMeta)}>
+                <EditIcon/>
+              </IconButton>
+            );
           },
           filter: false,
           sort: false,
@@ -125,19 +166,11 @@ function AdminEvent(props) {
         label: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
-            if(isEditing) {
-              return (
-                <IconButton onClick = {event => setIsEditing(false)}>
-                  <CloseIcon/>
-                </IconButton>
-              );
-            } else {
-              return (
-                <IconButton onClick = {event => handleDelete(tableMeta)}>
-                  <DeleteIcon/>
-                </IconButton>
-              );
-            }
+            return (
+              <IconButton onClick = {event => handleDelete(tableMeta)}>
+                <DeleteIcon/>
+              </IconButton>
+            );
           },
           filter: false,
           sort: false,
@@ -167,7 +200,7 @@ function AdminEvent(props) {
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
-        <CreateEventDialog open = {open} handleClose = {event => handleClose()}/>
+        <CreateEventDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {debounce} from 'lodash';
 
 /* Import custom components */
-import NavigationBar from '../components/NavigationBar.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -117,7 +116,8 @@ function CreateEventDialog(props) {
           </MuiPickersUtilsProvider>
       </DialogContent>
       <DialogActions>
-        <Button variant='contained' color='primary' type='submit' onClick = {event => handleSubmit(event)}>Submit</Button>
+        <Button variant='contained' color='primary' onClick = {event => props.handleClose()}>Cancel</Button>
+        <Button variant='contained' color='primary' onClick = {event => handleSubmit(event)}>Submit</Button>
       </DialogActions>
     </Dialog>
   );
