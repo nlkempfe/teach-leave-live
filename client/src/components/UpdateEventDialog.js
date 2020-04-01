@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {debounce} from 'lodash';
 
 /* Import custom components */
@@ -41,6 +41,19 @@ function UpdateEventDialog(props) {
     const [selectedState, setSelectedState] = useState('');
     const [selectedZip, setSelectedZip] = useState('');
 
+    useEffect(() => {
+      if(props.data !== null) {
+        console.log(props.data);
+        setSelectedDate((new Date(props.data.dateAndTime.toDate())));
+        setSelectedName(props.data.name);
+        setSelectedDescription(props.data.description);
+        setSelectedAddress(props.data.address);
+        setSelectedCity(props.data.city);
+        setSelectedState(props.data.state);
+        setSelectedZip(props.data.zip);
+      }
+    }, [props.open]);
+
     //Splits description into an array of strings since firebase only allows strings of 99 characters or less
     function makeDescriptionArray(eventDescription) {
         let count = 0;
@@ -50,7 +63,6 @@ function UpdateEventDialog(props) {
             eventDescription[i] = selectedDescription.substring(count, count + 98);
             count += 99;
         }
-        console.log(i);
         eventDescription[i] = selectedDescription.substring(count);
     }
 
@@ -79,11 +91,10 @@ function UpdateEventDialog(props) {
 
     //Adds event to database after submission of form
     const handleSubmit = (event) => {
-      console.log('called');
       currentDate = selectedDate;
       let eventDescription = new Array(Math.ceil(selectedDescription.length/99));
       makeDescriptionArray(eventDescription);
-      let doc = db.collection('events').add({
+      let doc = db.collection('events').doc(props.data.id).set({
           name : selectedName,
           address : selectedAddress,
           city : selectedCity,
@@ -96,14 +107,14 @@ function UpdateEventDialog(props) {
 
   return (
     <Dialog open = {props.open}>
-      <DialogTitle>Create Event</DialogTitle>
+      <DialogTitle>Update Event</DialogTitle>
         <DialogContent className = {classes.root}>
-          <TextField label='Event Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
-          <TextField label='Event Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
-          <TextField label='Address' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleAddressChange(e.target.value)}/>
-          <TextField label='City' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleCityChange(e.target.value)}/>
-          <TextField label='State' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleStateChange(e.target.value)}/>
-          <TextField label='Zip' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleZipChange(e.target.value)}/>
+          <TextField label='Event Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)} defaultValue = {selectedName}/>
+          <TextField label='Event Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)} defaultValue = {selectedDescription}/>
+          <TextField label='Address' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleAddressChange(e.target.value)} defaultValue = {selectedAddress}/>
+          <TextField label='City' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleCityChange(e.target.value)} defaultValue = {selectedCity}/>
+          <TextField label='State' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleStateChange(e.target.value)} defaultValue = {selectedState}/>
+          <TextField label='Zip' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleZipChange(e.target.value)} defaultValue = {selectedZip}/>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify='center' spacing={1}>
             <Grid item>

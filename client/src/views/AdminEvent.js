@@ -28,6 +28,7 @@ function AdminEvent(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [events, setEvents] = useState([]);
   const [open, setOpen] = useState(false);
+  const [rowData, setRowData] = useState(null);
   const [width, setWidth] = useState({width: window.innerWidth});
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function AdminEvent(props) {
             id: doc.id,
             name: doc.data().name,
             dateAndTime: doc.data().dateAndTime,
-            description: doc.data().description,
+            description: doc.data().description.join(),
             address: doc.data().address,
             city: doc.data().city,
             state: doc.data().city,
@@ -68,9 +69,9 @@ function AdminEvent(props) {
     db.collection('events').doc(events[tableMeta.rowIndex].id).delete().then(handleUpdate());
   }
   const handleEdit = (tableMeta) => {
+    setRowData(events[tableMeta.rowIndex]);
     setIsEditing(true);
-    setIsOpen(true);
-    setRowIndex(tableMeta.rowIndex);
+    setOpen(true);
   }
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
@@ -101,7 +102,9 @@ function AdminEvent(props) {
       label: 'Date & Time',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          return ('' + value.toDate());
+          const d = value.toDate();
+          const date = ("0"+(d.getMonth()+1)).slice(-2)  + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
+          return (date);
         },
         filter: false,
         sort: true
@@ -111,6 +114,14 @@ function AdminEvent(props) {
       name: 'description',
       label: 'Description',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(value.length > 30) {
+            return (value.substring(0, 30) + '...');
+          } else {
+            return (value);
+
+          }
+        },
         filter: false,
         sort: true
       }
@@ -202,7 +213,7 @@ function AdminEvent(props) {
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
         <CreateEventDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
-        <UpdateEventDialog open = {open && isEditing} handleClose = {event => handleClose()}/>
+        <UpdateEventDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
