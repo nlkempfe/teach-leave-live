@@ -58,6 +58,11 @@ function AdminEvent(props) {
     handleUpdate();
   }, []);
 
+  const handleClose = () => {
+    setOpen(false);
+    handleUpdate();
+  }
+
   const handleDelete = (tableMeta) => {
     /* TODO */
   }
@@ -162,7 +167,7 @@ function AdminEvent(props) {
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
-        <CreateEventDialog open = {open} handleClose = {event => setOpen(false)}/>
+        <CreateEventDialog open = {open} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );

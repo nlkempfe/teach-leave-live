@@ -79,11 +79,12 @@ function CreateEventDialog(props) {
     }, 500);
 
     //Adds event to database after submission of form
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
+      console.log('called');
       currentDate = selectedDate;
       let eventDescription = new Array(Math.ceil(selectedDescription.length/99));
       makeDescriptionArray(eventDescription);
-      db.collection('events').doc().set({
+      let doc = db.collection('events').add({
           name : selectedName,
           address : selectedAddress,
           city : selectedCity,
@@ -91,14 +92,12 @@ function CreateEventDialog(props) {
           zip : selectedZip,
           description : eventDescription,
           dateAndTime : currentDate
-      });
-      props.handleClose();
+      }).then(props.handleClose());
     };
 
   return (
-    <Dialog open = {props.open} onClose = {props.handleClose}>
+    <Dialog open = {props.open}>
       <DialogTitle>Create Event</DialogTitle>
-      <form onSubmit={handleSubmit}>
         <DialogContent className = {classes.root}>
           <TextField label='Event Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
           <TextField label='Event Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
@@ -118,9 +117,8 @@ function CreateEventDialog(props) {
           </MuiPickersUtilsProvider>
       </DialogContent>
       <DialogActions>
-        <Button variant='contained' color='primary' type='submit' onClick = {(event) => handleSubmit()}>Submit</Button>
+        <Button variant='contained' color='primary' type='submit' onClick = {event => handleSubmit(event)}>Submit</Button>
       </DialogActions>
-      </form>
     </Dialog>
   );
 }
