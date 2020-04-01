@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Link from '@material-ui/core/Link'
 
 /* Import material-ui icons */
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -101,7 +102,7 @@ const AuthButton = (props) => {
                     {user.firstName}
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <MenuItem onClick={handleClose}>Account</MenuItem>
+                    <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     <MenuItem onClick={() =>{
                         fetch('/stripe')

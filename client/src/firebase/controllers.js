@@ -88,11 +88,3 @@ export const updateEvent = (name, updatedValues) => {
     let updateEvent = eventRef.update(updatedValues);
 
 };
-
-/* Get all events*/
-/* TODO should probably search by date instead but I cannot figure out how */
-export const getAllEvents = (callback) => {
-  db.collection("events").get().then(function(snap) {
-    callback(snap.docs)
-  })
-};
