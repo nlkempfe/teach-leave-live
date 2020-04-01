@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
@@ -13,19 +14,39 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import {auth, provider, db} from '../firebase/firebaseInit';
 import {readUser} from "../firebase/controllers";
 
+var stripe = window.Stripe('pk_test_EAXk2U8zR7fVlKNW9sUoACCl006fPFA1kk');
+
 const AuthButton = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     //Event handler to log the user in with Firebase auth()
     const handleLogin = () => {
         //Sign into Firebase with fb auth provider
-        auth().signInWithPopup(provider).then((retUser) => {
+        auth().signInWithPopup(provider).then(async (retUser) => {
 
             //Update current user throughout app
             props.updateUser(retUser);
 
             //Update (or add) user document with most recent sign-in information (from fb)
             let userDoc = db.collection('users').doc(retUser.user.uid);
+
+            // Only update role if new account -> default to user role
+            let role = await userDoc.get().then(snapshot => {
+               if(snapshot.exists){
+                  return snapshot.data().role;
+               } else {
+                 return 'user';
+               }
+            });
+
+            // Only update premium status if new account -> default to not premium
+            let premium = await userDoc.get().then(snapshot => {
+               if(snapshot.exists){
+                  return snapshot.data().premium;
+               } else {
+                 return false;
+               }
+            });
 
             //Email might not be shared, set user doc accordingly.
             if(retUser.additionalUserInfo.profile.email){
@@ -35,7 +56,8 @@ const AuthButton = (props) => {
                     firstName : retUser.additionalUserInfo.profile.first_name,
                     lastName : retUser.additionalUserInfo.profile.last_name,
                     picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                    role: 'user'
+                    premium: premium,
+                    role: role
                 });
             }
             else{
@@ -45,7 +67,8 @@ const AuthButton = (props) => {
                     firstName : retUser.additionalUserInfo.profile.first_name,
                     lastName : retUser.additionalUserInfo.profile.last_name,
                     picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                    role: 'user'
+                    premium: premium,
+                    role: role
                 });
             }
         });
@@ -73,7 +96,6 @@ const AuthButton = (props) => {
     //Conditional return buttons based on whether a user is logged in
     if(user != null){
         //User is logged in -> Display button to allow logout
-
         return (
             <div>
                 <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick}>
@@ -82,6 +104,17 @@ const AuthButton = (props) => {
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <MenuItem onClick={() =>{
+                        fetch('/stripe')
+                            .then(r => r.json())
+                            .then(d => {
+                                stripe.redirectToCheckout({
+                                    sessionId: d.id,
+                                }).then(function (result) {
+                                    console.log(result);
+                                })
+                            })                      
+                    }}>Checkout</MenuItem>
                 </Menu>
             </div>
         );
