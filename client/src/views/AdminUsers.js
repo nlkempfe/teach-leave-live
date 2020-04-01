@@ -22,10 +22,16 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
   const [isEditing, setIsEditing] = useState(false);
+
   const [isPremium, setIsPremium] = useState(false);
   const [rowIndex, setRowIndex] = useState(null);
   const [role, setRole] = useState('user');
   const [users, setUsers] = useState([]);
+  const [width, setWidth] = useState({width: window.innerWidth});
+
+  useEffect(() => {
+    window.addEventListener('resize', setWidth(window.innerWidth));
+  });
 
   const handleUpdate = () => {
     db.collection('users').get().then(querySnapshot => {
@@ -48,6 +54,7 @@ function AdminUsers(props) {
   useEffect(() => {
     handleUpdate();
   }, []);
+
 
   const handleDelete = (tableMeta) => {
     /* TODO */
@@ -220,8 +227,8 @@ function AdminUsers(props) {
 
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
-        <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
+          <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
       </Container>
     </div>
   );

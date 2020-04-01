@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+/* Import custom components */
+import CreateEventDialog from './CreateEventDialog.js';
+
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
 
@@ -9,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
 
 /* Import material-ui icons */
 import AddIcon from '@material-ui/icons/Add';
@@ -23,8 +25,14 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminEvent(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [rowIndex, setRowIndex] = useState(null);
   const [events, setEvents] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [rowIndex, setRowIndex] = useState(null);
+  const [width, setWidth] = useState({width: window.innerWidth});
+
+  useEffect(() => {
+    window.addEventListener('resize', setWidth(window.innerWidth));
+  });
 
   const handleUpdate = () => {
     db.collection('events').get().then(querySnapshot => {
@@ -50,9 +58,6 @@ function AdminEvent(props) {
     handleUpdate();
   }, []);
 
-  const handleAdd = () => {
-    /* TODO */
-  }
   const handleDelete = (tableMeta) => {
     /* TODO */
   }
@@ -138,7 +143,7 @@ function AdminEvent(props) {
   const options = {
     customToolbar: () => {
       return (
-        <IconButton onClick = {event => handleAdd()}>
+        <IconButton onClick = {event => setOpen(true)}>
           <AddIcon/>
         </IconButton>
       );
@@ -155,8 +160,9 @@ function AdminEvent(props) {
 
   return (
     <div>
-      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20}}>
+      <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
+        <CreateEventDialog open = {open} handleClose = {event => setOpen(false)}/>
       </Container>
     </div>
   );
