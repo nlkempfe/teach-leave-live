@@ -13,8 +13,8 @@ app.use(express.static(path.join(__dirname, './client/build')));
  */
 app.get('/stripe',( async (req, res) => {
   const session = await stripe.checkout.sessions.create({
-    success_url: 'https://www.google.com/',
-    cancel_url: 'https://devops-teach-leave-live.herokuapp.com/account',
+    success_url: 'https://devops-teach-leave-live.herokuapp.com/checkout/success',
+    cancel_url: 'https://devops-teach-leave-live.herokuapp.com/checkout/cancel',
     payment_method_types: ['card'],
     line_items: [
       {

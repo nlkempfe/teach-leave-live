@@ -104,7 +104,7 @@ const AuthButton = (props) => {
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                    <MenuItem onClick={() =>{
+                    <MenuItem /*disable={props.IsPremium}*/ onClick={() =>{
                         fetch('/stripe')
                             .then(r => r.json())
                             .then(d => {
@@ -129,9 +129,6 @@ const AuthButton = (props) => {
             </div>
         );
     }
-
-
-
 };
 
 export default AuthButton;
