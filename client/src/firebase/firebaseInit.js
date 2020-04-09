@@ -1,9 +1,9 @@
 /* Import Firebase app */
 import firebase from 'firebase';
-// import config from "../firebaseConfig";
+import config from "../firebaseConfig.js";
 
 /* Import environment variables for initialization */
-const config = {
+const configENV = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -14,7 +14,12 @@ const config = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-firebase.initializeApp(config);
+if(process.env.NODE_ENV === 'productiion'){
+  firebase.initializeApp(configENV);
+}
+else{
+  firebase.initializeApp(config);
+}
 
 /* Exports */
 export const auth = firebase.auth;
