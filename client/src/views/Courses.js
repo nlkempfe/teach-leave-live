@@ -1,26 +1,111 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import EmbeddedVideo from '../components/EmbeddedVideo.js'
 
-function Courses(props) {
+import TextField from '@material-ui/core/TextField';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import { FixedSizeList } from 'react-window';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 
+//import firebase
+import {auth, provider, db} from '../firebase/firebaseInit';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    flexWrap: 'nowrap',
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+    height: 400,
+  },
+  title: {
+    color: theme.palette.primary.light,
+  },
+  titleBar: {
+    background:
+      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+}));
+
+function Courses(props) {
+  const [searchCourse, setSearchCourse] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [courseFilter, setCourseFilter] = useState('');
+
+  const classes = useStyles();
+
+  const filteredCourses = courses.filter(course => course.name.toLowerCase().includes(courseFilter.toLowerCase()));
 
   const simple_video_style = {
-    width: '20%',
-    marginLeft: 'auto',
-    marginRight: 'auto'
+    width: '100'
   }
 
+  const searchBarStyle = {
+    paddingLeft: 10,
+    width: '25%'
+  };
 
-  return (
+  useEffect(() => {
+    db.collection('courses').get().then(querySnapshot => {
+      let tempCourses = [];
+      querySnapshot.forEach(doc => {
+        let course = {
+            name: doc.data().name,
+            description: doc.data().description,
+            premium: doc.data().premium,
+            link: doc.data().link
+        }
+        tempCourses.push(course);
+      });
+      setCourses(tempCourses);
+    });
+  }, []);
+
+  const listElementStyle = {
+      height: '100%',
+      width: '20%',
+      padding: 20
+  }
+
+  const courseList = filteredCourses.map(directory => {
+      return (
+        <GridListTile style={listElementStyle}>
+          <EmbeddedVideo link={directory.link} 
+                         name={directory.name} 
+                         description={directory.description} 
+                         premium={directory.premium} 
+                         style = {simple_video_style}/>
+        </GridListTile>
+      );
+  });
+
+  const handleSearchChange = (event) => {
+    setCourseFilter(event);
+  }
+
+//<EmbeddedVideo courseName='nXThNu12Bnp2V4dq6KCW' style = {simple_video_style}/>
+  
+return (
     <div>
-      <p>
-      This is the courses page.
-      </p>
-      <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dolor nibh, fermentum porttitor pulvinar sed, lacinia a lorem. Sed iaculis augue vel dictum rhoncus. Suspendisse venenatis, tellus nec sollicitudin molestie, urna felis semper mi, vitae laoreet nulla mi rhoncus risus. Ut dictum mauris nec ornare fermentum. Donec vulputate felis in vestibulum fermentum. Etiam varius varius nunc sed pharetra. In in est libero. Aenean auctor at ante eu scelerisque. Vestibulum vitae convallis mauris. Nam risus nibh, pellentesque a lacus eget, accumsan ultricies arcu. Phasellus finibus risus a velit dapibus, eget laoreet erat maximus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris varius volutpat luctus. Integer tincidunt feugiat justo. Phasellus eu sem urna. Pellentesque eget vehicula enim.
-      </p>
-      <EmbeddedVideo courseName='nXThNu12Bnp2V4dq6KCW' style = {simple_video_style}/>
+      <h1>Courses</h1>
+      <div style={searchBarStyle}>
+        <TextField label='Search For Course' fullWidth variant='outlined' onChange={e => handleSearchChange(e.target.value)} defaultValue ={searchCourse}/>
+      </div>
+      <GridList className={classes.gridList}>
+        {courseList}
+      </GridList>
     </div>
   );
 }
