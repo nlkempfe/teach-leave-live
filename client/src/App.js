@@ -11,7 +11,7 @@ import AdminBar from './components/AdminBar.js'
 
 /* Import views */
 import Home from './views/Home.js';
-import AdminDashboard from './views/AdminCourses.js';
+import AdminCourses from './views/AdminCourses.js';
 import AdminDashboard from './views/AdminDashboard.js';
 import AdminEvent from './views/AdminEvent.js';
 import AdminUsers from './views/AdminUsers.js';

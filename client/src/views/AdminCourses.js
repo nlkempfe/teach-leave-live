@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
-import CreateCourseDialog from '../components/CreateCourseDialog.js';
-import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
+// import CreateCourseDialog from '../components/CreateCourseDialog.js';
+// import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -32,7 +32,7 @@ function AdminCourses(props) {
   const [width, setWidth] = useState({width: window.innerWidth});
 
   useEffect(() => {
-    window.addCourseListener('resize', setWidth(window.innerWidth));
+    window.addEventListener('resize', setWidth(window.innerWidth));
   });
 
   const handleUpdate = () => {
@@ -42,11 +42,11 @@ function AdminCourses(props) {
         let course = {
             id: doc.id,
             name: doc.data().name,
-            description: doc.data().description.join(),
+            description: doc.data().description,
             link: doc.data().link,
             premium: doc.data().premium,
         }
-        tempCourses.push(event);
+        tempCourses.push(course);
       });
       setCourses(tempCourses);
     });
@@ -90,18 +90,12 @@ function AdminCourses(props) {
       name: 'name',
       label: 'Course Name',
       options: {
-        filter: false,
-        sort: true
-      }
-    },
-    {
-      name: 'dateAndTime',
-      label: 'Date & Time',
-      options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          const d = value.toDate();
-          const date = ("0"+(d.getMonth()+1)).slice(-2)  + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
-          return (date);
+          if(value.length > 30) {
+            return (value.substring(0, 30) + '...');
+          } else {
+            return (value);
+          }
         },
         filter: false,
         sort: true
@@ -116,7 +110,6 @@ function AdminCourses(props) {
             return (value.substring(0, 30) + '...');
           } else {
             return (value);
-
           }
         },
         filter: false,
@@ -124,33 +117,24 @@ function AdminCourses(props) {
       }
     },
     {
-      name: 'address',
-      label: 'Address',
+      name: 'link',
+      label: 'Link',
       options: {
         filter: false,
         sort: true
       }
     },
     {
-      name: 'city',
-      label: 'City',
+      name: 'premium',
+      label: 'Subscription Plan',
       options: {
-        filter: false,
-        sort: true
-      }
-    },
-    {
-      name: 'state',
-      label: 'State',
-      options: {
-        filter: false,
-        sort: true
-      }
-    },
-    {
-      name: 'zip',
-      label: 'Zipcode',
-      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(value) {
+            return 'Premium';
+          } else {
+            return 'Free';
+          }
+        },
         filter: false,
         sort: true
       }
@@ -160,7 +144,7 @@ function AdminCourses(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {event => handleEdit(tableMeta)}>
+              <IconButton onClick = {course => handleEdit(tableMeta)}>
                 <EditIcon/>
               </IconButton>
             );
@@ -176,7 +160,7 @@ function AdminCourses(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {event => handleDelete(tableMeta)}>
+              <IconButton onClick = {course => handleDelete(tableMeta)}>
                 <DeleteIcon/>
               </IconButton>
             );
@@ -190,7 +174,7 @@ function AdminCourses(props) {
   const options = {
     customToolbar: () => {
       return (
-        <IconButton onClick = {event => setOpen(true)}>
+        <IconButton onClick = {course => setOpen(true)}>
           <AddIcon/>
         </IconButton>
       );
@@ -209,8 +193,6 @@ function AdminCourses(props) {
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Courses'} data={courses} columns={columns} options={options}/>
-        // <CreateCourseDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
-        // <UpdateCourseDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
