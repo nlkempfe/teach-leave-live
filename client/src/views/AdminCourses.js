@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
-import CreateEventDialog from '../components/CreateEventDialog.js';
-import UpdateEventDialog from '../components/UpdateEventDialog.js';
+import CreateCourseDialog from '../components/CreateCourseDialog.js';
+import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -26,32 +26,29 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminCourses(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [events, setEvents] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [width, setWidth] = useState({width: window.innerWidth});
 
   useEffect(() => {
-    window.addEventListener('resize', setWidth(window.innerWidth));
+    window.addCourseListener('resize', setWidth(window.innerWidth));
   });
 
   const handleUpdate = () => {
-    db.collection('events').get().then(querySnapshot => {
-      let tempEvents = [];
+    db.collection('courses').get().then(querySnapshot => {
+      let tempCourses = [];
       querySnapshot.forEach(doc => {
-        let event = {
+        let course = {
             id: doc.id,
             name: doc.data().name,
-            dateAndTime: doc.data().dateAndTime,
             description: doc.data().description.join(),
-            address: doc.data().address,
-            city: doc.data().city,
-            state: doc.data().city,
-            zip: doc.data().zip,
+            link: doc.data().link,
+            premium: doc.data().premium,
         }
-        tempEvents.push(event);
+        tempCourses.push(event);
       });
-      setEvents(tempEvents);
+      setCourses(tempCourses);
     });
   }
 
@@ -66,10 +63,10 @@ function AdminCourses(props) {
   }
 
   const handleDelete = (tableMeta) => {
-    db.collection('events').doc(events[tableMeta.rowIndex].id).delete().then(handleUpdate());
+    db.collection('courses').doc(courses[tableMeta.rowIndex].id).delete().then(handleUpdate());
   }
   const handleEdit = (tableMeta) => {
-    setRowData(events[tableMeta.rowIndex]);
+    setRowData(courses[tableMeta.rowIndex]);
     setIsEditing(true);
     setOpen(true);
   }
@@ -91,7 +88,7 @@ function AdminCourses(props) {
     },
     {
       name: 'name',
-      label: 'Event Name',
+      label: 'Course Name',
       options: {
         filter: false,
         sort: true
@@ -211,9 +208,9 @@ function AdminCourses(props) {
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
-        <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
-        <CreateEventDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
-        <UpdateEventDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
+        <MUIDataTable title={'Manage Courses'} data={courses} columns={columns} options={options}/>
+        // <CreateCourseDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
+        // <UpdateCourseDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
