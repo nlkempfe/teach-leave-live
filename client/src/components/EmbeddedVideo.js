@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 
-//import controller functions
-import {readUser} from '../firebase/controllers'
-
 //import material ui components
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -39,7 +36,6 @@ function EmbeddedVideo (props) {
   //stores information about user and video
   const [link, setLink] = useState('')
   const [premium, setPremium] = useState(false)
-  const [userPremium, setUserPremium] = useState(false)
   const [description, setDescription] = useState('')
   const [name, setName] = useState('')
   const [open, setOpen] = useState(null)
@@ -75,13 +71,12 @@ function EmbeddedVideo (props) {
     else {
         setLink(doc.data().link)
         setPremium(doc.data().premium)
-        setUserPremium(readUser().premium)
         setDescription(doc.data().description)
         if (premium)
         {
           setName(doc.data().name + ' (Premium)')
         }
-        else 
+        else
         {
           setName(doc.data().name)
         }
@@ -104,11 +99,10 @@ function EmbeddedVideo (props) {
 
   /*Chooses what to return based off the status of user and the video. The component will always start with an
     image of the youtube video and a button that creates a popup. If the video is a standard video or if a premium user
-    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the 
+    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the
     popup will direct the user to pay for a premium membership*/
   const checkUser = () => {
-    //console.log(!(premium))
-    if ((userPremium || !(premium)) && !(displayVideo))
+    if ((props.premium || !(premium)) && !(displayVideo))
     {
       return ( <div style={props.style}>
                 <Card classname={classes.root}>
@@ -146,7 +140,7 @@ function EmbeddedVideo (props) {
     }
     else if (displayVideo)
     {
-      return ( 
+      return (
         <div style={props.style}>
           <Card classname={classes.root}>
             <CardContent>

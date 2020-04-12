@@ -23,54 +23,30 @@ const AuthButton = (props) => {
     const handleLogin = () => {
         //Sign into Firebase with fb auth provider
         auth().signInWithPopup(provider).then(async (retUser) => {
-
-            //Update current user throughout app
-            props.updateUser(retUser);
-
             //Update (or add) user document with most recent sign-in information (from fb)
             let userDoc = db.collection('users').doc(retUser.user.uid);
 
-            // Only update role if new account -> default to user role
-            let role = await userDoc.get().then(snapshot => {
+            // Only update date if new account
+            let data = await userDoc.get().then(snapshot => {
                if(snapshot.exists){
-                  return snapshot.data().role;
+                  return snapshot.data();
                } else {
-                 return 'user';
+                 return {};
                }
             });
 
-            // Only update premium status if new account -> default to not premium
-            let premium = await userDoc.get().then(snapshot => {
-               if(snapshot.exists){
-                  return snapshot.data().premium;
-               } else {
-                 return false;
-               }
+            //set the user doc ensuring that undefined values become default values
+            userDoc.set({
+                uid : ('uid' in data ? data.uid : retUser.user.uid),
+                email : (retUser.additionalUserInfo.profile.email ? retUser.additionalUserInfo.profile.email : "N/A"),
+                firstName : (retUser.additionalUserInfo.profile.first_name),
+                lastName : (retUser.additionalUserInfo.profile.last_name),
+                picURL : (retUser.additionalUserInfo.profile.picture.data.url),
+                premium: ('premium' in data ? data.premium : false),
+                role: ('role' in data ? data.role : 'user'),
+                blogPermission: ('blogPermission' in data ? data.blogPermission : false),
+                commentPermission: ('commentPermission' in data ? data.commentPermission : true)
             });
-
-            //Email might not be shared, set user doc accordingly.
-            if(retUser.additionalUserInfo.profile.email){
-                userDoc.set({
-                    uid : retUser.user.uid,
-                    email : retUser.additionalUserInfo.profile.email,
-                    firstName : retUser.additionalUserInfo.profile.first_name,
-                    lastName : retUser.additionalUserInfo.profile.last_name,
-                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                    premium: premium,
-                    role: role
-                });
-            }
-            else{
-                userDoc.set({
-                    uid : retUser.user.uid,
-                    email: "N/A",
-                    firstName : retUser.additionalUserInfo.profile.first_name,
-                    lastName : retUser.additionalUserInfo.profile.last_name,
-                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
-                    premium: premium,
-                    role: role
-                });
-            }
         });
     };
 
@@ -113,7 +89,7 @@ const AuthButton = (props) => {
                                 }).then(function (result) {
                                     console.log(result);
                                 })
-                            })                      
+                            })
                     }}>Checkout</MenuItem>
                 </Menu>
             </div>
