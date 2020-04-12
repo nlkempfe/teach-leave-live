@@ -59,6 +59,7 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/home' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser}/>} />
         </Switch>
       </Router>
     );
