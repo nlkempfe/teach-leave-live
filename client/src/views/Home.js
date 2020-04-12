@@ -34,6 +34,7 @@ function Home(props) {
 
   const classes = useStyles();
 
+  //style for div around entire newsletter card
   const newsletterStyle = {
     width: '25%',
     float: 'left'
