@@ -84,7 +84,7 @@ function Home(props) {
       <div style={newsletterStyle}>
       <Card classname={classes.root}>
           <CardContent>
-            <h3>Subscribe To Our Newsletter</h3>
+            <h2>Subscribe To Our Newsletter</h2>
           </CardContent>
           <CardActions>
           <Button color='primary' onClick={handleNewsletterOpen}>Subscribe</Button>
