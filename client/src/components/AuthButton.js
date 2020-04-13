@@ -114,7 +114,7 @@ const AuthButton = (props) => {
                                     console.log(result);
                                 })
                             })                      
-                    }}>Checkout</MenuItem>
+                    }}>Subscribe</MenuItem>
                 </Menu>
             </div>
         );

@@ -79,6 +79,8 @@ function App() {
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/checkout/success' render ={(props) => <CheckoutSuccess currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/checkout/cancel' render ={(props) => <CheckoutCancel currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription' render ={(props) => <Subscription currUser={currUser} updateUser={setCurrUser}/>} />
+
         </Switch>
       </Router>
     );
