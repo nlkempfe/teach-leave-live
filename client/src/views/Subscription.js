@@ -137,17 +137,10 @@ export default function Pricing() {
             noWrap
             className={classes.toolbarTitle}
           >
-            Teach.Leave.Live
+            
           </Typography>
           <nav>
-            <Link
-              variant="button"
-              color="textPrimary"
-              href="#"
-              className={classes.link}
-            >
-              Home
-            </Link>
+            
           </nav>
         </Toolbar>
       </AppBar>
@@ -191,7 +184,7 @@ export default function Pricing() {
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: "center" }}
                   subheaderTypographyProps={{ align: "center" }}
-                  action={tier.title === "Pro" ? <StarIcon /> : null}
+                  action={tier.title === "Premium" ? <StarIcon /> : null}
                   className={classes.cardHeader}
                 />
                 <CardContent>
@@ -259,3 +252,4 @@ export default function Pricing() {
     </React.Fragment>
   );
 }
+

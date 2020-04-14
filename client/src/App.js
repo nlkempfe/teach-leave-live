@@ -22,6 +22,7 @@ import Account from './views/Account.js';
 import Socials from './views/Socials.js';
 import CheckoutSuccess from './views/CheckoutSuccess.js';
 import CheckoutCancel from './views/CheckoutCancel.js';
+import Subscription from './views/Subscription'
 
 
 function App() {

@@ -7,14 +7,14 @@ export default class StripeCheckout extends React.Component {
   stripeRouter = () => {
     Axios.get('/stripe').then((val) => {
       console.log('here')
-      /*return val.data.id
+      return val.data.id
       }).then((val) => {
         stripe.redirectToCheckout({
           sessionId: val,
           user: this.props.user
       }).then(function (result) {
           //result.error.message
-      })*/
+      })
     })
   }
 
