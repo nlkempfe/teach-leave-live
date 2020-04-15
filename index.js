@@ -13,14 +13,14 @@ app.use(express.static(path.join(__dirname, './client/build')));
  */
 app.get('/stripe',( async (req, res) => {
   const session = await stripe.checkout.sessions.create({
-    success_url: '/checkout/success',
-    cancel_url: '/checkout/cancel',
+    success_url: 'https://devops-teach-leave-live.herokuapp.com/checkout/success',
+    cancel_url: 'https://devops-teach-leave-live.herokuapp.com/checkout/cancel',
     payment_method_types: ['card'],
     line_items: [
       {
         name: 'Premium Subscription',
-        description: 'Subscription',
-        amount: 1999,
+        //description: 'Subscription',
+        amount: 1000,
         currency: 'usd',
         quantity: 1,
       },
@@ -39,12 +39,10 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 
-
  // const router = require('express').Router(),
  //   stripe = require('stripe')(process.env.STRIPE_URI || require('../config').stripe.uri);
 
 
 
-
-//module.exports = router;
+// module.exports = router;
 //https://devops-teach-leave-live.herokuapp.com

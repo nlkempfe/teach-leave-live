@@ -140,17 +140,6 @@ export default function Pricing() {
 
   return (
     <React.Fragment>
-        <Button onClick={() => {
-                        fetch('/stripe')
-                            .then(r => r.json())
-                            .then(d => {
-                                stripe.redirectToCheckout({
-                                    sessionId: d.id,
-                                }).then(function (result) {
-                                    console.log(result);
-                                })
-                            })      
-                    }}>Test</Button>
       <CssBaseline />
       <AppBar
         position="static"
