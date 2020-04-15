@@ -15,6 +15,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 
+var stripe = window.Stripe('pk_test_EAXk2U8zR7fVlKNW9sUoACCl006fPFA1kk');
+
 function Subscription(props) {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -123,6 +125,17 @@ export default function Pricing() {
 
   return (
     <React.Fragment>
+        <Button onClick={() => {
+                        fetch('/stripe')
+                            .then(r => r.json())
+                            .then(d => {
+                                stripe.redirectToCheckout({
+                                    sessionId: d.id,
+                                }).then(function (result) {
+                                    console.log(result);
+                                })
+                            })      
+                    }}>Test</Button>
       <CssBaseline />
       <AppBar
         position="static"
