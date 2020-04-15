@@ -39,8 +39,8 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 
- const router = require('express').Router(),
-   stripe = require('stripe')(process.env.STRIPE_URI || require('../config').stripe.uri);
+ // const router = require('express').Router(),
+ //   stripe = require('stripe')(process.env.STRIPE_URI || require('../config').stripe.uri);
 
 
 

@@ -15,6 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 
+var stripe = window.Stripe('pk_test_EAXk2U8zR7fVlKNW9sUoACCl006fPFA1kk');
+
+
 function Subscription(props) {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -85,7 +88,10 @@ const tiers = [
       "Email support"
     ],
     buttonText: "Sign up for free",
-    buttonVariant: "outlined"
+    buttonVariant: "outlined",
+    onClick:  () => {
+      //This is where you implement what happens when "Sign up for free" is clicked
+    }
   },
   {
     title: "Premium",
@@ -98,7 +104,18 @@ const tiers = [
       "Plan events with other people"
     ],
     buttonText: "Get Premium",
-    buttonVariant: "contained"
+    buttonVariant: "contained",
+    onClick:  () => {
+      fetch('/stripe')
+          .then(r => r.json())
+          .then(d => {
+            stripe.redirectToCheckout({
+              sessionId: d.id,
+            }).then(function (result) {
+              console.log(result);
+            })
+          })
+    }
   }
 ];
 const footers = [
@@ -214,6 +231,7 @@ export default function Pricing() {
                     fullWidth
                     variant={tier.buttonVariant}
                     color="primary"
+                    onClick={tier.onClick}
                   >
                     {tier.buttonText}
                   </Button>
