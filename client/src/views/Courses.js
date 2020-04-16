@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
+//import components
 import EmbeddedVideo from '../components/EmbeddedVideo.js'
 
+//import material-ui
 import TextField from '@material-ui/core/TextField';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import { FixedSizeList } from 'react-window';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 //import firebase
 import {auth, provider, db} from '../firebase/firebaseInit';
 
 
+//Style for GridList
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -26,9 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     flexWrap: 'nowrap',
+    width: '100%',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    height: 400,
+    height: 450,
   },
   title: {
     color: theme.palette.primary.light,
@@ -40,23 +39,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Courses(props) {
-  const [searchCourse, setSearchCourse] = useState(null);
   const [courses, setCourses] = useState([]);
   const [courseFilter, setCourseFilter] = useState('');
 
   const classes = useStyles();
 
+  //removes courses whose names don't containt the characters in the search bar
   const filteredCourses = courses.filter(course => course.name.toLowerCase().includes(courseFilter.toLowerCase()));
 
+  //style for the video in the EmbeddedVideo component
   const simple_video_style = {
     width: '100'
   }
 
+  //Style for search bar
   const searchBarStyle = {
-    paddingLeft: 10,
-    width: '25%'
+    paddingLeft: '2.5%',
+    width: '25%',
+    paddingTop: 30
   };
 
+  //gets list of courses
   useEffect(() => {
     db.collection('courses').get().then(querySnapshot => {
       let tempCourses = [];
@@ -73,12 +76,22 @@ function Courses(props) {
     });
   }, []);
 
+  //Styles each element in the GridList
   const listElementStyle = {
       height: '100%',
       width: '20%',
-      padding: 20
+      paddingRight: '2%'
   }
 
+  //Styles the Courses header
+  const headerStyle = {
+    position: 'fixed',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    paddingTop: 20
+  }
+
+  //Creates the list of courses by making each course into an EmbeddedVideo
   const courseList = filteredCourses.map(directory => {
       return (
         <GridListTile style={listElementStyle}>
@@ -91,21 +104,27 @@ function Courses(props) {
       );
   });
 
+  //sets course filter
   const handleSearchChange = (event) => {
     setCourseFilter(event);
   }
 
-//<EmbeddedVideo courseName='nXThNu12Bnp2V4dq6KCW' style = {simple_video_style}/>
+  //Styles div around GridList
+  const listStyle = {
+    padding: '2.5%'
+  }
   
 return (
     <div>
-      <h1>Courses</h1>
+      <h1 style={headerStyle}>Courses</h1>
       <div style={searchBarStyle}>
-        <TextField label='Search For Course' fullWidth variant='outlined' onChange={e => handleSearchChange(e.target.value)} defaultValue ={searchCourse}/>
+        <TextField label='Search For Course' fullWidth variant='outlined' onChange={e => handleSearchChange(e.target.value)} defaultValue ={courseFilter}/>
       </div>
-      <GridList className={classes.gridList}>
-        {courseList}
-      </GridList>
+      <div style={listStyle}>
+        <GridList className={classes.gridList}>
+          {courseList}
+        </GridList>
+      </div>
     </div>
   );
 }
