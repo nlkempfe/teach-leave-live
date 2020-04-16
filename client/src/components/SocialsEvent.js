@@ -1,8 +1,11 @@
 import React from 'react';
-import {Paper, List, ListItem, Typography} from '@material-ui/core';
+import {Paper, Grid, Typography, Collapse, Badge} from '@material-ui/core';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 
-const timeFormatOptions = {hour: '2-digit', minute: '2-digit', timeZoneName: 'short'};
+
+
+const dateTimeFormatOptions = {weekday: "long", year: "numeric", month: "short", day: "numeric", hour: '2-digit', minute: '2-digit', timeZoneName: 'short'};
 
 function formatAddress(event){
   let result = ''
@@ -30,28 +33,39 @@ function formatAddress(event){
 
 function SocialsEvent(props){
   return(
-    <List>
-      <ListItem key={0}>
-        <Typography>
-          {props.event.name}
-        </Typography>
-      </ListItem>
-      <ListItem key={1}>
-        <Typography>
-          {props.event.dateAndTime.toLocaleTimeString('en-US', timeFormatOptions)}
-        </Typography>
-      </ListItem>
-      <ListItem key={2}>
-        <Typography>
-          {formatAddress(props.event)}
-        </Typography>
-      </ListItem>
-      <ListItem key={3}>
-        <Typography>
-          {props.event.description}
-        </Typography>
-      </ListItem>
-    </List>
+    <Badge badgeContent={props.expanded ? undefined : <OpenInNewIcon />}>
+      <Grid container
+        spacing={3}
+        direction="column"
+        alignItems="flex-start"
+        style={{'flexGrow': 1, 'margin': 3}}
+      >
+        <Grid item>
+          <Typography>
+            {props.event.name}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography>
+            {props.event.dateAndTime.toLocaleDateString('en-US', dateTimeFormatOptions)}
+          </Typography>
+        </Grid>
+        {props.expanded ?
+          <Grid item>
+            <Typography>
+              {formatAddress(props.event)}
+            </Typography>
+          </Grid>
+        : undefined}
+        {props.expanded ?
+          <Grid item>
+            <Typography style={{'maxWidth': 300}}>
+              {props.event.description}
+            </Typography>
+          </Grid>
+        : undefined}
+      </Grid>
+    </Badge>
   )
 }
 

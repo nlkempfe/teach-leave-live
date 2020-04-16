@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {Grid, Paper, Typography, TextField} from "@material-ui/core";
-import SearchIcon from '@material-ui/icons/Search';
+import {Grid, Paper, TextField, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText} from "@material-ui/core";
 import {db} from '../firebase/firebaseInit';
+import {readUser, updateEvent} from '../firebase/controllers.js';
 
-import SocialsCalendar from '../components/SocialsCalenderNew.js'
-import SocialsEvent from '../components/SocialsEvent.js'
+import SocialsCalendar from '../components/SocialsCalenderNew.js';
+import SocialsEvent from '../components/SocialsEvent.js';
 
 function sameDay(date1, date2){
   return (
@@ -18,6 +18,8 @@ function Socials(props) {
   const [date, setDate] = useState(new Date()); //now
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState('');
+  const [clickedEvent, setClickedEvent] = useState(undefined);
+  const [popUpResult, setPopUpResult] = useState('');
   useEffect(() => {
     db.collection('events').get().then(querySnapshot => {
       let tempEvents = [];
@@ -30,7 +32,8 @@ function Socials(props) {
             address: data.address,
             city: data.city,
             state: data.state,
-            zip: data.zip
+            zip: data.zip,
+            attendees: (data.attendees ? data.attendees : [])
         }
         tempEvents.push(event);
       });
@@ -39,37 +42,111 @@ function Socials(props) {
   }, []);
 
   let eventComponents = [];
+  const addEvent = (event) => {
+    eventComponents.push(
+      <Grid item onClick={() => {
+        setClickedEvent(event);
+        setDate(event.dateAndTime);
+      }}>
+        <Paper>
+          <SocialsEvent event={event}/>
+        </Paper>
+      </Grid>
+    );
+  };
+  for(let i = 0; i < events.length; i++){
+    if(sameDay(events[i].dateAndTime, date)){
+      addEvent(events[i]);
+    }
+  }
   if(search){
     for(let i = 0; i < events.length; i++){
       if(events[i].name.toLowerCase().includes(search.toLowerCase())){
-          eventComponents.push(<SocialsEvent event={events[i]} />);
-      }
-    }
-  }else{
-    for(let i = 0; i < events.length; i++){
-      if(sameDay(events[i].dateAndTime, date)){
-        eventComponents.push(<SocialsEvent event={events[i]} />);
+          if(!sameDay(events[i].dateAndTime, date)){
+            addEvent(events[i]);
+          }
       }
     }
   }
 
   return (
-    <Grid container spacing={3} style={{'flexGrow': 1, 'padding': 10}}>
-      <Grid item xs={12}>
-        <h1 style={{"textAlign" : "center"}}>Upcoming Events</h1>
-      </Grid>
-      <Grid item xs={12}>
-        <TextField label="Search Events" variant="outlined" onChange={e => {
-          setSearch(e.target.value);
-        }}/>
-      </Grid>
+    <div>
+    <Grid container
+      spacing={3}
+      justify="center"
+      style={{'flexGrow': 1, 'padding': 10}}
+    >
       <Grid item onClick={()=>{setSearch('')}}>
         <SocialsCalendar date={date} setDate={setDate} events={events}/>
       </Grid>
       <Grid item>
-        {eventComponents.map(component => <Paper style={{'margin': 10}}> {component} </Paper>)}
+        <Grid container
+          spacing={3}
+          direction="column"
+          alignItems="flex-start"
+        >
+          <Grid item>
+            <TextField label="Search Events" variant="outlined" onChange={e => {
+              setSearch(e.target.value);
+            }}/>
+          </Grid>
+          {eventComponents}
+        </Grid>
+      </Grid>
+      <Grid item>
+        {clickedEvent ?
+          <Paper>
+            <Grid container
+              direction="column"
+              alignItems="flex-start"
+            >
+              <Grid item>
+                <SocialsEvent event={clickedEvent} expanded={true}/>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" style={{'margin': 10}}
+                  onClick={() => {
+                    const user = readUser();
+
+                    if(!user){
+                      setPopUpResult('You are not logged in.');
+                    }else if(!clickedEvent.attendees.includes(user.uid)){
+                      clickedEvent.attendees.push(user.uid);
+                      updateEvent(clickedEvent.name, {attendees: clickedEvent.attendees});
+                      setPopUpResult('You have been added successfully.');
+                    }else{
+                      setPopUpResult('You were added already.');
+                    }
+                  }}
+                >
+                  RSVP
+                </Button>
+                {'Attendees: ' + clickedEvent.attendees.length}
+              </Grid>
+            </Grid>
+          </Paper>
+        : undefined }
       </Grid>
     </Grid>
+    <Dialog
+        open={popUpResult}
+        onClose={() => setPopUpResult('')}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"RSVP"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpResult}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setPopUpResult('')} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
 
