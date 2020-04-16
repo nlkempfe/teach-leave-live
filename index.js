@@ -20,7 +20,7 @@ app.get('/stripe',( async (req, res) => {
       {
         name: 'Premium Subscription',
         //description: 'Subscription',
-        amount: 1000,
+        amount: 1999,
         currency: 'usd',
         quantity: 1,
       },
