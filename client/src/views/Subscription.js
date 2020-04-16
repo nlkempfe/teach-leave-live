@@ -124,14 +124,14 @@ const footers = [
     description: ["Team", "History", "Contact us", "Locations"]
   },
   {
-    title: "Features",
+    title: "COntact Us",
     description: [
-      "Cool stuff",
-      "Random feature",
-      "Team feature",
-      "Developer stuff",
-      "Another one"
+      'Teacher focused courses',
+      'Blogging',
+      'community interaction',
+      
     ]
+     
   }
 ];
 
