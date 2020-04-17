@@ -16,6 +16,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+let Alert = (props) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -31,6 +37,7 @@ function Home(props) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [errorText, setErrorText] = useState('');
+  const [showSnackBar, setShowSnackBar] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const classes = useStyles();
@@ -53,6 +60,7 @@ function Home(props) {
                 email: email
             }).then(doc => {
                 console.log("Success: " + doc);
+                setShowSnackBar(true);
             });
             handleNewsletterClose();
         }
@@ -86,6 +94,14 @@ function Home(props) {
         setOpen(true);
     };
 
+    //Close success message 'snack bar'
+    let handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setShowSnackBar(false);
+    };
+
   return (
     <div>
       <div style={newsletterStyle}>
@@ -110,6 +126,11 @@ function Home(props) {
             <Button variant='contained' color='primary' onClick = {event => handleSubmit()}>Submit</Button>
           </DialogActions>
       </Dialog>
+          <Snackbar open={showSnackBar} autoHideDuration={6000} onClose={handleSuccessClose}>
+              <Alert onClose={handleSuccessClose} severity="success">
+                  Successfully subscribed to the newsletter!
+              </Alert>
+          </Snackbar>
       </div>
     </div>
   );
