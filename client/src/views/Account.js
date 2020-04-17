@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Avatar, Container, Card, CardContent, Typography, Grid, Button} from '@material-ui/core'
 
+
 function Account(props) {
 
   if(props.currUser === null){
@@ -30,7 +31,7 @@ function Account(props) {
             ) : (
               <Container>
                 <Typography paragraph>You are not a premium user.</Typography>
-                <Button variant='contained'>Become a premium user</Button>
+                <Button onClick='contained'>Subscribe</Button>
               </Container>
             )}
           </CardContent>
