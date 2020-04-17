@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Tracker } from 'react-tracker';
 /* Import custom components */
 import DashboardChart from '../components/DashboardChart.js';
 
@@ -10,6 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
+const tracker = new Tracker();
 
 function Admin(props) {
   const [width, setWidth] = useState({width: window.innerWidth});

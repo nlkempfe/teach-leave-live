@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-
+import { Tracker } from 'react-tracker';
 import ProfileLink from '../components/ProfileLink.js'
+
+const tracker = new Tracker();
 
 function Blog() {
   let userID = 'a2c60dovnNajfSG91rnB4UXmBlf2'
