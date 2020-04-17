@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Tracker } from 'react-tracker';
+// import { Tracker } from 'react-tracker';
 import EmbeddedVideo from '../components/EmbeddedVideo.js'
 
-const tracker = new Tracker();
+// const tracker = new Tracker();
 
 function Courses(props) {
 

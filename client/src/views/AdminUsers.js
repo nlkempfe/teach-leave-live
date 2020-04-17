@@ -16,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
+import Chip from '@material-ui/core/Chip';
 
 /* Import mui-datatables */
 import MUIDataTable from 'mui-datatables';
@@ -225,10 +226,17 @@ function AdminUsers(props) {
     selectableRowsHeader: false,
   };
 
+  const premiumUsers = users.filter(u => u.premium);
+
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
-          <MUIDataTable title={'Manage Users'} data={users} columns={columns} options={options}/>
+          <div style={{marginBottom: 16}}>
+          <Chip label={`Premium users: ${premiumUsers.length}`}/>
+          <div style={{width:16,height:16}}/>
+          <Chip label={`Non-Premium users: ${users.length - premiumUsers.length}`}/>
+          </div>
+          <MUIDataTable title={`Manage Users`} data={users} columns={columns} options={options}/>
       </Container>
     </div>
   );

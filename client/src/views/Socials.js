@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import SocialsCalendar from '../components/SocialsCalendar.js'
-import { Tracker } from 'react-tracker';
+// import { Tracker } from 'react-tracker';
 
-const tracker = new Tracker();
+// const tracker = new Tracker();
 function Socials(props) {
   return (
     <div>
