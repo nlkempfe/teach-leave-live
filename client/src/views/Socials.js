@@ -3,7 +3,7 @@ import {Grid, Paper, TextField, Button, Dialog, DialogTitle, DialogActions, Dial
 import {db} from '../firebase/firebaseInit';
 import {readUser, updateEvent} from '../firebase/controllers.js';
 
-import SocialsCalendar from '../components/SocialsCalenderNew.js';
+import SocialsCalendar from '../components/SocialsCalender.js';
 import SocialsEvent from '../components/SocialsEvent.js';
 
 function sameDay(date1, date2){
