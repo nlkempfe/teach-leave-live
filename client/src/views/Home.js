@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {debounce} from 'lodash';
+import {db} from '../firebase/firebaseInit';
 
 /* Import assets */
 import logo from '../assets/logo.png'
@@ -38,15 +39,21 @@ function Home(props) {
   const newsletterStyle = {
     width: '25%',
     float: 'left'
-  }
+  };
 
     /* On submission checks if email is in correct format but not the check is not too extensive
        to prevent users with weird addresses from entering email. Just checking for '@' and '.' mostly.
        If it doesn't match don't submit and create an error on the TextField. Add any functionality upon
-       submitting in the if statement*/
-       const handleSubmit = () => {
+       submitting in the if statement */
+    const handleSubmit = () => {
         if (email.match(/\S+@\S+\.\S+/))
         {
+            //Email passes -> store in database
+            let documentRef = db.collection('subscribers').add({
+                email: email
+            }).then(doc => {
+                console.log("Success: " + doc);
+            });
             handleNewsletterClose();
         }
         else
@@ -54,7 +61,7 @@ function Home(props) {
             setErrorText('Invalid Email');
             setIsError(true);
         }
-    }
+    };
 
     //Handles change in email textfield but debounce prevents it from updating too often. Reset any errors.
     const handleEmailChange = debounce ((tempEmail) => {
@@ -65,14 +72,14 @@ function Home(props) {
 
     //Disables keyboard navigation of menu so that the TextField can be typed in properly
     const stopPropagation = e => {
-                e.stopPropagation();
+        e.stopPropagation();
     };
 
 
     //closes newsletter dialog
     const handleNewsletterClose = () => {
-      setOpen(false);
-    }
+        setOpen(false);
+    };
 
     //opens newsletter dialog
     const handleNewsletterOpen = () => {
@@ -82,7 +89,7 @@ function Home(props) {
   return (
     <div>
       <div style={newsletterStyle}>
-      <Card classname={classes.root}>
+      <Card className={classes.root}>
           <CardContent>
             <h2>Subscribe To Our Newsletter</h2>
           </CardContent>
