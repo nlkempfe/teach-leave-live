@@ -15,13 +15,17 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
     root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   }));
 
@@ -55,6 +59,7 @@ function CreateEventDialog(props) {
           description : selectedDescription,
           link: selectedLink,
           premium: selectedSubscription,
+          views: 0
       }).then(props.handleClose());
     };
 
@@ -62,10 +67,14 @@ function CreateEventDialog(props) {
     <Dialog open = {props.open}>
       <DialogTitle>Create Course</DialogTitle>
         <DialogContent className = {classes.root}>
-          <TextField label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
-          <TextField label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
-          <TextField label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)}/>
-          <TextField label='Subscription Plan' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleSubscriptionChange(e.target.value)}/>
+          <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
+          <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
+          <TextField className = {classes.root} label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)}/>
+          <InputLabel className = {classes.root}>Subscription Plan</InputLabel>
+          <Select className = {classes.root} variant = 'outlined' value = {selectedSubscription} onChange = {event => handleSubscriptionChange(event.target.value)}>
+            <MenuItem value = {true}>Premium</MenuItem>
+            <MenuItem value = {false}>Free</MenuItem>
+          </Select>
       </DialogContent>
       <DialogActions>
         <Button variant='contained' color='primary' onClick = {course => props.handleClose()}>Cancel</Button>
