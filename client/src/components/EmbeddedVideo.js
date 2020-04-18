@@ -14,9 +14,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 
 //import firebase
 import {auth, provider, db} from '../firebase/firebaseInit';
+import {readUser} from '../firebase/controllers'
 /*
 Provides an embeded youtube video that fills its container and matches an aspect ratio
 Provide props.aspectRatio to specify the aspect ratio (e.g. 16.0/9.0)
@@ -33,11 +35,11 @@ const useStyles = makeStyles({
 });
 
 function EmbeddedVideo (props) {
-  //stores information about user and video
-  const [link, setLink] = useState('')
-  const [premium, setPremium] = useState(false)
-  const [description, setDescription] = useState('')
-  const [name, setName] = useState('')
+  const [userPremium, setUserPremium] = useState(readUser().premium)
+  const link = props.link;
+  const premium = props.premium;
+  const description = props.description;
+  const name = props.name;
   const [open, setOpen] = useState(null)
   const [displayVideo, setDisplayVideo] = useState(false)
 
@@ -50,38 +52,24 @@ function EmbeddedVideo (props) {
   const container_style = {
     position: 'relative',
     overflow: 'hidden',
-    paddingTop: 20
+    paddingTop: 20,
+    height: 400
   };
 
   //styles the Iframe containing the youtube video
   const iframe_style = {
     width: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto'
   };
 
-  //Gets course information from database and current user information
-  let userRef = db.collection('courses').doc(props.courseName);
-  let getDoc = userRef.get()
-  .then(doc => {
-    if (!doc.exists)
+  //If the courese is premium this Icon is displayed
+  const checkPremiumCourse = () => {
+    console.log(premium)
+    if (premium)
     {
-      console.log('No Such Document')
+      return (
+      <LocalAtmIcon />);
     }
-    else {
-        setLink(doc.data().link)
-        setPremium(doc.data().premium)
-        setDescription(doc.data().description)
-        if (premium)
-        {
-          setName(doc.data().name + ' (Premium)')
-        }
-        else
-        {
-          setName(doc.data().name)
-        }
-    }
-  })
+  };
 
   //handles opening of popup
   const handleClickOpen = () => {
@@ -92,9 +80,25 @@ function EmbeddedVideo (props) {
     setOpen(false);
   };
 
+  const closeVideo = () => {
+    setDisplayVideo(false);
+  }
+
   //displays the video when needed
   const changeDisplay = () => {
     setDisplayVideo(true);
+    setOpen(false);
+  }
+
+  //styles the button
+  const buttonStyle = {
+    float: 'center',
+    paddingTop: 5
+  }
+
+  //styles the icon
+  const iconStyle = {
+    float: 'right'
   }
 
   /*Chooses what to return based off the status of user and the video. The component will always start with an
@@ -102,10 +106,10 @@ function EmbeddedVideo (props) {
     is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the
     popup will direct the user to pay for a premium membership*/
   const checkUser = () => {
-    if ((props.premium || !(premium)) && !(displayVideo))
+    if ((userPremium || !(premium)) && !(displayVideo))
     {
       return ( <div style={props.style}>
-                <Card classname={classes.root}>
+                <Card variant='outlined' classname={classes.root}>
                   <CardContent>
                     <Dialog
                       open={open}
@@ -131,10 +135,10 @@ function EmbeddedVideo (props) {
                       </DialogActions>
                     </Dialog>
                       <img width='100%' src={'https://img.youtube.com/vi/' + link + '/default.jpg'} />
-                    </CardContent>
-                    <CardActions>
-                      <Button onClick={handleClickOpen}>{name}</Button>
-                    </CardActions>
+                      <div style={buttonStyle}>
+                        <Button fullWidth variant='outlined' onClick={handleClickOpen}>{name}<div style={iconStyle}>{checkPremiumCourse()}</div></Button>
+                      </div>
+                      </CardContent>
                 </Card>
               </div>)
     }
@@ -142,9 +146,12 @@ function EmbeddedVideo (props) {
     {
       return (
         <div style={props.style}>
-          <Card classname={classes.root}>
+          <Card variant='outlined' classname={classes.root}>
             <CardContent>
               <iframe style={iframe_style} src={'https://www.youtube.com/embed/' + link} frameborder='0' allowFullScreen />
+              <div style={buttonStyle}>
+                 <Button fullWidth variant='outlined' onClick={closeVideo}>Close</Button>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -183,10 +190,10 @@ function EmbeddedVideo (props) {
               </DialogActions>
             </Dialog>
             <img width='100%' src={'https://img.youtube.com/vi/' + link + '/default.jpg'} />
+          <div style={buttonStyle}>
+            <Button fullWidth variant='outlined' onClick={handleClickOpen}>{name}<div style={iconStyle}>{checkPremiumCourse()}</div></Button>
+          </div>
           </CardContent>
-          <CardActions>
-          <Button onClick={handleClickOpen}>{name}</Button>
-        </CardActions>
       </Card>
       </div>)
     }

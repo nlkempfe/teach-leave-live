@@ -7,7 +7,7 @@ function Account(props) {
     return null;
   }
 
-  const user = JSON.parse(props.currUser);
+  const user = props.currUser;
 
   return (
     <Card fluid style = {{margin: 20}}>
