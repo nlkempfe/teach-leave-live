@@ -15,6 +15,7 @@ import AdminDashboard from './views/AdminDashboard.js';
 import AdminEvent from './views/AdminEvent.js';
 import AdminUsers from './views/AdminUsers.js';
 import AdminBlog from './views/AdminBlog';
+import AdminCourses from './views/AdminCourses';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
 import Account from './views/Account.js';
@@ -53,7 +54,7 @@ function App() {
           <Route path = '/admin/dashboard' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
           <Route path = '/admin/users' render ={(props) => <AdminUsers drawerWidth={drawerWidth}/>} />
           <Route path = '/admin/blog' render ={(props) => <AdminBlog currUser={currUser} drawerWidth={drawerWidth}/>} />
-          <Route path = '/admin/courses' render ={(props) => <AdminDashboard currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
+          <Route path = '/admin/courses' render ={(props) => <AdminCourses currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
           <Route path = '/admin/events' render ={(props) => <AdminEvent currUser={currUser} updateUser={setCurrUser} drawerWidth={drawerWidth}/>} />
           <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
           <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
