@@ -26,8 +26,9 @@ function Socials(props) {
       querySnapshot.forEach(doc => {
         const data = doc.data();
         let event = {
+            id: doc.id,
             name: data.name,
-            description: data.description,
+            description: data.description.join(),
             dateAndTime: new Date(data.dateAndTime.seconds * 1000),
             address: data.address,
             city: data.city,
@@ -44,13 +45,14 @@ function Socials(props) {
   let eventComponents = [];
   const addEvent = (event) => {
     eventComponents.push(
-      <Grid item onClick={() => {
-        setClickedEvent(event);
-        setDate(event.dateAndTime);
-      }}>
-        <Paper>
+      <Grid item>
+        <Button block variant="contained" style={{'textTransform': 'none'}}
+        onClick={() => {
+          setClickedEvent(event);
+          setDate(event.dateAndTime);
+        }}>
           <SocialsEvent event={event}/>
-        </Paper>
+        </Button>
       </Grid>
     );
   };
@@ -112,7 +114,7 @@ function Socials(props) {
                       setPopUpResult('You are not logged in.');
                     }else if(!clickedEvent.attendees.includes(user.uid)){
                       clickedEvent.attendees.push(user.uid);
-                      updateEvent(clickedEvent.name, {attendees: clickedEvent.attendees});
+                      updateEvent(clickedEvent.id, {attendees: clickedEvent.attendees});
                       setPopUpResult('You have been added successfully.');
                     }else{
                       setPopUpResult('You were added already.');

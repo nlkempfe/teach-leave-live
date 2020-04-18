@@ -33,39 +33,37 @@ function formatAddress(event){
 
 function SocialsEvent(props){
   return(
-    <Badge badgeContent={props.expanded ? undefined : <OpenInNewIcon />}>
-      <Grid container
-        spacing={3}
-        direction="column"
-        alignItems="flex-start"
-        style={{'flexGrow': 1, 'margin': 3}}
-      >
-        <Grid item>
-          <Typography>
-            {props.event.name}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography>
-            {props.event.dateAndTime.toLocaleDateString('en-US', dateTimeFormatOptions)}
-          </Typography>
-        </Grid>
-        {props.expanded ?
-          <Grid item>
-            <Typography>
-              {formatAddress(props.event)}
-            </Typography>
-          </Grid>
-        : undefined}
-        {props.expanded ?
-          <Grid item>
-            <Typography style={{'maxWidth': 300}}>
-              {props.event.description}
-            </Typography>
-          </Grid>
-        : undefined}
+    <Grid container
+      spacing={3}
+      direction="column"
+      alignItems="flex-start"
+      style={{'flexGrow': 1, 'margin': 3}}
+    >
+      <Grid item>
+        <Typography>
+          {props.event.name}
+        </Typography>
       </Grid>
-    </Badge>
+      <Grid item>
+        <Typography>
+          {props.event.dateAndTime.toLocaleDateString('en-US', dateTimeFormatOptions)}
+        </Typography>
+      </Grid>
+      {props.expanded ?
+        <Grid item>
+          <Typography>
+            {formatAddress(props.event)}
+          </Typography>
+        </Grid>
+      : undefined}
+      {props.expanded ?
+        <Grid item>
+          <Typography style={{'maxWidth': 300}}>
+            {props.event.description}
+          </Typography>
+        </Grid>
+      : undefined}
+    </Grid>
   )
 }
 
