@@ -48,6 +48,7 @@ function AdminEvent(props) {
             city: doc.data().city,
             state: doc.data().state,
             zip: doc.data().zip,
+            attendees: (doc.data().attendees ? doc.data().attendees : [])   //for future use
         }
         console.log(event);
         tempEvents.push(event);
