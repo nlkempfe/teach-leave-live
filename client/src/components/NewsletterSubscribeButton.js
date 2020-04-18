@@ -32,6 +32,12 @@ const useStyles = makeStyles({
 
 let NewsletterSubscribeButton = () => {
 
+    const [open, setOpen] = useState(false);
+    const [email, setEmail] = useState('');
+    const [errorText, setErrorText] = useState('');
+    const [showSnackBar, setShowSnackBar] = useState(false);
+    const [isError, setIsError] = useState(false);
+
     const classes = useStyles();
 
     //style for div around entire newsletter card
@@ -93,12 +99,6 @@ let NewsletterSubscribeButton = () => {
         }
         setShowSnackBar(false);
     };
-
-    const [open, setOpen] = useState(false);
-    const [email, setEmail] = useState('');
-    const [errorText, setErrorText] = useState('');
-    const [showSnackBar, setShowSnackBar] = useState(false);
-    const [isError, setIsError] = useState(false);
 
     return (<div style={newsletterStyle}>
         <Card className={classes.root}>
