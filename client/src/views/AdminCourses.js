@@ -45,6 +45,7 @@ function AdminCourses(props) {
             description: doc.data().description,
             link: doc.data().link,
             premium: doc.data().premium,
+            views: doc.data().views,
         }
         tempCourses.push(course);
       });
@@ -135,6 +136,14 @@ function AdminCourses(props) {
             return 'Free';
           }
         },
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'views',
+      label: 'Views',
+      options: {
         filter: false,
         sort: true
       }
