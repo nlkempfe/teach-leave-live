@@ -33,7 +33,7 @@ const AuthButton = (props) => {
             // Only update role if new account -> default to user role
             let role = await userDoc.get().then(snapshot => {
                if(snapshot.exists){
-                  return snapshot.data().role;
+                 return snapshot.data().role;
                } else {
                  return 'user';
                }
@@ -53,7 +53,7 @@ const AuthButton = (props) => {
                if(snapshot.exists){
                   return snapshot.data().recentlyViewed;
                } else {
-                 return [];
+                 return [''];
                }
             });
 
