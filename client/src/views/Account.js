@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Avatar, Container, Card, CardContent, Typography, Grid, Button} from '@material-ui/core'
+import { Link } from 'react-router-dom';
 
 function Account(props) {
 
@@ -30,7 +31,9 @@ function Account(props) {
             ) : (
               <Container>
                 <Typography paragraph>You are not a premium user.</Typography>
-                <Button variant='contained'>Become a premium user</Button>
+                <Link to={'/subscription'} style={{ textDecoration: 'none' }}>
+                <Button variant='contained'>Become a premium user!</Button>
+                </Link>
               </Container>
             )}
           </CardContent>

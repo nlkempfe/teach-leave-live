@@ -109,12 +109,13 @@ const tiers = [
       fetch('/stripe')
           .then(r => r.json())
           .then(d => {
-            stripe.redirectToCheckout({
-              sessionId: d.id,
-            }).then(function (result) {
-              console.log(result);
-            })
-          })
+              stripe.redirectToCheckout({
+                  sessionId: d.id,
+              }).then(function (result) {
+                  console.log(result);
+              })
+          })                      
+  
     }
   }
 ];
@@ -137,7 +138,7 @@ const footers = [
 
 export default function Pricing() {
   const classes = useStyles();
-
+  console.log(tiers);
   return (
     <React.Fragment>
       <CssBaseline />

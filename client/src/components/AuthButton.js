@@ -104,8 +104,6 @@ const AuthButton = (props) => {
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                    
-                    <MenuItem disabled={props.IsPremium} ><a href = '/subscription'>Subscribe</a></MenuItem>
                 </Menu>
             </div>
         );

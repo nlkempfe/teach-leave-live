@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-export default class App extends React.Component {
-  componenetDidMount(){
-    setTimeout(this.props.history.push('/'), 5000)
-  }
-
-  render() {
-    return (
-      <div style={{marginTop: 100}}>
+const App = () => {
+  const history = useHistory();
+  useEffect(()  => {
+    setTimeout(() => history.push('/subscription'), 3000);
+  }, []);
+  return (
+<div style={{marginTop: 100}}>
         <div style={{textAlign: 'center'}}>
           There was an error processing your payment.
         </div>
@@ -18,6 +18,8 @@ export default class App extends React.Component {
           You will be redirected to the home page.
         </div>
       </div>
-    )
-  }
+  )
 }
+
+export default App;
+
