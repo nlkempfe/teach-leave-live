@@ -125,11 +125,8 @@ const footers = [
     description: ["Team", "History", "Contact us", "Locations"]
   },
   {
-    title: "COntact Us",
+    title: "Contact Us",
     description: [
-      'Teacher focused courses',
-      'Blogging',
-      'community interaction',
       
     ]
      
@@ -180,7 +177,7 @@ export default function Pricing() {
           component="p"
         >
           Choose to enhance your ability to teach children via our online
-          ciriculum. We would love to make you a part o fthe Teach.leave.live
+          ciriculum. We would love to make you a part of the Teach.leave.live
           team! Join Premium now!
         </Typography>
       </Container>
