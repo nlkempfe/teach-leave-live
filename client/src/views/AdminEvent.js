@@ -46,9 +46,10 @@ function AdminEvent(props) {
             description: doc.data().description.join(),
             address: doc.data().address,
             city: doc.data().city,
-            state: doc.data().city,
+            state: doc.data().state,
             zip: doc.data().zip,
         }
+        console.log(event);
         tempEvents.push(event);
       });
       setEvents(tempEvents);
