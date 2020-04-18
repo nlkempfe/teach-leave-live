@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    height: 450,
+    height: '100%',
   },
   title: {
     color: theme.palette.primary.light,
@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Courses(props) {
+  const [activeName, setActiveName] = useState('');
+  const [activeDescription, setActiveDescription] = useState('')
+  const [activePremium, setActivePremium] = useState(false);
+  const [activeLink, setActiveLink] = useState('');
+  const [courseActive, setCourseActive] = useState(false);
   const [courses, setCourses] = useState([]);
   const [courseFilter, setCourseFilter] = useState('');
 
@@ -99,7 +104,14 @@ function Courses(props) {
                          name={directory.name} 
                          description={directory.description} 
                          premium={directory.premium} 
-                         style = {simple_video_style}/>
+                         style={simple_video_style}
+                         setFilter={setCourseFilter}
+                         shouldDisplay={false}
+                         setActive={setCourseActive}
+                         setPremium={setActivePremium}
+                         setLink={setActiveLink}
+                         setName={setActiveName}
+                         setDescription={setActiveDescription}/>
         </GridListTile>
       );
   });
@@ -113,18 +125,47 @@ function Courses(props) {
   const listStyle = {
     padding: '2.5%'
   }
+
+  //If course is active only display that youtube video otherwise display the list of courses
+  const chooseDisplay = () => {
+    console.log(courseActive);
+    if (courseActive)
+    {
+      return (
+      <EmbeddedVideo link={activeLink} 
+      name={activeName} 
+      description={activeDescription} 
+      premium={activePremium} 
+      style={simple_video_style}
+      setFilter={setCourseFilter}
+      shouldDisplay={true}
+      setActive={setCourseActive}
+      setPremium={setActivePremium}
+      setLink={setActiveLink}
+      setName={setActiveName}
+      setDescription={setActiveDescription}/>)
+    }
+    else
+    {
+      return (
+      <div>
+        <h1 style={headerStyle}>Courses</h1>
+        <div style={searchBarStyle}>
+        <TextField label='Search For Course' fullWidth variant='outlined' onChange={e => handleSearchChange(e.target.value)} defaultValue ={courseFilter}/>
+        </div>
+        <div style={listStyle}>
+          <GridList className={classes.gridList}>
+            {courseList}
+          </GridList>
+        </div> 
+      </div>
+      )
+    }
+  }
   
 return (
     <div>
-      <h1 style={headerStyle}>Courses</h1>
-      <div style={searchBarStyle}>
-        <TextField label='Search For Course' fullWidth variant='outlined' onChange={e => handleSearchChange(e.target.value)} defaultValue ={courseFilter}/>
-      </div>
-      <div style={listStyle}>
-        <GridList className={classes.gridList}>
-          {courseList}
-        </GridList>
-      </div>
+      {chooseDisplay()}
     </div>
   );
 }
