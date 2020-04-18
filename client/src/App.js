@@ -18,7 +18,7 @@ import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
 import Account from './views/Account.js';
 import Socials from './views/Socials.js'
-
+import Unsubscribe from "./views/Unsubscribe";
 
 function App() {
 
@@ -60,6 +60,7 @@ function App() {
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/home' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/unsubscribe' render ={(props) => <Unsubscribe/>}/>
         </Switch>
       </Router>
     );
@@ -74,6 +75,7 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/unsubscribe' render ={(props) => <Unsubscribe/>}/>
         </Switch>
       </Router>
     );
