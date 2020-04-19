@@ -95,6 +95,7 @@ function App() {
           <Route path = '/' render = {(props) => <NavigationBar currUser={currUser} updateUser={setCurrUser}/>} />
           <Switch>
             <Route exact path = '/' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
+            <Route path = '/home' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser}/>} />
             <Route path = '/blog' render ={(props) => <Blog currUser={currUser} updateUser={setCurrUser} />} />
             <Route path = '/user' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser} />} />
             <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
