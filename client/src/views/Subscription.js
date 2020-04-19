@@ -83,9 +83,8 @@ const tiers = [
     price: "0",
     description: [
       "View blog posts",
-      "View calendar events",
-      "Help center access",
-      "Email support"
+      "Add blog posts/comment",
+      "Plan events with other people"
     ],
     buttonText: "Sign up for free",
     buttonVariant: "outlined",
@@ -99,9 +98,9 @@ const tiers = [
     price: "19.99",
     description: [
       "View blog posts",
-      "Add blog posts/comment on existing",
-      "Access to educational content",
-      "Plan events with other people"
+      "Add blog posts/comment",
+      "Plan events with other people",
+      "Access to educational content"
     ],
     buttonText: "Get Premium",
     buttonVariant: "contained",
@@ -121,11 +120,11 @@ const tiers = [
 ];
 const footers = [
   {
-    title: "Company",
-    description: ["Team", "History", "Contact us", "Locations"]
+    title: "",
+    description: ["", "", "", ""]
   },
   {
-    title: "Contact Us",
+    title: "",
     description: [
       
     ]
