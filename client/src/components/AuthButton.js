@@ -33,7 +33,7 @@ const AuthButton = (props) => {
             // Only update role if new account -> default to user role
             let role = await userDoc.get().then(snapshot => {
                if(snapshot.exists){
-                  return snapshot.data().role;
+                 return snapshot.data().role;
                } else {
                  return 'user';
                }
@@ -48,6 +48,33 @@ const AuthButton = (props) => {
                }
             });
 
+            // Only update recently viewed corses if new account -> default to empty array
+            let recentlyViewed = await userDoc.get().then(snapshot => {
+               if(snapshot.exists){
+                  return snapshot.data().recentlyViewed;
+               } else {
+                 return [''];
+               }
+            });
+
+            // Only update commenting permissions if new account -> default to true
+            let allowCommenting = await userDoc.get().then(snapshot => {
+               if(snapshot.exists){
+                  return snapshot.data().allowCommenting;
+               } else {
+                 return true;
+               }
+            });
+
+            // Only update posting permissions if new account -> default to false
+            let allowPosting = await userDoc.get().then(snapshot => {
+               if(snapshot.exists){
+                  return snapshot.data().allowPosting;
+               } else {
+                 return true;
+               }
+            });
+
             //Email might not be shared, set user doc accordingly.
             if(retUser.additionalUserInfo.profile.email){
                 userDoc.set({
@@ -57,7 +84,10 @@ const AuthButton = (props) => {
                     lastName : retUser.additionalUserInfo.profile.last_name,
                     picURL : retUser.additionalUserInfo.profile.picture.data.url,
                     premium: premium,
-                    role: role
+                    role: role,
+                    recentlyViewed: recentlyViewed,
+                    allowCommenting: allowCommenting,
+                    allowPosting: allowPosting
                 });
             }
             else{
@@ -68,7 +98,10 @@ const AuthButton = (props) => {
                     lastName : retUser.additionalUserInfo.profile.last_name,
                     picURL : retUser.additionalUserInfo.profile.picture.data.url,
                     premium: premium,
-                    role: role
+                    role: role,
+                    recentlyViewed: recentlyViewed,
+                    allowCommenting: allowCommenting,
+                    allowPosting: allowPosting
                 });
             }
         });
@@ -89,6 +122,7 @@ const AuthButton = (props) => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+
     };
 
     let user = readUser();
@@ -103,7 +137,7 @@ const AuthButton = (props) => {
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <MenuItem href = "/" onClick={handleLogout}>Logout</MenuItem>
                     <MenuItem onClick={() =>{
                         fetch('/stripe')
                             .then(r => r.json())
@@ -113,7 +147,7 @@ const AuthButton = (props) => {
                                 }).then(function (result) {
                                     console.log(result);
                                 })
-                            })                      
+                            })
                     }}>Checkout</MenuItem>
                 </Menu>
             </div>
