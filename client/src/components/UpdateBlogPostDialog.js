@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function UpdateCourseDialog(props) {
+function UpdateBlogPostDialog(props) {
     const classes = useStyles();
 
     /* Hook for the value of each form */
@@ -91,4 +91,4 @@ function UpdateCourseDialog(props) {
   );
 }
 
-export default UpdateCourseDialog;
+export default UpdateBlogPostDialog;
