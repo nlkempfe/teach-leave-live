@@ -166,15 +166,9 @@ function EmbeddedVideo (props) {
     }
     else if (displayVideo)
     {
-<<<<<<< HEAD
       return (
-        <div style={props.style}>
-          <Card variant='outlined' classname={classes.root}>
-=======
-      return ( 
         <div style={playingStyle}>
           <Card variant='outlined'>
->>>>>>> master
             <CardContent>
               <iframe allow='autoplay' style={iframe_style} src={'https://www.youtube.com/embed/' + link + '?autoplay=1'} frameborder='0' allowFullScreen/>
               <div style={buttonStyle}>

@@ -100,17 +100,10 @@ function Courses(props) {
   const courseList = filteredCourses.map(directory => {
       return (
         <GridListTile style={listElementStyle}>
-<<<<<<< HEAD
           <EmbeddedVideo link={directory.link}
                          name={directory.name}
                          description={directory.description}
                          premium={directory.premium}
-                         style = {simple_video_style}/>
-=======
-          <EmbeddedVideo link={directory.link} 
-                         name={directory.name} 
-                         description={directory.description} 
-                         premium={directory.premium} 
                          style={simple_video_style}
                          setFilter={setCourseFilter}
                          shouldDisplay={false}
@@ -119,7 +112,6 @@ function Courses(props) {
                          setLink={setActiveLink}
                          setName={setActiveName}
                          setDescription={setActiveDescription}/>
->>>>>>> master
         </GridListTile>
       );
   });
@@ -134,18 +126,16 @@ function Courses(props) {
     padding: '2.5%'
   }
 
-<<<<<<< HEAD
-=======
   //If course is active only display that youtube video otherwise display the list of courses
   const chooseDisplay = () => {
     console.log(courseActive);
     if (courseActive)
     {
       return (
-      <EmbeddedVideo link={activeLink} 
-      name={activeName} 
-      description={activeDescription} 
-      premium={activePremium} 
+      <EmbeddedVideo link={activeLink}
+      name={activeName}
+      description={activeDescription}
+      premium={activePremium}
       style={simple_video_style}
       setFilter={setCourseFilter}
       shouldDisplay={true}
@@ -167,13 +157,12 @@ function Courses(props) {
           <GridList className={classes.gridList}>
             {courseList}
           </GridList>
-        </div> 
+        </div>
       </div>
       )
     }
   }
-  
->>>>>>> master
+
 return (
     <div>
       {chooseDisplay()}
