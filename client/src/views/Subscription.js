@@ -94,7 +94,7 @@ const tiers = [
   },
   {
     title: "Premium",
-    subheader: "Most popular",
+    //subheader: "Most popular",
     price: "19.99",
     description: [
       "View blog posts",
@@ -176,7 +176,7 @@ export default function Pricing() {
           component="p"
         >
           Choose to enhance your ability to teach children via our online
-          ciriculum. We would love to make you a part of the Teach.leave.live
+          curriculum. We would love to make you a part of the Teach.leave.live
           team! Join Premium now!
         </Typography>
       </Container>
