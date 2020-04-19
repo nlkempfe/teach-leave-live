@@ -24,7 +24,10 @@ export const createCourse = (course) => {
        The course will be saved by its name and can be retrieved the same way */
 
     let courseRef = db.collection('courses').doc(course.name);
-    let createCourse = courseRef.set(course);
+    let createCourse = courseRef.set({
+        ...course,
+        clickedCount: 0
+    });
 
 };
 
