@@ -41,6 +41,12 @@ function AdminBlog(props) {
   const [width, setWidth] = useState({width: window.innerWidth});
 
   const theme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#1C1C1C'
+      },
+    },
      overrides: {
        MUIDataTableSelectCell: {
          expandDisabled: {
