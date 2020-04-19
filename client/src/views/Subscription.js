@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "baseline",
     marginBottom: theme.spacing(3),
 
-   
+
   },
   footer: {
     borderTop: `1px solid ${theme.palette.divider}`,
@@ -91,13 +91,13 @@ const tiers = [
     ],
     buttonText: "Sign up for free",
     buttonVariant: "outlined",
+    disabled: true,
     onClick:  () => {
       //This is where you implement what happens when "Sign up for free" is clicked
     }
   },
   {
     title: "Premium",
-    //subheader: "Most popular",
     price: "19.99",
     description: [
       "Blog access",
@@ -107,6 +107,7 @@ const tiers = [
     ],
     buttonText: "Get Premium",
     buttonVariant: "contained",
+    disabled: false,
     onClick:  () => {
       fetch('/stripe')
           .then(r => r.json())
@@ -116,8 +117,8 @@ const tiers = [
               }).then(function (result) {
                   console.log(result);
               })
-          })                      
-  
+          })
+
     }
   }
 ];
@@ -129,9 +130,9 @@ const footers = [
   {
     title: "",
     description: [
-      
+
     ]
-     
+
   }
 ];
 
@@ -154,10 +155,10 @@ export default function Pricing() {
             noWrap
             className={classes.toolbarTitle}
           >
-            
+
           </Typography>
           <nav>
-            
+
           </nav>
         </Toolbar>
       </AppBar>
@@ -178,7 +179,7 @@ export default function Pricing() {
           color="textSecondary"
           component="p"
         >
-          
+
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -226,6 +227,7 @@ export default function Pricing() {
                 </CardContent>
                 <CardActions>
                   <Button
+                    disabled = {tier.disabled}
                     fullWidth
                     variant={tier.buttonVariant}
                     color="primary"
@@ -239,7 +241,7 @@ export default function Pricing() {
           ))}
         </Grid>
       </Container>
-    
+
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
         <Grid container spacing={4} justify="space-evenly">
@@ -268,4 +270,3 @@ export default function Pricing() {
     </React.Fragment>
   );
 }
-
