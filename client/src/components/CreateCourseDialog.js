@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function CreateEventDialog(props) {
+function CreateCourseDialog(props) {
     const classes = useStyles();
 
     /* Hook for the value of each form */
@@ -84,4 +84,4 @@ function CreateEventDialog(props) {
   );
 }
 
-export default CreateEventDialog;
+export default CreateCourseDialog;
