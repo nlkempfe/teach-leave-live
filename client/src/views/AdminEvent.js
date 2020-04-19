@@ -50,7 +50,6 @@ function AdminEvent(props) {
             zip: doc.data().zip,
             attendees: (doc.data().attendees ? doc.data().attendees : [])   //for future use
         }
-        console.log(event);
         tempEvents.push(event);
       });
       setEvents(tempEvents);
@@ -77,7 +76,6 @@ function AdminEvent(props) {
   }
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
-    /* TODO */
   }
 
   const columns = [
@@ -203,7 +201,7 @@ function AdminEvent(props) {
     disableToolbarSelect: true,
     download: false,
     elevation: 1,
-    filterType: 'checkbox',
+    filter: false,
     print: false,
     responsive: 'scrollMaxHeight',
     selectableRows: 'none',

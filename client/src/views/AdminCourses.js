@@ -73,7 +73,6 @@ function AdminCourses(props) {
   }
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
-    /* TODO */
   }
 
   const columns = [
@@ -136,7 +135,7 @@ function AdminCourses(props) {
             return 'Free';
           }
         },
-        filter: false,
+        filter: true,
         sort: true
       }
     },
