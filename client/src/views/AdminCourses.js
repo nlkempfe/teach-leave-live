@@ -73,7 +73,6 @@ function AdminCourses(props) {
   }
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
-    /* TODO */
   }
 
   const columns = [

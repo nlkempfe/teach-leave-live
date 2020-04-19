@@ -42,6 +42,7 @@ function EmbeddedVideo (props) {
   const premium = props.premium;
   const description = props.description;
   const name = props.name;
+  const id = props.id;
   const [open, setOpen] = useState(null)
   const [displayVideo, setDisplayVideo] = useState(props.shouldDisplay)
 
@@ -91,6 +92,7 @@ function EmbeddedVideo (props) {
     props.setName('');
     props.setDescription('');
     props.setLink('');
+    props.setId('');
   }
 
   //displays the video when needed
@@ -103,6 +105,7 @@ function EmbeddedVideo (props) {
     props.setName(name);
     props.setDescription(description);
     props.setLink(link);
+    props.setId(id);
   }
 
   //styles the button
@@ -127,7 +130,7 @@ function EmbeddedVideo (props) {
 
   /*Chooses what to return based off the status of user and the video. The component will always start with an
     image of the youtube video and a button that creates a popup. If the video is a standard video or if a premium user
-    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the 
+    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the
     popup will direct the user to pay for a premium membership*/
   const checkUser = () => {
     if ((userPremium || !(premium)) && !(displayVideo))
@@ -168,7 +171,7 @@ function EmbeddedVideo (props) {
     }
     else if (displayVideo)
     {
-      return ( 
+      return (
         <div style={playingStyle}>
           <Card variant='outlined'>
             <CardContent>
