@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function CreateCourseDialog(props) {
+function CreateBlogPostDialog(props) {
     const classes = useStyles();
 
     /* Hook for the value of each form */
