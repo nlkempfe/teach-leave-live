@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {debounce} from 'lodash';
 
-/* Import custom components */
-
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
 
@@ -93,4 +91,4 @@ function UpdateCourseDialog(props) {
   );
 }
 
-export default CreateEventDialog;
+export default UpdateCourseDialog;
