@@ -19,71 +19,74 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+    content: {
       marginLeft: 'auto',
       marginRight: 'auto',
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
+    actions: {
+      marginRight: theme.spacing(2),
+      marginBottom: theme.spacing(1),
+    }
   }));
 
 function UpdateBlogPostDialog(props) {
     const classes = useStyles();
 
     /* Hook for the value of each form */
-    const [selectedName, setSelectedName] = useState('');
-    const [selectedDescription, setSelectedDescription] = useState('');
-    const [selectedLink, setSelectedLink] = useState('');
-    const [selectedSubscription, setSelectedSubscription] = useState(false);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [imageURL, setImageURL] = useState('');
+    const [allowCommenting, setAllowCommenting] = useState(false);
 
     useEffect(() => {
       if(props.data !== null) {
-        setSelectedName(props.data.name);
-        setSelectedDescription(props.data.description);
-        setSelectedLink(props.data.link);
-        setSelectedSubscription(props.data.premium);
+        setTitle(props.data.title);
+        setContent(props.data.content);
+        setImageURL(props.data.imageURL);
+        setAllowCommenting(props.data.allowCommenting);
       }
     }, [props.open]);
 
     /* Handle changes of the value of each form using debounce to improve performance*/
-    const handleNameChange = debounce ((name) => {
-      setSelectedName(name);
+    const handleTitleChange = debounce ((title) => {
+      setTitle(title);
     }, 500);
-    const handleDescriptionChange = debounce ((description) => {
-      setSelectedDescription(description);
+    const handleContentChange = debounce ((content) => {
+      setContent(content);
     }, 500);
-    const handleLinkChange = debounce ((link) => {
-      setSelectedLink(link);
+    const handleImageURLChange = debounce ((imageURL) => {
+      setImageURL(imageURL);
     }, 500);
-    const handleSubscriptionChange = debounce ((subscription) => {
-      setSelectedSubscription(subscription);
+    const handleAllowCommentingChange = debounce ((allowCommenting) => {
+      setAllowCommenting(allowCommenting);
     }, 500);
 
     //Adds course to database after submission of form
     const handleSubmit = (course) => {
-      let doc = db.collection('courses').doc(props.data.id).set({
-          name : selectedName,
-          description: selectedDescription,
-          link: selectedLink,
-          premium: selectedSubscription,
-          views: props.data.views,
+      let doc = db.collection('posts').doc(props.data.id).update({
+          title : title,
+          content: content,
+          imageURL: imageURL,
+          allowCommenting: allowCommenting
       }).then(props.handleClose());
     };
 
   return (
     <Dialog open = {props.open}>
-      <DialogTitle>Create Course</DialogTitle>
-        <DialogContent className = {classes.root}>
-          <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)} defaultValue = {selectedName}/>
-          <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)} defaultValue = {selectedDescription}/>
-          <TextField className = {classes.root} label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)} defaultValue = {selectedLink}/>
-          <InputLabel className = {classes.root}>Subscription Plan</InputLabel>
-          <Select className = {classes.root} variant = 'outlined' value = {selectedSubscription} onChange = {event => handleSubscriptionChange(event.target.value)} defaultValue = {selectedSubscription}>
-            <MenuItem value = {true}>Premium</MenuItem>
-            <MenuItem value = {false}>Free</MenuItem>
+      <DialogTitle>Update Blog Post</DialogTitle>
+        <DialogContent className = {classes.content}>
+          <TextField className = {classes.content} label='Title' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleTitleChange(e.target.value)} defaultValue = {title}/>
+          <TextField className = {classes.content} label='Content' multiline required fullWidth rows='15' variant='outlined' onChange={e => handleContentChange(e.target.value)} defaultValue = {content}/>
+          <TextField className = {classes.content} label='Image URL' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleImageURLChange(e.target.value)} defaultValue = {imageURL}/>
+          <InputLabel className = {classes.content}>Allow Commenting</InputLabel>
+          <Select className = {classes.content} variant = 'outlined' value = {allowCommenting} onChange = {event => handleAllowCommentingChange(event.target.value)} defaultValue = {allowCommenting}>
+            <MenuItem value = {true}>Yes</MenuItem>
+            <MenuItem value = {false}>No</MenuItem>
           </Select>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className = {classes.actions}>
         <Button variant='contained' color='primary' onClick = {course => props.handleClose()}>Cancel</Button>
         <Button variant='contained' color='primary' onClick = {course => handleSubmit(course)}>Submit</Button>
       </DialogActions>

@@ -135,7 +135,7 @@ function AdminCourses(props) {
             return 'Free';
           }
         },
-        filter: false,
+        filter: true,
         sort: true
       }
     },

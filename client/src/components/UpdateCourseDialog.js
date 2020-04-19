@@ -72,7 +72,7 @@ function UpdateCourseDialog(props) {
 
   return (
     <Dialog open = {props.open}>
-      <DialogTitle>Create Course</DialogTitle>
+      <DialogTitle>Update Course</DialogTitle>
         <DialogContent className = {classes.root}>
           <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)} defaultValue = {selectedName}/>
           <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)} defaultValue = {selectedDescription}/>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {debounce} from 'lodash';
 
 /* Import firebase products */
-import {db} from '../firebase/firebaseInit';
+import {db, firestore} from '../firebase/firebaseInit';
 
 /* Import material-UI components */
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,67 +19,72 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+    content: {
       marginLeft: 'auto',
       marginRight: 'auto',
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
+    actions: {
+      marginRight: theme.spacing(2),
+      marginBottom: theme.spacing(1),
+    }
   }));
 
 function CreateBlogPostDialog(props) {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    /* Hook for the value of each form */
-    const [selectedName, setSelectedName] = useState('');
-    const [selectedDescription, setSelectedDescription] = useState('');
-    const [selectedLink, setSelectedLink] = useState('');
-    const [selectedSubscription, setSelectedSubscription] = useState(false);
+  /* Hook for the value of each form */
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [imageURL, setImageURL] = useState('');
+  const [allowCommenting, setAllowCommenting] = useState(false);
 
-    /* Handle changes of the value of each form using debounce to improve performance*/
-    const handleNameChange = debounce ((name) => {
-      setSelectedName(name);
-    }, 500);
-    const handleDescriptionChange = debounce ((description) => {
-      setSelectedDescription(description);
-    }, 500);
-    const handleLinkChange = debounce ((link) => {
-      setSelectedLink(link);
-    }, 500);
-    const handleSubscriptionChange = debounce ((subscription) => {
-      setSelectedSubscription(subscription);
-    }, 500);
+  /* Handle changes of the value of each form using debounce to improve performance*/
+  const handleTitleChange = debounce ((title) => {
+    setTitle(title);
+  }, 500);
+  const handleContentChange = debounce ((content) => {
+    setContent(content);
+  }, 500);
+  const handleImageURLChange = debounce ((imageURL) => {
+    setImageURL(imageURL);
+  }, 500);
+  const handleAllowCommentingChange = debounce ((allowCommenting) => {
+    setAllowCommenting(allowCommenting);
+  }, 500);
 
-    //Adds course to database after submission of form
-    const handleSubmit = (course) => {
-      let doc = db.collection('courses').add({
-          name : selectedName,
-          description : selectedDescription,
-          link: selectedLink,
-          premium: selectedSubscription,
-          views: 0
-      }).then(props.handleClose());
-    };
+  //Adds course to database after submission of form
+  const handleSubmit = async (course) => {
+    let doc = db.collection('posts').add({
+        title : title,
+        content: content,
+        imageURL: imageURL,
+        allowCommenting: allowCommenting,
+        views: 0,
+        timestamp: firestore.Timestamp.now()
+    }).then(props.handleClose());
+  };
 
-  return (
-    <Dialog open = {props.open}>
-      <DialogTitle>Create Course</DialogTitle>
-        <DialogContent className = {classes.root}>
-          <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
-          <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
-          <TextField className = {classes.root} label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)}/>
-          <InputLabel className = {classes.root}>Subscription Plan</InputLabel>
-          <Select className = {classes.root} variant = 'outlined' value = {selectedSubscription} onChange = {event => handleSubscriptionChange(event.target.value)}>
-            <MenuItem value = {true}>Premium</MenuItem>
-            <MenuItem value = {false}>Free</MenuItem>
-          </Select>
-      </DialogContent>
-      <DialogActions>
-        <Button variant='contained' color='primary' onClick = {course => props.handleClose()}>Cancel</Button>
-        <Button variant='contained' color='primary' onClick = {course => handleSubmit(course)}>Submit</Button>
-      </DialogActions>
-    </Dialog>
-  );
+return (
+  <Dialog open = {props.open}>
+    <DialogTitle>Create Blog Post</DialogTitle>
+      <DialogContent className = {classes.content}>
+        <TextField className = {classes.content} label='Title' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleTitleChange(e.target.value)}/>
+        <TextField className = {classes.content} label='Content' multiline required fullWidth rows='15' variant='outlined' onChange={e => handleContentChange(e.target.value)}/>
+        <TextField className = {classes.content} label='Image URL' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleImageURLChange(e.target.value)}/>
+        <InputLabel className = {classes.content}>Allow Commenting</InputLabel>
+        <Select className = {classes.content} variant = 'outlined' value = {allowCommenting} onChange = {event => handleAllowCommentingChange(event.target.value)} defaultValue = {allowCommenting}>
+          <MenuItem value = {true}>Yes</MenuItem>
+          <MenuItem value = {false}>No</MenuItem>
+        </Select>
+    </DialogContent>
+    <DialogActions className = {classes.actions}>
+      <Button variant='contained' color='primary' onClick = {course => props.handleClose()}>Cancel</Button>
+      <Button variant='contained' color='primary' onClick = {course => handleSubmit(course)}>Submit</Button>
+    </DialogActions>
+  </Dialog>
+);
 }
 
 export default CreateBlogPostDialog;

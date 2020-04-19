@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
-import CreateCourseDialog from '../components/CreateCourseDialog.js';
-import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
+import CreateBlogPostDialog from '../components/CreateBlogPostDialog.js';
+import UpdateBlogPostDialog from '../components/UpdateBlogPostDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -13,6 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 /* Import material-ui icons */
 import AddIcon from '@material-ui/icons/Add';
@@ -26,7 +28,7 @@ import MUIDataTable from 'mui-datatables';
 
 function AdminBlog(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [courses, setCourses] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [width, setWidth] = useState({width: window.innerWidth});
@@ -36,21 +38,23 @@ function AdminBlog(props) {
   });
 
   const handleUpdate = () => {
-    db.collection('courses').get().then(querySnapshot => {
-      let tempCourses = [];
+    db.collection('posts').get().then(querySnapshot => {
+      let tempPosts = [];
       querySnapshot.forEach(doc => {
-        let course = {
+        let post = {
             id: doc.id,
-            name: doc.data().name,
-            description: doc.data().description,
-            link: doc.data().link,
-            premium: doc.data().premium,
+            allowCommenting: doc.data().allowCommenting,
+            title: doc.data().title,
+            content: doc.data().content,
+            imageURL: doc.data().imageURL,
+            timestamp: doc.data().timestamp,
             views: doc.data().views,
         }
-        tempCourses.push(course);
+        tempPosts.push(post);
       });
-      setCourses(tempCourses);
+      setPosts(tempPosts);
     });
+    console.log('posts', posts);
   }
 
   useEffect(() => {
@@ -64,10 +68,10 @@ function AdminBlog(props) {
   }
 
   const handleDelete = (tableMeta) => {
-    db.collection('courses').doc(courses[tableMeta.rowIndex].id).delete().then(handleUpdate());
+    db.collection('posts').doc(posts[tableMeta.rowIndex].id).delete().then(handleUpdate());
   }
   const handleEdit = (tableMeta) => {
-    setRowData(courses[tableMeta.rowIndex]);
+    setRowData(posts[tableMeta.rowIndex]);
     setIsEditing(true);
     setOpen(true);
   }
@@ -87,8 +91,8 @@ function AdminBlog(props) {
       }
     },
     {
-      name: 'name',
-      label: 'Course Name',
+      name: 'title',
+      label: 'Title',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           if(value.length > 30) {
@@ -102,8 +106,21 @@ function AdminBlog(props) {
       }
     },
     {
-      name: 'description',
-      label: 'Description',
+      name: 'timestamp',
+      label: 'Timestamp',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          const d = value.toDate();
+          const date = ("0"+(d.getMonth()+1)).slice(-2)  + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
+          return (date);
+        },
+        filter: false,
+        sort: true
+      }
+    },
+    {
+      name: 'content',
+      label: 'Content',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
           if(value.length > 30) {
@@ -117,25 +134,27 @@ function AdminBlog(props) {
       }
     },
     {
-      name: 'link',
-      label: 'Link',
+      name: 'imageURL',
+      label: 'Image',
       options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <img src = {value} alt = 'thumbnail' width = '50' height = '50'/>
+          );
+        },
         filter: false,
         sort: true
       }
     },
     {
-      name: 'premium',
-      label: 'Subscription Plan',
+      name: 'allowCommenting',
+      label: 'Allow Commenting',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          if(value) {
-            return 'Premium';
-          } else {
-            return 'Free';
-          }
+          if(value) return 'Yes';
+          else return 'No';
         },
-        filter: false,
+        filter: true,
         sort: true
       }
     },
@@ -152,7 +171,7 @@ function AdminBlog(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {course => handleEdit(tableMeta)}>
+              <IconButton onClick = {post => handleEdit(tableMeta)}>
                 <EditIcon/>
               </IconButton>
             );
@@ -168,7 +187,7 @@ function AdminBlog(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {course => handleDelete(tableMeta)}>
+              <IconButton onClick = {post => handleDelete(tableMeta)}>
                 <DeleteIcon/>
               </IconButton>
             );
@@ -182,7 +201,7 @@ function AdminBlog(props) {
   const options = {
     customToolbar: () => {
       return (
-        <IconButton onClick = {course => setOpen(true)}>
+        <IconButton onClick = {post => setOpen(true)}>
           <AddIcon/>
         </IconButton>
       );
@@ -190,9 +209,26 @@ function AdminBlog(props) {
     disableToolbarSelect: true,
     download: false,
     elevation: 1,
-    filterType: 'checkbox',
+    expandableRows: true,
+    isRowExpandable: (dataIndex, expandedRows) => {
+        // Prevent expand/collapse of any row if there are 4 rows expanded already (but allow those already expanded to be collapsed)
+        if (expandedRows.data.length > 0 && expandedRows.data.filter(d => d.dataIndex === dataIndex).length === 0) return false;
+        return true;
+      },
+    filter: false,
     print: false,
     responsive: 'scrollMaxHeight',
+    renderExpandableRow: (rowData, rowMeta) => {
+      const colSpan = rowData.length + 1;
+      return (
+        <TableRow>
+          <TableCell colSpan={colSpan}>
+            Custom expandable row option.
+          </TableCell>
+        </TableRow>
+      );
+    },
+    onRowsExpand: (curExpanded, allExpanded) => console.log(curExpanded, allExpanded),
     selectableRows: 'none',
     selectableRowsHeader: false,
   };
@@ -200,9 +236,9 @@ function AdminBlog(props) {
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
-        <MUIDataTable title={'Manage Courses'} data={courses} columns={columns} options={options}/>
-        <CreateCourseDialog open = {open && !isEditing} handleClose = {course => handleClose()}/>
-        <UpdateCourseDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
+        <MUIDataTable title={'Manage Blog Posts'} data={posts} columns={columns} options={options}/>
+        <CreateBlogPostDialog open = {open && !isEditing} handleClose = {post => handleClose()}/>
+        <UpdateBlogPostDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
