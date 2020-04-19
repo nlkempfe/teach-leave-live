@@ -11,6 +11,8 @@ import { CenturyView } from 'react-calendar';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
+import NewsletterSubscribeButton from "../components/NewsletterSubscribeButton";
+
 function Home(props) {
   const styles = {
     paperContainer: {
@@ -48,6 +50,7 @@ function Home(props) {
         <Box bgcolor="text.disabled" color="background.paper" p={1} style={styles.paperContainer2}>
           
         </Box>
+      <NewsletterSubscribeButton/>
     </div>
   );
 }
