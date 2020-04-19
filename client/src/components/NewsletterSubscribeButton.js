@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
@@ -30,9 +30,9 @@ const useStyles = makeStyles({
     },
 });
 
-let NewsletterSubscribeButton = () => {
+function NewsletterSubscribeButton (props) {
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [email, setEmail] = useState('');
     const [errorText, setErrorText] = useState('');
     const [showSnackBar, setShowSnackBar] = useState(false);
@@ -45,6 +45,10 @@ let NewsletterSubscribeButton = () => {
         width: '25%',
         float: 'left'
     };
+
+    useEffect(() => {
+      setOpen(props.open);
+    }, [props.open]);
 
     /* On submission checks if email is in correct format but not the check is not too extensive
        to prevent users with weird addresses from entering email. Just checking for '@' and '.' mostly.
@@ -101,14 +105,6 @@ let NewsletterSubscribeButton = () => {
     };
 
     return (<div style={newsletterStyle}>
-        <Card className={classes.root}>
-            <CardContent>
-                <h2>Subscribe To Our Newsletter</h2>
-            </CardContent>
-            <CardActions>
-                <Button color='primary' onClick={handleNewsletterOpen}>Subscribe</Button>
-            </CardActions>
-        </Card>
         <Dialog open = {open}>
             <DialogTitle>Join Our Newsletter</DialogTitle>
             <DialogContent>

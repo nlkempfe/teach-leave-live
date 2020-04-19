@@ -1,56 +1,26 @@
 import React, { useState } from 'react';
-/* Import assets */
 
+/* Import assets */
+import logo from '../assets/logo.png';
+import classroom from '../assets/classroom.jpg';
+
+/* Import material-ui components */
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
-import logo from '../assets/logo.png';
-import classroom from "../assets/c1.jpg";
-
-import { CenturyView } from 'react-calendar';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-
-import NewsletterSubscribeButton from "../components/NewsletterSubscribeButton";
+/* Import custom components */
+import NewsletterSubscribeButton from '../components/NewsletterSubscribeButton';
 
 function Home(props) {
-  const styles = {
-    paperContainer: {
-      flexGrow:1,
-      backgroundImage: `url(${classroom})`,
-      align:CenturyView,
-      backgroundRepeat: "no-Repeat",
-      height: '100vh',
-      textAlign: 'center',
-      backgroundPosition: "center center",
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed",
-  },
-  paperContainer2: {
-    flexGrow:1,
-    height: '83vh',
-},
-};
 
   return (
-    
-    <div style={styles.paperContainer} height = "max" width = "max">
-      
-      <Box bgcolor="text.disabled" color="background.paper" p={3}>
-
-      <Typography variant="h4" component="h2" gutterBottom>
-        Teach. Leave. Live.
-      </Typography>
-
-      <Typography variant="subtitle1" gutterBottom>
-        "We are the bridge between the classroom and personal lives of the teachers" 
-      </Typography>
-        </Box>
-        
-        <Box bgcolor="text.disabled" color="background.paper" p={1} style={styles.paperContainer2}>
-          
-        </Box>
-      <NewsletterSubscribeButton/>
+    <div style={{margin: 'auto', textAlign: 'center', backgroundImage: `url(${classroom})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundSize: 'cover',  height: '100vh'}}>
+      <Container fluid style = {{paddingTop: '10%'}}>
+        <Typography variant= 'h1' gutterBottom >Teach. Leave. Live.</Typography>
+        <Typography variant= 'subtitle1' color = 'primary.contrastText' gutterBottom >We are the bridge between the classroom and personal lives of the teachers.</Typography>
+        <NewsletterSubscribeButton open = {true}/>
+      </Container>
     </div>
   );
 }
