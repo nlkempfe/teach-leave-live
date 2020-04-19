@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {debounce} from 'lodash';
 
 /* Import firebase products */
@@ -41,7 +41,7 @@ function UpdateCourseDialog(props) {
         setSelectedName(props.data.name);
         setSelectedDescription(props.data.description);
         setSelectedLink(props.data.link);
-        setSelectedSubscription(props.data.subscription);
+        setSelectedSubscription(props.data.premium);
       }
     }, [props.open]);
 
@@ -74,11 +74,11 @@ function UpdateCourseDialog(props) {
     <Dialog open = {props.open}>
       <DialogTitle>Create Course</DialogTitle>
         <DialogContent className = {classes.root}>
-          <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)}/>
-          <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)}/>
-          <TextField className = {classes.root} label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)}/>
+          <TextField className = {classes.root} label='Course Name' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleNameChange(e.target.value)} defaultValue = {selectedName}/>
+          <TextField className = {classes.root} label='Course Description' multiline required fullWidth rows='4' variant='outlined' onChange={e => handleDescriptionChange(e.target.value)} defaultValue = {selectedDescription}/>
+          <TextField className = {classes.root} label='Link' fullWidth variant='outlined' required inputProps={{maxLength: 99}} onChange={e => handleLinkChange(e.target.value)} defaultValue = {selectedLink}/>
           <InputLabel className = {classes.root}>Subscription Plan</InputLabel>
-          <Select className = {classes.root} variant = 'outlined' value = {selectedSubscription} onChange = {event => handleSubscriptionChange(event.target.value)}>
+          <Select className = {classes.root} variant = 'outlined' value = {selectedSubscription} onChange = {event => handleSubscriptionChange(event.target.value)} defaultValue = {selectedSubscription}>
             <MenuItem value = {true}>Premium</MenuItem>
             <MenuItem value = {false}>Free</MenuItem>
           </Select>

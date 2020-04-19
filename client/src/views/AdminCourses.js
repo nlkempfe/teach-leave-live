@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
 import CreateCourseDialog from '../components/CreateCourseDialog.js';
-// import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
+import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -203,6 +203,7 @@ function AdminCourses(props) {
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <MUIDataTable title={'Manage Courses'} data={courses} columns={columns} options={options}/>
         <CreateCourseDialog open = {open && !isEditing} handleClose = {course => handleClose()}/>
+        <UpdateCourseDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
