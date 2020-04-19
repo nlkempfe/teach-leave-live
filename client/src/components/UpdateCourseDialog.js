@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-function CreateEventDialog(props) {
+function UpdateCourseDialog(props) {
     const classes = useStyles();
 
     /* Hook for the value of each form */
@@ -37,6 +37,15 @@ function CreateEventDialog(props) {
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedLink, setSelectedLink] = useState('');
     const [selectedSubscription, setSelectedSubscription] = useState(false);
+
+    useEffect(() => {
+      if(props.data !== null) {
+        setSelectedName(props.data.name);
+        setSelectedDescription(props.data.description);
+        setSelectedLink(props.data.link);
+        setSelectedSubscription(props.data.subscription);
+      }
+    }, [props.open]);
 
     /* Handle changes of the value of each form using debounce to improve performance*/
     const handleNameChange = debounce ((name) => {
@@ -54,12 +63,12 @@ function CreateEventDialog(props) {
 
     //Adds course to database after submission of form
     const handleSubmit = (course) => {
-      let doc = db.collection('courses').add({
+      let doc = db.collection('courses').doc(props.data.id).set({
           name : selectedName,
-          description : selectedDescription,
+          description: selectedDescription,
           link: selectedLink,
           premium: selectedSubscription,
-          views: 0
+          views: props.data.views,
       }).then(props.handleClose());
     };
 
