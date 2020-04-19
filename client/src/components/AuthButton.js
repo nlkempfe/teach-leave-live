@@ -137,18 +137,7 @@ const AuthButton = (props) => {
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <MenuItem disabled={props.disableAccount} onClick={handleClose} component={Link} href='/account' style={{textDecoration: 'none', color: 'inherit'}}>Account</MenuItem>
-                    <MenuItem href = "/" onClick={handleLogout}>Logout</MenuItem>
-                    <MenuItem onClick={() =>{
-                        fetch('/stripe')
-                            .then(r => r.json())
-                            .then(d => {
-                                stripe.redirectToCheckout({
-                                    sessionId: d.id,
-                                }).then(function (result) {
-                                    console.log(result);
-                                })
-                            })
-                    }}>Checkout</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             </div>
         );
@@ -163,9 +152,6 @@ const AuthButton = (props) => {
             </div>
         );
     }
-
-
-
 };
 
 export default AuthButton;

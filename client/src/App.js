@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import {auth, db} from './firebase/firebaseInit';
 
+import history from './history';
+
 /* Import controllers */
 import {readUser} from './firebase/controllers.js';
 
@@ -18,7 +20,10 @@ import AdminUsers from './views/AdminUsers.js';
 import Blog from './views/Blog.js';
 import Courses from './views/Courses.js'
 import Account from './views/Account.js';
-import Socials from './views/Socials.js'
+import Socials from './views/Socials.js';
+import CheckoutSuccess from './views/CheckoutSuccess.js';
+import CheckoutCancel from './views/CheckoutCancel.js';
+import Subscription from './views/Subscription'
 import Unsubscribe from "./views/Unsubscribe";
 
 function App() {
@@ -60,6 +65,8 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription/cancel' render ={(props) => <CheckoutCancel currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription' render ={(props) => <Subscription currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/home' render ={(props) => <Home currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/unsubscribe' render ={(props) => <Unsubscribe/>}/>
         </Switch>
@@ -76,6 +83,9 @@ function App() {
           <Route path = '/courses' render ={(props) => <Courses currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/socials' render ={(props) => <Socials currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/account' render ={(props) => <Account currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription/success' render ={(props) => <CheckoutSuccess currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription/cancel' render ={(props) => <CheckoutCancel currUser={currUser} updateUser={setCurrUser}/>} />
+          <Route path = '/subscription' render ={(props) => <Subscription currUser={currUser} updateUser={setCurrUser}/>} />
           <Route path = '/unsubscribe' render ={(props) => <Unsubscribe/>}/>
         </Switch>
       </Router>
