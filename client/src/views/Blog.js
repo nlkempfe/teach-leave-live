@@ -7,11 +7,10 @@ import { CenturyView } from 'react-calendar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
-import TextField from '@material-ui/core/TextField';
-
 function Blog() {
   const styles = {
     paperContainer: {
@@ -20,7 +19,7 @@ function Blog() {
         height : 220,
         backgroundRepeat: "no-Repeat"
     },
-    media: {
+    card: {
       flexGrow: 1,
       width: '25vh',
       height: '25vh',
@@ -28,16 +27,15 @@ function Blog() {
       marginTop:'10'
     }
 };
-  //let userID = 'a2c60dovnNajfSG91rnB4UXmBlf2'
   return (
     <div>
       <Grid container spacing={0} justify='flex-start'>
       <Grid item xs={6} sm={3}>
-      <Box style={styles.paperContainer} bgcolor="text.disabled" color="background.paper">
+      <Box style={styles.paperContainer} bgcolor="text.primary" color="background.paper">
         </Box>
       </Grid>
       <Grid item xs={12} sm={9}>
-      <Box bgcolor="text.disabled" color="background.paper" p={8.9} align = "center">
+      <Box bgcolor="text.primary" color="background.paper" p={8.9} align = "center">
       <h1> Blog Forum</h1>
        </Box> 
       </Grid>
@@ -57,14 +55,12 @@ function Blog() {
         <TextField id="outlined-basic" label="Search for discussion" variant="outlined" />
     </form>
     <br/>
+    <Grid container spacing={4} justify='flex-start'>
+    <Grid item xs={6} sm={3}>
      <Card>
        <CardActionArea>
-       <CardMedia
-          image={require('../assets/logo.png')}
-          title="Contemplative Reptile"
-          style={styles.media}
-          height="0"
-      />
+         <CardMedia component="img" alt = "Teach.Leave.Live" style={styles.card} image={require('../assets/logo.png')} title = "test">
+           </CardMedia>
            <CardContent>
              <Typography gutterBottom variant="h5" component="h2">
             Teach.Leave.Live
@@ -80,6 +76,92 @@ function Blog() {
         </Button>
            </CardActions>
        </Card>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+     <Card>
+       <CardActionArea>
+         <CardMedia component="img" alt = "Teach.Leave.Live" style={styles.card} image={require('../assets/logo.png')} title = "test">
+           </CardMedia>
+           <CardContent>
+             <Typography gutterBottom variant="h5" component="h2">
+            Teach.Leave.Live
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            TEST
+          </Typography>
+           </CardContent>
+         </CardActionArea>
+         <CardActions>
+         <Button size="small" color="primary">
+          See More
+        </Button>
+           </CardActions>
+       </Card>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+     <Card>
+       <CardActionArea>
+         <CardMedia component="img" alt = "Teach.Leave.Live" style={styles.card} image={require('../assets/logo.png')} title = "test">
+           </CardMedia>
+           <CardContent>
+             <Typography gutterBottom variant="h5" component="h2">
+            Teach.Leave.Live
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            TEST
+          </Typography>
+           </CardContent>
+         </CardActionArea>
+         <CardActions>
+         <Button size="small" color="primary">
+          See More
+        </Button>
+           </CardActions>
+       </Card>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+     <Card>
+       <CardActionArea>
+         <CardMedia component="img" alt = "Teach.Leave.Live" style={styles.card} image={require('../assets/logo.png')} title = "test">
+           </CardMedia>
+           <CardContent>
+             <Typography gutterBottom variant="h5" component="h2">
+            Teach.Leave.Live
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            TEST
+          </Typography>
+           </CardContent>
+         </CardActionArea>
+         <CardActions>
+         <Button size="small" color="primary">
+          See More
+        </Button>
+           </CardActions>
+       </Card>
+    </Grid>
+    <Grid item xs={6} sm={3}>
+     <Card>
+       <CardActionArea>
+         <CardMedia component="img" alt = "Teach.Leave.Live" style={styles.card} image={require('../assets/logo.png')} title = "test">
+           </CardMedia>
+           <CardContent>
+             <Typography gutterBottom variant="h5" component="h2">
+            Teach.Leave.Live
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            TEST
+          </Typography>
+           </CardContent>
+         </CardActionArea>
+         <CardActions>
+         <Button size="small" color="primary">
+          See More
+        </Button>
+           </CardActions>
+       </Card>
+    </Grid>
+    </Grid>
     </div>
   );
 }
