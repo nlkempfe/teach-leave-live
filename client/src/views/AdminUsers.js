@@ -21,8 +21,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import MUIDataTable from 'mui-datatables';
 
 function AdminUsers(props) {
+  const [allowCommenting, setAllowCommenting] = useState(false);
+  const [allowPosting, setAllowPosting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
   const [isPremium, setIsPremium] = useState(false);
   const [rowIndex, setRowIndex] = useState(null);
   const [role, setRole] = useState('user');
@@ -43,7 +44,9 @@ function AdminUsers(props) {
             lastName: doc.data().lastName,
             email: doc.data().email,
             premium: doc.data().premium,
-            role: doc.data().role
+            role: doc.data().role,
+            allowCommenting: doc.data().allowCommenting,
+            allowPosting: doc.data().allowPosting,
         }
         tempUsers.push(user);
       });
@@ -55,15 +58,13 @@ function AdminUsers(props) {
     handleUpdate();
   }, []);
 
-
-  const handleDelete = (tableMeta) => {
-    /* TODO */
-  }
   const handleEdit = (tableMeta) => {
     setIsEditing(true);
     setRowIndex(tableMeta.rowIndex);
     setIsPremium(tableMeta.rowData[4]);
     setRole(tableMeta.rowData[5]);
+    setAllowCommenting(tableMeta.rowData[6]);
+    setAllowPosting(tableMeta.rowData[7]);
   }
   const handleRoleChange = (role) => {
     setRole(role);
@@ -71,10 +72,18 @@ function AdminUsers(props) {
 
   const handleSubmit = (tableMeta) => {
     setIsEditing(false);
-    db.collection('users').doc(users[tableMeta.rowIndex].uid).update({premium: isPremium, role: role}).then(handleUpdate());
+    db.collection('users').doc(users[tableMeta.rowIndex].uid).update({premium: isPremium, role: role, allowCommenting: allowCommenting, allowPosting: allowPosting}).then(handleUpdate());
   }
   const handleSubscriptionPlanChange = (isPremium) => {
     setIsPremium(isPremium);
+  }
+
+  const handleCommentingPermissionChange = (allowCommenting) => {
+    setAllowCommenting(allowCommenting);
+  }
+
+  const handlePostingPermissionChange = (allowPosting) => {
+    setAllowPosting(allowCommenting);
   }
 
   const columns = [
@@ -167,14 +176,65 @@ function AdminUsers(props) {
       }
     },
     {
+      name: 'allowCommenting',
+      label: 'Allow Commenting',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(isEditing && tableMeta.rowIndex === rowIndex) {
+            return (
+              <Select variant = 'outlined' value = {allowCommenting} onChange = {event => handleCommentingPermissionChange(event.target.value)}>
+                <MenuItem value = {true}>Yes</MenuItem>
+                <MenuItem value = {false}>No</MenuItem>
+              </Select>
+            );
+          } else {
+            if(value) return 'Yes';
+            else return 'No';
+          }
+        },
+        filter: true,
+        sort: true
+      }
+    },
+    {
+      name: 'allowPosting',
+      label: 'Allow Posting',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(isEditing && tableMeta.rowIndex === rowIndex) {
+            return (
+              <Select variant = 'outlined' value = {allowPosting} onChange = {event => handlePostingPermissionChange(event.target.value)}>
+                <MenuItem value = {true}>Yes</MenuItem>
+                <MenuItem value = {false}>No</MenuItem>
+              </Select>
+            );
+          } else {
+            if(value) return 'Yes';
+            else return 'No';
+          }
+        },
+        filter: true,
+        sort: true
+      }
+    },
+    {
         name: '',
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             if(isEditing) {
               return (
-                <IconButton onClick = {event => handleSubmit(tableMeta)}>
-                  <DoneIcon/>
-                </IconButton>
+                <Grid container>
+                  <Grid item>
+                    <IconButton onClick = {event => handleSubmit(tableMeta)}>
+                      <DoneIcon/>
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton onClick = {event => setIsEditing(false)}>
+                      <CloseIcon/>
+                    </IconButton>
+                  </Grid>
+                </Grid>
               );
             } else {
               return (
@@ -188,31 +248,7 @@ function AdminUsers(props) {
           sort: false,
           viewColumns: false
         }
-      },
-      {
-        name: '',
-        label: '',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => {
-            if(isEditing) {
-              return (
-                <IconButton onClick = {event => setIsEditing(false)}>
-                  <CloseIcon/>
-                </IconButton>
-              );
-            } else {
-              return (
-                <IconButton onClick = {event => handleDelete(tableMeta)}>
-                  <DeleteIcon/>
-                </IconButton>
-              );
-            }
-          },
-          filter: false,
-          sort: false,
-          viewColumns: false
-        }
-      },
+    },
   ];
   const options = {
     disableToolbarSelect: true,

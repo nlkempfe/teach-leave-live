@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
 /* Import controllers */
+import {auth} from '../firebase/firebaseInit';
 import {readUser} from "../firebase/controllers";
 
 /* Import custom components */
@@ -27,6 +28,10 @@ function NavigationBar (props) {
   const location = useLocation().pathname;
   let user = readUser();
 
+  useEffect(() => {
+    user = readUser();
+  }, [props.currUser]);
+
   return (
     <div style = {{display: 'flex'}}>
       <CssBaseline/>
@@ -36,9 +41,9 @@ function NavigationBar (props) {
             Teach. Leave. Live.
           </Typography>
           <Button href = '/home' disabled = {location.startsWith('/home')}>Home</Button>
-          <Button href = '/blog' disabled = {location.startsWith('/blog')}>Blog</Button>
-          <Button href = '/courses' disabled = {location.startsWith('/courses')}>Courses</Button>
-          <Button href = '/socials' disabled = {location.startsWith('/socials')}>Socials</Button>
+          {user !== null ? <Button href = '/blog' disabled = {location.startsWith('/blog')}>Blog</Button> : null}
+          {user !== null ? <Button href = '/courses' disabled = {location.startsWith('/courses')}>Courses</Button> : null}
+          {user !== null ? <Button href = '/socials' disabled = {location.startsWith('/socials')}>Socials</Button> : null}
           {(user !== null && user.role === 'admin') ? <Button href = '/admin/dashboard' disabled = {location.startsWith('/admin')}>Admin</Button> : null }
           <AuthButton currUser={props.currUser} updateUser={props.updateUser} disableAccount={location.startsWith('/account')}/>
         </Toolbar>

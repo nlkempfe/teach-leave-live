@@ -90,7 +90,8 @@ function CreateEventDialog(props) {
           state : selectedState,
           zip : selectedZip,
           description : eventDescription,
-          dateAndTime : currentDate
+          dateAndTime : currentDate,
+          attendees: ['']
       }).then(props.handleClose());
     };
 
