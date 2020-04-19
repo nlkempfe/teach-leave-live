@@ -63,7 +63,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "baseline",
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(3),
+
+   
   },
   footer: {
     borderTop: `1px solid ${theme.palette.divider}`,
@@ -82,9 +84,10 @@ const tiers = [
     title: "Free",
     price: "0",
     description: [
-      "View blog posts",
-      "Add blog posts/comment",
-      "Plan events with other people"
+      "Blog access",
+      "Interact with other users on the blog",
+      "Access to our social event calendar",
+      "Limited access to free courses"
     ],
     buttonText: "Sign up for free",
     buttonVariant: "outlined",
@@ -97,10 +100,10 @@ const tiers = [
     //subheader: "Most popular",
     price: "19.99",
     description: [
-      "View blog posts",
-      "Add blog posts/comment",
-      "Plan events with other people",
-      "Access to educational content"
+      "Blog access",
+      "Interact with other users on the blog",
+      "Access to our social event calendar",
+      "Unlimited access to free courses"
     ],
     buttonText: "Get Premium",
     buttonVariant: "contained",
@@ -175,22 +178,20 @@ export default function Pricing() {
           color="textSecondary"
           component="p"
         >
-          Choose to enhance your ability to teach children via our online
-          curriculum. We would love to make you a part of the Teach.leave.live
-          team! Join Premium now!
+          
         </Typography>
       </Container>
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-end">
+        <Grid container spacing={5} alignItems="center">
           {tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === "Enterprise" ? 12 : 6}
-              md={4}
+              sm={6}
+              md={6}
             >
               <Card>
                 <CardHeader
