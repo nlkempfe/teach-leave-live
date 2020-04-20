@@ -154,7 +154,7 @@ const drawerWidth = 240;
           </div>
           <CardContent>
             <Typography variant = 'h6'>User Activity</Typography>
-            <DashboardChart/>
+           
           </CardContent>
           <CardActions></CardActions>
         </Card>
