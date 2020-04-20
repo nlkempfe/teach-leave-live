@@ -153,10 +153,10 @@ function EmbeddedVideo (props) {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button onClick={changeDisplay} color='primary'>
+                        <Button onClick={changeDisplay} variant='contained' color='primary'>
                           Watch Video
                         </Button>
-                        <Button onClick={handleClose} color='primary'>
+                        <Button onClick={handleClose} variant='contained' color='primary'>
                           Exit
                         </Button>
                       </DialogActions>
@@ -208,10 +208,10 @@ function EmbeddedVideo (props) {
                 </DialogContentText>
               </DialogContent>
                 <DialogActions>
-                  <Button href = '/account' color='primary'>
+                  <Button href = '/account' variant='contained' color='primary'>
                     Buy Premium
                  </Button>
-                 <Button onClick={handleClose} color='primary'>
+                 <Button onClick={handleClose} variant='contained' color='primary'>
                    Exit
                  </Button>
               </DialogActions>
