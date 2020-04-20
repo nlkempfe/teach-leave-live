@@ -28,7 +28,7 @@ function Socials(props) {
         let event = {
             id: doc.id,
             name: data.name,
-            description: data.description.join(),
+            description: data.description.join(''),
             dateAndTime: new Date(data.dateAndTime.seconds * 1000),
             address: data.address,
             city: data.city,
@@ -76,7 +76,7 @@ function Socials(props) {
     <Grid container
       spacing={3}
       justify="center"
-      style={{'flexGrow': 1, 'padding': 10}}
+      style={{'flexGrow': 1, 'margin': 0, 'width': '100%'}}
     >
       <Grid item onClick={()=>{setSearch('')}}>
         <SocialsCalendar date={date} setDate={setDate} events={events}/>
