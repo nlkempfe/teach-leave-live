@@ -5,7 +5,7 @@ import { DatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
 const styles = {
   dayWithEvent: {
     borderRadius: '25%',
-    background: 'green' //todo change this color to match rest of page
+    background: '#01ffff90'
   },
   dayWithoutEvent:{
 
