@@ -70,10 +70,10 @@ const drawerWidth = 240;
   }, []);
 
   useEffect(() => {
-    db.collection('posts').orderBy('date', 'desc').get().then(s => {
+    db.collection('posts').get().then(s => {
         const newPosts = s.docs.map(d => ({
             ...d.data(),
-            date: String(new Date(d.data().date.seconds * 1000))
+            //date: String(new Date(d.data().date.seconds * 1000))
         }));
         setPosts(newPosts);
     });
