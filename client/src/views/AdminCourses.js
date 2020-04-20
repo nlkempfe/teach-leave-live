@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 /* Import custom components */
-import CreateEventDialog from '../components/CreateEventDialog.js';
-import UpdateEventDialog from '../components/UpdateEventDialog.js';
+import CreateCourseDialog from '../components/CreateCourseDialog.js';
+import UpdateCourseDialog from '../components/UpdateCourseDialog.js';
 
 /* Import firebase products */
 import {db} from '../firebase/firebaseInit';
@@ -24,9 +24,9 @@ import EditIcon from '@material-ui/icons/Edit';
 /* Import mui-datatables */
 import MUIDataTable from 'mui-datatables';
 
-function AdminEvent(props) {
+function AdminCourses(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [events, setEvents] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [width, setWidth] = useState({width: window.innerWidth});
@@ -36,23 +36,20 @@ function AdminEvent(props) {
   });
 
   const handleUpdate = () => {
-    db.collection('events').get().then(querySnapshot => {
-      let tempEvents = [];
+    db.collection('courses').get().then(querySnapshot => {
+      let tempCourses = [];
       querySnapshot.forEach(doc => {
-        let event = {
+        let course = {
             id: doc.id,
             name: doc.data().name,
-            dateAndTime: doc.data().dateAndTime,
-            description: doc.data().description.join(),
-            address: doc.data().address,
-            city: doc.data().city,
-            state: doc.data().state,
-            zip: doc.data().zip,
-            attendees: (doc.data().attendees ? doc.data().attendees : [])   //for future use
+            description: doc.data().description,
+            link: doc.data().link,
+            premium: doc.data().premium,
+            views: doc.data().views,
         }
-        tempEvents.push(event);
+        tempCourses.push(course);
       });
-      setEvents(tempEvents);
+      setCourses(tempCourses);
     });
   }
 
@@ -67,10 +64,10 @@ function AdminEvent(props) {
   }
 
   const handleDelete = (tableMeta) => {
-    db.collection('events').doc(events[tableMeta.rowIndex].id).delete().then(handleUpdate());
+    db.collection('courses').doc(courses[tableMeta.rowIndex].id).delete().then(handleUpdate());
   }
   const handleEdit = (tableMeta) => {
-    setRowData(events[tableMeta.rowIndex]);
+    setRowData(courses[tableMeta.rowIndex]);
     setIsEditing(true);
     setOpen(true);
   }
@@ -91,20 +88,14 @@ function AdminEvent(props) {
     },
     {
       name: 'name',
-      label: 'Event Name',
-      options: {
-        filter: false,
-        sort: true
-      }
-    },
-    {
-      name: 'dateAndTime',
-      label: 'Date & Time',
+      label: 'Course Name',
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          const d = value.toDate();
-          const date = ("0"+(d.getMonth()+1)).slice(-2)  + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
-          return (date);
+          if(value.length > 30) {
+            return (value.substring(0, 30) + '...');
+          } else {
+            return (value);
+          }
         },
         filter: false,
         sort: true
@@ -119,7 +110,6 @@ function AdminEvent(props) {
             return (value.substring(0, 30) + '...');
           } else {
             return (value);
-
           }
         },
         filter: false,
@@ -127,32 +117,31 @@ function AdminEvent(props) {
       }
     },
     {
-      name: 'address',
-      label: 'Address',
+      name: 'link',
+      label: 'Link',
       options: {
         filter: false,
         sort: true
       }
     },
     {
-      name: 'city',
-      label: 'City',
+      name: 'premium',
+      label: 'Subscription Plan',
       options: {
-        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          if(value) {
+            return 'Premium';
+          } else {
+            return 'Free';
+          }
+        },
+        filter: true,
         sort: true
       }
     },
     {
-      name: 'state',
-      label: 'State',
-      options: {
-        filter: false,
-        sort: true
-      }
-    },
-    {
-      name: 'zip',
-      label: 'Zipcode',
+      name: 'views',
+      label: 'Views',
       options: {
         filter: false,
         sort: true
@@ -163,7 +152,7 @@ function AdminEvent(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {event => handleEdit(tableMeta)}>
+              <IconButton onClick = {course => handleEdit(tableMeta)}>
                 <EditIcon/>
               </IconButton>
             );
@@ -179,7 +168,7 @@ function AdminEvent(props) {
         options: {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <IconButton onClick = {event => handleDelete(tableMeta)}>
+              <IconButton onClick = {course => handleDelete(tableMeta)}>
                 <DeleteIcon/>
               </IconButton>
             );
@@ -193,7 +182,7 @@ function AdminEvent(props) {
   const options = {
     customToolbar: () => {
       return (
-        <IconButton onClick = {event => setOpen(true)}>
+        <IconButton onClick = {course => setOpen(true)}>
           <AddIcon/>
         </IconButton>
       );
@@ -201,7 +190,7 @@ function AdminEvent(props) {
     disableToolbarSelect: true,
     download: false,
     elevation: 1,
-    filter: false,
+    filterType: 'checkbox',
     print: false,
     responsive: 'scrollMaxHeight',
     selectableRows: 'none',
@@ -211,12 +200,12 @@ function AdminEvent(props) {
   return (
     <div>
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
-        <MUIDataTable title={'Manage Events'} data={events} columns={columns} options={options}/>
-        <CreateEventDialog open = {open && !isEditing} handleClose = {event => handleClose()}/>
-        <UpdateEventDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
+        <MUIDataTable title={'Manage Courses'} data={courses} columns={columns} options={options}/>
+        <CreateCourseDialog open = {open && !isEditing} handleClose = {course => handleClose()}/>
+        <UpdateCourseDialog open = {open && isEditing} data = {rowData} handleClose = {event => handleClose()}/>
       </Container>
     </div>
   );
 }
 
-export default AdminEvent;
+export default AdminCourses;

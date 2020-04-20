@@ -79,7 +79,6 @@ function CreateEventDialog(props) {
 
     //Adds event to database after submission of form
     const handleSubmit = (event) => {
-      console.log('called');
       currentDate = selectedDate;
       let eventDescription = new Array(Math.ceil(selectedDescription.length/99));
       makeDescriptionArray(eventDescription);
@@ -90,7 +89,8 @@ function CreateEventDialog(props) {
           state : selectedState,
           zip : selectedZip,
           description : eventDescription,
-          dateAndTime : currentDate
+          dateAndTime : currentDate,
+          attendees: ['']
       }).then(props.handleClose());
     };
 

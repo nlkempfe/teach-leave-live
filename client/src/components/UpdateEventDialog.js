@@ -43,7 +43,6 @@ function UpdateEventDialog(props) {
 
     useEffect(() => {
       if(props.data !== null) {
-        console.log(props.data);
         setSelectedDate((new Date(props.data.dateAndTime.toDate())));
         setSelectedName(props.data.name);
         setSelectedDescription(props.data.description);

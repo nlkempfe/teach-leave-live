@@ -1,6 +1,6 @@
 /* Import Firebase app */
 import firebase from 'firebase';
- //import config from "../firebaseConfig";
+// import config from "../firebaseConfig";
 require("firebase/firestore");
 
 /* Import environment variables for initialization */
@@ -22,4 +22,3 @@ export const auth = firebase.auth;
 export const provider = new firebase.auth.FacebookAuthProvider();
 export const db = firebase.firestore();
 export const firestore = firebase.firestore;
-

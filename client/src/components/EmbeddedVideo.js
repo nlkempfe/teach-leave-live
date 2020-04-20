@@ -42,8 +42,9 @@ function EmbeddedVideo (props) {
   const premium = props.premium;
   const description = props.description;
   const name = props.name;
+  const id = props.id;
   const [open, setOpen] = useState(null)
-  const [displayVideo, setDisplayVideo] = useState(false)
+  const [displayVideo, setDisplayVideo] = useState(props.shouldDisplay)
 
   const classes = useStyles();
 
@@ -55,12 +56,13 @@ function EmbeddedVideo (props) {
     position: 'relative',
     overflow: 'hidden',
     paddingTop: 20,
-    height: 400
+    height: '100%'
   };
 
   //styles the Iframe containing the youtube video
   const iframe_style = {
     width: '100%',
+    height: 600
   };
 
   //If the courese is premium this Icon is displayed
@@ -84,12 +86,26 @@ function EmbeddedVideo (props) {
 
   const closeVideo = () => {
     setDisplayVideo(false);
+    props.setFilter('');
+    props.setActive(false);
+    props.setPremium(false);
+    props.setName('');
+    props.setDescription('');
+    props.setLink('');
+    props.setId('');
   }
 
   //displays the video when needed
   const changeDisplay = () => {
     setDisplayVideo(true);
     setOpen(false);
+    props.setFilter(name);
+    props.setActive(true);
+    props.setPremium(premium);
+    props.setName(name);
+    props.setDescription(description);
+    props.setLink(link);
+    props.setId(id);
   }
 
   //styles the button
@@ -103,9 +119,18 @@ function EmbeddedVideo (props) {
     float: 'right'
   }
 
+  //Styles the video when it is activated
+  const playingStyle = {
+    float: 'center',
+    paddingTop: '1%',
+    paddingLeft: '10%',
+    paddingRight: '10%',
+    height: '100%'
+  }
+
   /*Chooses what to return based off the status of user and the video. The component will always start with an
     image of the youtube video and a button that creates a popup. If the video is a standard video or if a premium user
-    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the 
+    is viewing a premium user the popup will allow the user to click a button to view and watch the video. Otherwise the
     popup will direct the user to pay for a premium membership*/
   const checkUser = () => {
     if ((userPremium || !(premium)) && !(displayVideo))
@@ -146,11 +171,11 @@ function EmbeddedVideo (props) {
     }
     else if (displayVideo)
     {
-      return ( 
-        <div style={props.style}>
-          <Card variant='outlined' classname={classes.root}>
+      return (
+        <div style={playingStyle}>
+          <Card variant='outlined'>
             <CardContent>
-              <iframe style={iframe_style} src={'https://www.youtube.com/embed/' + link} frameborder='0' allowFullScreen />
+              <iframe allow='autoplay' style={iframe_style} src={'https://www.youtube.com/embed/' + link + '?autoplay=1'} frameborder='0' allowFullScreen/>
               <div style={buttonStyle}>
                  <Button fullWidth variant='outlined' onClick={closeVideo}>Close</Button>
               </div>

@@ -13,14 +13,14 @@ app.use(express.static(path.join(__dirname, './client/build')));
  */
 app.get('/stripe',( async (req, res) => {
   const session = await stripe.checkout.sessions.create({
-    success_url: 'https://www.google.com/',
-    cancel_url: 'https://www.bing.com/',
+    success_url: 'https://devops-teach-leave-live.herokuapp.com/subscription/success',
+    cancel_url: 'https://devops-teach-leave-live.herokuapp.com/subscription/cancel',
     payment_method_types: ['card'],
     line_items: [
       {
         name: 'Premium Subscription',
         //description: 'Subscription',
-        amount: 1000,
+        amount: 1999,
         currency: 'usd',
         quantity: 1,
       },
@@ -30,6 +30,10 @@ app.get('/stripe',( async (req, res) => {
   res.json(session)
 }));
 
+/*
+ * The "catchall" handler: for any request that doesn't
+ * match one above, send back React's index.html file.
+ */
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
@@ -39,9 +43,12 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 
-// const router = require('express').Router(),
-//   stripe = require('stripe')(process.env.STRIPE_URI || require('../config').stripe.uri);
+ // const router = require('express').Router(),
+ //   stripe = require('stripe')(process.env.STRIPE_URI || require('../config').stripe.uri);
 
 
 
 // module.exports = router;
+//https://devops-teach-leave-live.herokuapp.com
+
+//https://devops-teach-leave-live.herokuapp.com/subscription/cancel
