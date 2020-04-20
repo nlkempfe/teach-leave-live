@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink} from 'react-router-dom';
 
 /* Import material-ui components */
 import Button from '@material-ui/core/Button';
@@ -50,7 +50,7 @@ const AuthButton = (props) => {
 
             // Only update recently viewed corses if new account -> default to empty array
             let recentlyViewed = await userDoc.get().then(snapshot => {
-               if(snapshot.exists){
+               if(snapshot.exists && snapshot.data().recentlyViewed){
                   return snapshot.data().recentlyViewed;
                } else {
                  return [''];
@@ -114,6 +114,7 @@ const AuthButton = (props) => {
             props.updateUser(null);
         });
         handleClose();
+        window.location.href = '/home';
     };
 
     //Event handlers for the menu that is displayed when user is logged in
@@ -122,7 +123,6 @@ const AuthButton = (props) => {
     };
     const handleClose = () => {
         setAnchorEl(null);
-
     };
 
     let user = readUser();

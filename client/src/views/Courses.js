@@ -43,6 +43,7 @@ function Courses(props) {
   const [activeDescription, setActiveDescription] = useState('')
   const [activePremium, setActivePremium] = useState(false);
   const [activeLink, setActiveLink] = useState('');
+  const [activeId, setActiveId] = useState('');
   const [courseActive, setCourseActive] = useState(false);
   const [courses, setCourses] = useState([]);
   const [courseFilter, setCourseFilter] = useState('');
@@ -70,10 +71,12 @@ function Courses(props) {
       let tempCourses = [];
       querySnapshot.forEach(doc => {
         let course = {
+            id: doc.id,
             name: doc.data().name,
             description: doc.data().description,
             premium: doc.data().premium,
-            link: doc.data().link
+            link: doc.data().link,
+            views: doc.data().views
         }
         tempCourses.push(course);
       });
@@ -96,14 +99,27 @@ function Courses(props) {
     paddingTop: 20
   }
 
+  const handleUpdateViews = async (id) => {
+    let course = db.collection('courses').doc(id);
+    let views = await course.get().then(snapshot => {
+       if(snapshot.exists){
+         return snapshot.data().views;
+       } else {
+         return 0;
+       }
+    });
+    db.collection('courses').doc(id).update({views: (views + 1)});
+  }
+
   //Creates the list of courses by making each course into an EmbeddedVideo
   const courseList = filteredCourses.map(directory => {
       return (
         <GridListTile style={listElementStyle}>
-          <EmbeddedVideo link={directory.link} 
-                         name={directory.name} 
-                         description={directory.description} 
-                         premium={directory.premium} 
+          <EmbeddedVideo link={directory.link}
+                         name={directory.name}
+                         description={directory.description}
+                         premium={directory.premium}
+                         id={directory.id}
                          style={simple_video_style}
                          setFilter={setCourseFilter}
                          shouldDisplay={false}
@@ -111,7 +127,8 @@ function Courses(props) {
                          setPremium={setActivePremium}
                          setLink={setActiveLink}
                          setName={setActiveName}
-                         setDescription={setActiveDescription}/>
+                         setDescription={setActiveDescription}
+                         setId={setActiveId}/>
         </GridListTile>
       );
   });
@@ -128,14 +145,15 @@ function Courses(props) {
 
   //If course is active only display that youtube video otherwise display the list of courses
   const chooseDisplay = () => {
-    console.log(courseActive);
     if (courseActive)
     {
+      handleUpdateViews(activeId);
       return (
-      <EmbeddedVideo link={activeLink} 
-      name={activeName} 
-      description={activeDescription} 
-      premium={activePremium} 
+      <EmbeddedVideo link={activeLink}
+      name={activeName}
+      description={activeDescription}
+      premium={activePremium}
+      id={activeId}
       style={simple_video_style}
       setFilter={setCourseFilter}
       shouldDisplay={true}
@@ -143,7 +161,9 @@ function Courses(props) {
       setPremium={setActivePremium}
       setLink={setActiveLink}
       setName={setActiveName}
-      setDescription={setActiveDescription}/>)
+      setDescription={setActiveDescription}
+      setId={setActiveId}
+      />)
     }
     else
     {
@@ -157,12 +177,12 @@ function Courses(props) {
           <GridList className={classes.gridList}>
             {courseList}
           </GridList>
-        </div> 
+        </div>
       </div>
       )
     }
   }
-  
+
 return (
     <div>
       {chooseDisplay()}

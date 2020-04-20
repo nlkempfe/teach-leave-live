@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 const App = () => {
   const history = useHistory();
   useEffect(()  => {
-    setTimeout(() => history.push('/subscription'), 3000);
+    setTimeout(() => history.push('/account'), 3000);
   }, []);
   return (
 <div style={{marginTop: 100}}>
