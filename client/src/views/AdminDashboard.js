@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import MUIDataTable from 'mui-datatables';
 import {db} from '../firebase/firebaseInit';
+import { makeStyles } from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 // const tracker = new Tracker();
 
 function Admin(props) {
@@ -25,6 +27,13 @@ function Admin(props) {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
+
+const drawerWidth = 240;
+
+
+
+
+
 
 
 
@@ -82,17 +91,66 @@ function Admin(props) {
       <Container fluid style = {{marginLeft: props.drawerWidth + 50, marginRight: 50, marginTop: 20, maxWidth: (width - props.drawerWidth - 100)}}>
         <Card fluid>
           <div style={{marginBottom: 16}}>
-        <Chip label={`Courses: ${courses.length}`}/>
+          <div style={{width:'100%',display:'flex',justifyContent:'center'}}>
+          
+             </div>
         </div>
         <div style={{marginBottom: 16}}>
-          <Chip label={`Premium users: ${premiumUsers.length}`}/>
-          <div style={{width:16,height:16}}/>
-          <Chip label={`Non-Premium users: ${users.length - premiumUsers.length}`}/>
+          <div style={{width:'100%',display:'flex',justifyContent:'center'}}>
+          <Paper style={{height:100,width:100,margin:24}} elevation={3}>
+          <div style={{width:'100%',display:'flex',justifyContent:'center'}}>
+          <Typography variant="body2" align ="center" >
+            Course total: 
+          
+            <Typography component = "p" variant= "h4"> 
+          {courses.length}
+          </Typography>
+          </Typography>
           </div>
-          <div style={{marginBottom: 16}}>
-          <Chip label={`Blog posts: ${posts.length}`}/>
-          <div style={{width:16,height:16}}/>
-          <Chip label={`Post total comments: ${comments.length}`}/>
+          </Paper>
+
+          <Paper style={{height:100,width:100,margin:24}} elevation={3}>
+          <div style={{width:'100%',display:'flex',justifyContent:'center'}}>
+          <Typography variant="body2" align ="center" >
+          Premium users: 
+          <Typography component = "p" variant= "h4"> 
+          {premiumUsers.length}
+          </Typography> 
+          </Typography>
+          </div>
+          </Paper>
+
+         <Paper style={{height:100,width:100,margin:24,justify: "center"}} elevation={3}>
+         <Typography variant="body2" align ="center" >
+          Non-Premium users: 
+          <Typography component = "p" variant= "h4"> 
+          {users.length - premiumUsers.length}
+          </Typography>
+          </Typography>
+          </Paper>
+
+          <Paper style={{height:100,width:100,margin:24}} elevation={3}>
+            <Typography variant="body2" align ="center" >
+            <div>
+          Blog posts: 
+          </div>
+          <Typography component = "p" variant= "h4"> 
+            {posts.length}
+            </Typography>
+          </Typography>
+          </Paper >
+          
+          <Paper style={{height:100,width:100,margin:24,justifyContent:'center'}} elevation={3}>
+          <Typography variant="body2" align ="center" >
+          Post total comments: 
+          <Typography component = "p" variant= "h4"> 
+          {comments.length}
+          </Typography>
+          </Typography>
+          </Paper>
+          </div>
+          
+          
           </div>
           <CardContent>
             <Typography variant = 'h6'>User Activity</Typography>
