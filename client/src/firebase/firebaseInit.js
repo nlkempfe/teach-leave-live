@@ -1,8 +1,10 @@
 /* Import Firebase app */
 import firebase from 'firebase';
+// import config from "../firebaseConfig";
+require("firebase/firestore");
 
 /* Import environment variables for initialization */
-const configENV = {
+const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -13,25 +15,10 @@ const configENV = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-const config = {
-  apiKey: "AIzaSyDWipDGZ1j4xN632UILLy4QTD_SLDzSx7g",
-  authDomain: "teach-leave-live.firebaseapp.com",
-  databaseURL: "https://teach-leave-live.firebaseio.com",
-  projectId: "teach-leave-live",
-  storageBucket: "teach-leave-live.appspot.com",
-  messagingSenderId: "1083048857113",
-  appId: "1:1083048857113:web:54f27845f4e66ac65d2488",
-  measurementId: "G-9JCJ226ZD6"
-};
-
-if(process.env.NODE_ENV === 'productiion'){
-  firebase.initializeApp(configENV);
-}
-else{
-  firebase.initializeApp(config);
-}
+firebase.initializeApp(config);
 
 /* Exports */
 export const auth = firebase.auth;
 export const provider = new firebase.auth.FacebookAuthProvider();
 export const db = firebase.firestore();
+export const firestore = firebase.firestore;
