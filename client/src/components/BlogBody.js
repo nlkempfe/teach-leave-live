@@ -12,6 +12,8 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import CreateBlogPostDialog from "./CreateBlogPostDialog";
 import Dialog from '@material-ui/core/Dialog';
+import BlogComments from './BlogComments';
+
 
 
 const BlogBody = () => {
@@ -147,9 +149,12 @@ const BlogBody = () => {
                                 </ExpansionPanelSummary>
                             </Grid>
                             <ExpansionPanelDetails>
-                                <Typography variant="h6">
-                                    {post.content}
-                                </Typography>
+                                <Grid container>
+                                  <Typography variant="h6">
+                                      {post.content}
+                                  </Typography>
+                                  <BlogComments postId={post.id}/>
+                                </Grid>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                 </Grid>
