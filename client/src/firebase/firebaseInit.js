@@ -1,6 +1,6 @@
 /* Import Firebase app */
 import firebase from 'firebase';
-// import config from "../firebaseConfig";
+ //import config from "../firebaseConfig";
 require("firebase/firestore");
 
 /* Import environment variables for initialization */

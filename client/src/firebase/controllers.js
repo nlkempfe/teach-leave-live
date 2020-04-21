@@ -16,7 +16,10 @@ export const readUser = () => {
         return null;
 };
 
-/* COURSES */
+export const createComment = (comment) => {
+    let courseRef = db.collection('comments').doc().set(comment);
+};
+
 
 /* Create course document in database */
 export const createCourse = (course) => {

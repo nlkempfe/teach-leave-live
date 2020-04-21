@@ -11,6 +11,9 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import CreateBlogPostDialog from "./CreateBlogPostDialog";
+import Dialog from '@material-ui/core/Dialog';
+import BlogComments from './BlogComments';
+
 
 
 const BlogBody = () => {
@@ -22,6 +25,7 @@ const BlogBody = () => {
     const [users, setUsers] = useState([]);
     let currUser = readUser();
     let canPost;
+    //const [diaglogOpen, setDialogOpen] = useState(fales);
 
     //signed in, field exists, and its true
     if(currUser.allowPosting){
@@ -112,6 +116,7 @@ const BlogBody = () => {
     }, [comments]);
 
      let handleChange = (panel) => {
+        
        if(panel == expanded)
            setExpanded('');
        else
@@ -129,7 +134,9 @@ const BlogBody = () => {
         <Container>
             <Grid container spacing={3}>
                 {canPost && (<Grid item xs={12} sm={4}>
+                    <Dialog>
                     <AddNewBlogButton setOpen={setOpen}/>
+                    </Dialog>
                 </Grid>)}
                 {posts.map((post, index) => {
                     return (<Grid item xs={12} sm={4}>
@@ -144,9 +151,12 @@ const BlogBody = () => {
                                 </ExpansionPanelSummary>
                             </Grid>
                             <ExpansionPanelDetails>
-                                <Typography variant="h6">
-                                    {post.content}
-                                </Typography>
+                                <Grid container>
+                                  <Typography variant="h6">
+                                      {post.content}
+                                  </Typography>
+                                  <BlogComments postId={post.id}/>
+                                </Grid>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                 </Grid>
