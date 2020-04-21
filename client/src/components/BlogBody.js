@@ -25,6 +25,7 @@ const BlogBody = () => {
     const [users, setUsers] = useState([]);
     let currUser = readUser();
     let canPost;
+    //const [diaglogOpen, setDialogOpen] = useState(fales);
 
     //signed in, field exists, and its true
     if(currUser.allowPosting){
@@ -115,6 +116,7 @@ const BlogBody = () => {
     }, [comments]);
 
      let handleChange = (panel) => {
+        
        if(panel == expanded)
            setExpanded('');
        else
