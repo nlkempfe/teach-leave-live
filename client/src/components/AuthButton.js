@@ -77,12 +77,12 @@ const AuthButton = (props) => {
 
             //Email might not be shared, set user doc accordingly.
             if(retUser.additionalUserInfo.profile.email){
-                userDoc.set({
-                    uid : retUser.user.uid,
-                    email : retUser.additionalUserInfo.profile.email,
-                    firstName : retUser.additionalUserInfo.profile.first_name,
-                    lastName : retUser.additionalUserInfo.profile.last_name,
-                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
+                await userDoc.set({
+                    uid: retUser.user.uid,
+                    email: retUser.additionalUserInfo.profile.email,
+                    firstName: retUser.additionalUserInfo.profile.first_name,
+                    lastName: retUser.additionalUserInfo.profile.last_name,
+                    picURL: retUser.additionalUserInfo.profile.picture.data.url,
                     premium: premium,
                     role: role,
                     recentlyViewed: recentlyViewed,
@@ -91,12 +91,12 @@ const AuthButton = (props) => {
                 });
             }
             else{
-                userDoc.set({
-                    uid : retUser.user.uid,
+                await userDoc.set({
+                    uid: retUser.user.uid,
                     email: "N/A",
-                    firstName : retUser.additionalUserInfo.profile.first_name,
-                    lastName : retUser.additionalUserInfo.profile.last_name,
-                    picURL : retUser.additionalUserInfo.profile.picture.data.url,
+                    firstName: retUser.additionalUserInfo.profile.first_name,
+                    lastName: retUser.additionalUserInfo.profile.last_name,
+                    picURL: retUser.additionalUserInfo.profile.picture.data.url,
                     premium: premium,
                     role: role,
                     recentlyViewed: recentlyViewed,
