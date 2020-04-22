@@ -1,80 +1,108 @@
-# CEN3031 DevOps Team: Teach Leave Live
 
-## Instructions
-To clone this repo, follow these steps:
+# Teach-Leave-Live
 
-    Go to "Git Bash" just like cmd. Right click and "Run as Administrator".
-    Type ssh-keygen
-    Press enter.
-    It will ask you to save the key to the specific directory.
-    Press enter. It will prompt you to type password or enter without password.
-    The public key will be created to the specific directory.
-    Now go to the directory and open .ssh folder.
-    You'll see a file id_rsa.pub. Open it on notepad. Copy all text from it.
-    Go to https://gitlab.com/profile/keys .
-    Paste here in the "key" textfield.
-    Now click on the "Title" below. It will automatically get filled.
-    Then click "Add key".
-
-Then, you can clone the repo as normal, e.g. 'git clone git@gitlab.com:nlkempfe/teach-leave-live.git'
-[Source](https://stackoverflow.com/questions/40427498/getting-permission-denied-public-key-on-gitlab)
-
-To create a branch relating to an issue, follow these steps:
-
-  1. Click on the issue in GitLab
-  2. Click "Create branch" or click the arrow next to "Create merge request" to access the "Create branch" option
-  3. Do not change the description or tags when creating your branch
-
-To test your code, follow these steps:
-
-    npm install
-    npm start
-    Go to http://localhost:5000
-
-When you submit your merge request, it will automatically be linked to the related issue.
-
-## Teach Leave Live
 [Instagram](https://www.instagram.com/p/B8I9rZAh5tm/)
 
-[Color Palette #1](https://coolors.co/export/pdf/01ffff-ffffff-000000-474350-f8fff4)
+### Creators
 
-[Color Palette #2](https://coolors.co/export/pdf/000808-00b5b5-a6a6a6-009696-007777)
+- Dylan Booth
+- Connor Bullock
+- Michael Hoffman
+- Natascha Kempfe
+- Mathew Lamperski
+- Noah Rieck
+- Ryan Widgeon
 
-## Resources
-### Agile Development
-- [How to use GitLab for Agile software development](https://about.gitlab.com/blog/2018/03/05/gitlab-for-agile-software-development/)
-- [Agile Delivery](https://about.gitlab.com/solutions/agile-delivery/)
 
-### Blogging APIs
-Ideas
-- [Top Blogging APIs](https://rapidapi.com/blog/top-blogging-apis/)
+## Overview
 
-### FireBase
-Documentation and Tutorials
-- [A Firebase in React Tutorial for Beginners](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial)
-- [Build a Serverless full stack app using firebase cloud functions.](https://blog.usejournal.com/build-a-serverless-full-stack-app-using-firebase-cloud-functions-81afe34a64fc)
-- [How to setup Firebase Authentication with React in 5 minutes (maybe 10)](https://medium.com/firebase-developers/how-to-setup-firebase-authentication-with-react-in-5-minutes-maybe-10-bb8bb53e8834)
+In order to create the Teach. Leave. Live. web application, a variety of APIs were implemented. The APIs that were utilized were Stripe, Firebase, and Facebook login.
 
-### Material UI
-Documentation and Tutorials
-- [Material UI Icons](https://material-ui.com/components/material-icons/)
-- [Material UI](https://material-ui.com)
-- [Material UI Examples](https://material-ui.com/getting-started/example-projects/)
+### APIs
 
-### Recharts
-Documentation and Tutorials
-- [Recharts](http://recharts.org/en-US/)
-- [A Practical Guide to Hacking the Recharts Library](https://www.olioapps.com/blog/graph-hacking/)
+#### Firebase API:
+Firebase is utilized in order to create and structure the Teach-Leave-Live database. The database was organized into multiple tables that recorded and stored important information. We used this to pull all data used on our project.
 
-### Stripe
-Documentation and Tutorials
-- [Stripe API Documentation](https://stripe.com/docs/api?lang=node)
-- [Stripe API, ReactJS, Express Tutorial](https://hackernoon.com/stripe-api-reactjs-and-express-bc446bf08301)
-- [Stripe React Elements](https://stripe.dev/react-stripe-elements/#card)
-- [Stripe for ReactJS](https://stripe.com/docs/stripe-js/react)
 
-### Wireframes + Mockups
-- [Balsamiq](https://balsamiq.com)
-- [Figma](https://www.figma.com)
-- [Figma Examples](https://www.figmaresources.com)
-- [Figma Freebies](https://www.figmafreebies.com)
+#### Facebook API:
+The Teach-Leave-Live web app utilizes Facebook’s login functionality in order to allow users to register with their pre-existing facebook accounts. Once the user connects to their facebook, the web app then requests that their basic information (Name and email) be transferred so that it can be recorded by the firebase user table.
+
+
+#### Stripe API:
+The Teach.Leave.Live web app utilizes Stripe API in order to conduct secure monetary transactions for the purchase of a premium account. Once the user goes through the process of going to the account page and requesting to be a premium user they are routed to the stripe checkout window to then pay for the subscription (per clients request) on a yearly basis.
+
+Api keys: This is located in the stripeCheckout.js file on line 4
+
+### Description of features
+#### Login and Registration
+Users will login and register through Facebook. Upon visiting the site, the navigation bar will present a Login button on the far right. Users who are signed in have the option to subscribe to the newsletter and pay for premium. Users will be automatically signed in vie Facebook once they have been signed in once already.
+#### Viewing Home Page
+Users will be directed to the home page upon visiting the site. This page will display the company’s logo and slogan. The navigation bar will be displayed at the top at all times. Users can return later to the home through the navigation bar.
+#### Accessing Blogs
+Users can access the blogs page through the navigation bar. The blog page will show a list of blogs that the user can select. Selecting a blog allows the user to view it and add comments to it. The site only allows the editing of blogs and comments by the admin. So in order for a user to be allowed those accesses it's important that the user has been updated to have user permissions.
+#### Viewing Courses
+The courses page is also accessed through the navigation bar. All users will have the option to view certain videos. Most videos will require the user to have a premium status, however. For courses react YouTube has been implemented. We implemented a blocker to the ability to access this content without being a premium user.
+#### Checking Socials
+Users have the choice to view the socials page from the navigation bar. This page will display the present calendar and show the events that are happening on the selected date. Users will be able to select a date, view the events on that date, search for events, and RSVP to an event. The socials page was done using firebase to store the data entries and a material  Ui calendar template.
+#### Joining Premium
+Upon logging in or viewing their profile, users have the chance to join the premium service of the site. This will give them access to the premium courses in the video library. Selecting the Join Premium option will give the users a chance to provide their payment information. When being prompted to join the premium option on the accounts page once they
+#### Administrative Dashboard
+All administrative tasks are accomplished through the admin page, also referred to as the administrative dashboard. When signed in as the administrator, the navigation bar will include a link to the admin page. This dashboard will show a graph of user activity and a taskbar on the left for additional navigation.
+#### Viewing All Users
+Select the Manage Users option from the taskbar on the left. This will display a list of all users, including email, subscription status, and subscription status. The administrator can manually change any of these options for each user.
+#### Managing Blog Posts
+Select the Manage Blog option from the taskbar. This will display a list of current blogs and an option to Add Blog. If Add Blog is selected, the administrator may choose a title and the content for the new blog. If an existing blog is selected, options will be displayed to edit that blog’s content or delete any of its comments.
+#### Changing Course Content
+Select the Manage Courses option from the taskbar. This will show a list of all courses and an Add Course option. Selecting Add Course will prompt for a video to be uploaded, a title of the course, and a checkbox for if the course is exclusive to premium users. When viewing the list of active courses, each course will have an option to delete and change the premium requirement of that course.
+#### Editing Social Events
+Select the Manage Events option from the taskbar. This will display a calendar with the present date highlighted, an option to Add Event, and a list of current events on that date. Select a different date on the calendar to view events on that day. When Add Event is selected, the administrator will be prompted for the name of the event, the date and time it occurs at, and any additional information. If an event is selected from the current event list, options will be displayed to delete the event, change its date and/or time, and edit the additional information.
+
+## Project Structure
+
+This project was created with [react bootstrap](https://react-bootstrap.github.io/).
+
+The `client/src` contains almost all of the code written for this project. Files in the `src` directory are organized into separate categories.
+
+Because we used React for the basis of the project the structures are broken into views, components, and assets. There is also a firebase directory for firebase. Additionally we have an index.js file that holds the functionality of our express implementation.
+
+
+
+#### Views
+
+This directory contains react components that are responsible for an entire page or a large part of a page. For example, `src/views/Blog.js` is responsible for displaying the blog page.
+
+#### Components
+
+The components directory contains reusable react components. These components are small parts of the page. For example, `src/components/EmbeddedVideo` is the component responsible for displaying the
+
+##### Assets
+
+This directory contains the web apps images and documentation.
+
+#### Firebase
+
+This directory contains all relevant tools for accessing Firebase and firestore, the API used to manage data on this site. It also contains the configuration with private keys.
+
+## Setup and Use
+
+### Configuration
+
+Some information (such as private keys) is not stored within this repo. Specifically `src/firebase/firebaseInit` references a config file that contains all of the private information. To get the config file, you can either find it in the other documentation or get the information directly from firebase.
+
+To get the config from firebase:
+
+Navigate to `project overview -> project settings`
+Scroll down to Web Apps
+Copy the firebaseConfig variable.
+
+### Installing Dependencies
+
+[Download](https://nodejs.org/en/download/) NodeJS. Node package manager (or npm) is the package manager used to handle dependencies.  After downloading the repository, open the terminal and navigate to the root of this repository, then run the command `npm install` to install all dependencies required.
+
+### Running the App
+
+The app can be run locally by running the command `npm start` in the `teach-leave-live` or `teach-leave-live/client` directory. It is also deployed remotely on Heroku.
+
+When testing locally the payment processing first go do npm install, then cd into client the perform run npm build
+
+After doing so cd out of it and then run npm start.
