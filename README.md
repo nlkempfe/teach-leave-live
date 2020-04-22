@@ -29,7 +29,7 @@ The Teach-Leave-Live web app utilizes Facebook’s login functionality in order 
 
 
 #### Stripe API:
-    The Teach.Leave.Live web app utilizes Stripe API in order to conduct secure monetary transactions for the purchase of a premium account. Once the user goes through the process of going to the account page and requesting to be a premium user they are routed to the stripe checkout window to then pay for the subscription (per clients request) on a yearly basis.
+The Teach.Leave.Live web app utilizes Stripe API in order to conduct secure monetary transactions for the purchase of a premium account. Once the user goes through the process of going to the account page and requesting to be a premium user they are routed to the stripe checkout window to then pay for the subscription (per clients request) on a yearly basis.
 
 Api keys: This is located in the stripeCheckout.js file on line 4
 
